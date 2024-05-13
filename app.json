@@ -1,4 +1,11 @@
 {
   "name": "Converter",
-  "displayName": "Converter"
+  "displayName": "Converter",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "e204fe3b-005a-4adf-a313-5521fac441c2"
+      }
+    }
+  }
 }
