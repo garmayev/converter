@@ -1,0 +1,32 @@
+{
+  "translation": {
+    "loginScreen": "Авторизация",
+    "dashboardScreen": "Главная",
+
+    "Oxygen": "Кислород",
+    "Argon": "Аргон",
+    "Nitrogen": "Азот",
+    "Air": "Воздух",
+    "Hydrogen": "Водород",
+    "Helium": "Гелий",
+    "CarbonDioxide": "Углекислота",
+    "Methane": "Метан",
+
+    "Kg": "Килограмм",
+    "L": "Литр",
+    "CubicMeter": "Кубический метр",
+
+    "InputTemperature": "Введите температуру (C)",
+    "InputValue": "Введите количество",
+    "Calculate": "Рассчитать",
+    "Weight": "Масса",
+    "Gas": "Газ",
+    "Liquid": "Жидкость",
+
+    "Calculator": "Калькулятор",
+
+    "SelectGas": "Выберите газ",
+    "SelectScale": "Выберите ед.изм.",
+    "Loading": "Загрузка"
+  }
+}

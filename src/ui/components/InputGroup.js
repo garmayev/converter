@@ -1,4 +1,4 @@
-import {TextInput, View, StyleSheet, Text, Button, Keyboard} from 'react-native';
+import {TextInput, View, StyleSheet, Text, Button, Keyboard, Dimensions} from 'react-native';
 import {useState} from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 
@@ -36,6 +36,7 @@ export function InputGroup({
                                     onSelect.call(this, selectedItem, index);
                                 }
                             }}
+                            defaultValue={value}
                             renderButton={(selectedItem, isOpened) => {
                                 return (
                                     <View style={styles.dropdownButtonStyle}>
@@ -57,7 +58,9 @@ export function InputGroup({
                     </>);
             case 'button':
                 return (
-                    <Button title={label} onPress={onPress} style={styles.inputSubmit} />
+                    <View style={styles.inputSubmitContainer}>
+                        <Button title={label} onPress={onPress} style={styles.inputSubmit} />
+                    </View>
                 )
         }
     }
@@ -126,9 +129,13 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 15,
     },
+    inputSubmitContainer: {
+        marginTop: 10,
+        marginHorizontal: (Dimensions.get("screen").width * .4) / 2
+    },
     inputSubmit: {
         zIndex: 999,
-        width: '60%',
+        width: "100%",
         backgroundColor: '#0C68A9',
     },
 });
