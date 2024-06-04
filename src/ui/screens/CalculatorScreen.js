@@ -21,8 +21,8 @@ export default function CalculatorScreen({navigation}) {
             {title: t('Nitrogen'), moll: 0.028016, density: 0.808},
             {title: t('Air'), moll: 0.02896, density: 0.873},
             {title: t('Hydrogen'), moll: 0.0020156, density: 0.0708},
-            {title: t('Helium'), moll: 0.004003, density: 0.1249},
-            {title: t('CarbonDioxide'), moll: 0.04401, density: 1.0234},
+            {title: t('Helium'), moll: 0.004003, density: 0.145},
+            {title: t('CarbonDioxide'), moll: 0.04401, density: 0.771},
             {title: t('Methane'), moll: 0.01604, density: 0.415},
         ],
         scales = [
