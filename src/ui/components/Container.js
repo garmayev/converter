@@ -1,6 +1,5 @@
 import {Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {LogoSmall, LogoText} from './Logo';
-import LinearGradient from 'react-native-linear-gradient';
+import {LogoText} from './Logo';
 
 export default function Container({children}) {
     return (

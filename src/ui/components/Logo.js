@@ -1,6 +1,6 @@
 import * as React from "react";
 import {StyleSheet} from 'react-native';
-import Svg, { Defs, Polygon, Path } from "react-native-svg";
+import Svg, { Polygon, Path } from "react-native-svg";
 
 const styles = StyleSheet.create({
     svg: {

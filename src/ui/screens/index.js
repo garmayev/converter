@@ -1,8 +1,0 @@
-export {default as ViewScreen} from './ViewScreen'
-export {default as LoginScreen} from './LoginScreen'
-export {default as AboutScreen} from './AboutScreen'
-export {default as ProfileScreen} from './ProfileScreen'
-export {default as RegisterScreen} from './RegisterScreen'
-export {default as SettingsScreen} from './SettingsScreen'
-export {default as DashboardScreen} from './DashboardScreen'
-export {default as CalculatorScreen} from './CalculatorScreen'

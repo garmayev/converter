@@ -3,13 +3,13 @@ import {useState} from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 
 export function InputGroup({
-    labelText,
-    inputType,
-    onPress,
-    data,
-    onSelect,
-    value,
-    onTextChange
+                               labelText,
+                               inputType,
+                               onPress,
+                               data,
+                               onSelect,
+                               value,
+                               onTextChange
                            }) {
     const [label, setLabel] = useState(labelText ?? '');
     const [type, setType] = useState(inputType ?? 'text');
