@@ -64,12 +64,25 @@ export default function ReceiverScreen() {
         {title: t('balloonWeight', {value: 25}), value: 25},
         {title: t('balloonWeight', {value: 10}), value: 40},
     ];
+    const temperatureList = [
+        {title: '-50', value: -50, density: 94},
+        {title: '-40', value: -40, density: 103},
+        {title: '-30', value: -30, density: 111},
+        {title: '-20', value: -20, density: 120},
+        {title: '-10', value: -10, density: 127},
+        {title: '0', value: 0, density: 135},
+        {title: '10', value: 10, density: 143},
+        {title: '20', value: 20, density: 150},
+        {title: '30', value: 30, density: 157},
+        {title: '35', value: 35, density: 160},
+    ];
 
-    const [result, setResult] = useState({value: 0, K: 0});
+    const [result, setResult] = useState({value: 0, K: 0, weight: 0, gas: 0, liquid: 0});
     const [value, _setValue] = useState(1);
     const [gas, _setGas] = useState(gases[0]);
     const [scale, _setScale] = useState(scales[0]);
     const [balloon, setBalloon] = useState(balloonList[0]);
+    const [temperature, setTemperature] = useState(temperatureList[0]);
     const setValue = (data) => {
         _setValue(Number.parseInt(data));
     };
@@ -99,18 +112,19 @@ export default function ReceiverScreen() {
 
         switch (scale.value) {
             case 'kg':
-                cubic = (value / getDensity(gas, 20)).toFixed(afterDot);
+                cubic = (value / getDensity(gas, temperature.value)).toFixed(afterDot);
                 break;
             case 't':
-                cubic = ((value * 1000) / getDensity(gas, 20)).toFixed(afterDot);
+                cubic = ((value * 1000) / getDensity(gas, temperature.value)).toFixed(afterDot);
                 break;
             case 'l':
-                cubic = ((value * gas.density) / getDensity(gas, 20)).toFixed(afterDot);
+                cubic = ((value * gas.density) / getDensity(gas, temperature.value)).toFixed(afterDot);
                 break;
         }
+
+        console.log(temperature);
+        console.log(balloon);
         setResult({value: cubic / balloon.value});
-        console.log(balloon.value);
-        console.log(result.value);
     }
 
     return (
@@ -143,6 +157,7 @@ export default function ReceiverScreen() {
                     }}
                     data={gases}/>
             </View>
+            {/*Value-Scale*/}
             <View style={{
                 paddingHorizontal: 10,
                 flex: 1,
@@ -157,7 +172,7 @@ export default function ReceiverScreen() {
                     {/*<Text style={styles.inputLabel}>{t('Value')}</Text>*/}
                     <TextInput style={styles.inputText} onChangeText={(e, target, text) => {
                         setValue(e);
-                    }} placeholderTextColor={"#777"} placeholder={t('Value')}></TextInput>
+                    }} placeholderTextColor={'#777'} placeholder={t('Value')}></TextInput>
                 </View>
                 {/*scale*/}
                 <SelectDropdown
@@ -187,7 +202,7 @@ export default function ReceiverScreen() {
                     data={gas.scales}/>
             </View>
             {/*balloon*/}
-            <View style={{paddingHorizontal: 10}}>
+            <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
                 {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
                 <SelectDropdown
                     // defaultValue={balloon}
@@ -215,18 +230,52 @@ export default function ReceiverScreen() {
                     }}
                     data={gas.balloons}/>
             </View>
-            <View style={{padding: 10, elevation: 10}}>
+            <View style={{paddingHorizontal: 10}}>
+                {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
+                <SelectDropdown
+                    // defaultValue={balloon}
+                    onSelect={(selectedItem) => {
+                        setTemperature(selectedItem);
+                    }}
+                    renderButton={(selectedItem, isOpened) => {
+                        return (
+                            <View style={styles.dropdownButtonStyle}>
+                                {
+                                    (selectedItem && (selectedItem.title != t('Temperature'))) ?
+                                        (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
+                                        (<Text style={styles.dropdownPlaceholderStyle}>{t('Temperature')}</Text>)
+                                }
+                            </View>
+                        );
+                    }}
+                    renderItem={(item, index, isSelected) => {
+                        return (
+                            <View
+                                style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
+                                <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+                            </View>
+                        );
+                    }}
+                    data={temperatureList}/>
+            </View>
+            <View style={{paddingHorizontal: 10, paddingTop: 10, elevation: 10}}>
                 <Button title={t('Calculate')} onPress={() => {
                     Keyboard.dismiss();
                     calculate();
                 }}/>
             </View>
             <View style={styles.result}>
-                <Text style={styles.resultHeader}>{t('Calculated indicators')}</Text>
                 <View style={styles.horizontal}>
                     <Text style={styles.resultText}>{t('Balloon count')}:</Text>
                     <Text style={styles.resultValue}>{result.value.toFixed(2)} {t('Object')}</Text>
                 </View>
+                <Text style={{
+                    paddingHorizontal: 20,
+                    fontSize: 21,
+                    flex: 1,
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-end',
+                }}>*{t('with density', {dens: temperature.density})}</Text>
             </View>
         </Container>
     );
@@ -304,7 +353,8 @@ const styles = StyleSheet.create({
     dropdownMenuStyle: {
         backgroundColor: '#fff',
         borderRadius: 8,
-    },
+    }
+    ,
     dropdownItemStyle: {
         width: '100%',
         flexDirection: 'row',
@@ -312,7 +362,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 8,
-    },
+    }
+    ,
     dropdownItemTxtStyle: {
         flex: 1,
         color: '#151E26',

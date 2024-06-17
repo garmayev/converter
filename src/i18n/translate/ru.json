@@ -58,6 +58,7 @@
     "Programmer": "Программист",
     "Andrey Konovalov": "Андрей Коновалов",
     "Vladislav Ivanuk": "Владислав Иванюк",
-    "Bato Garmayev": "Бато Гармаев"
+    "Bato Garmayev": "Бато Гармаев",
+    "with density": "При давлении {{dens}} атм."
   }
 }

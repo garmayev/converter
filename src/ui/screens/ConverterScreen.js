@@ -111,9 +111,9 @@ export default function ConverterScreen() {
                     data={gases}/>
             </View>
             <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
-                <TextInput style={styles.inputText} placeholder={t("InputTemperature")} onChangeText={(text) => {
-                    setTemperature(Number.parseInt(text))
-                }} placeholderTextColor={"#777"}/>
+                <TextInput style={styles.inputText} placeholder={t('InputTemperature')} onChangeText={(text) => {
+                    setTemperature(Number.parseInt(text));
+                }} placeholderTextColor={'#777'}/>
             </View>
             <View style={{
                 paddingHorizontal: 10,
@@ -125,7 +125,7 @@ export default function ConverterScreen() {
                 <View style={{width: '70%'}}>
                     <TextInput style={styles.inputText} onChangeText={(e) => {
                         setCount(Number.parseInt(e));
-                    }} placeholder={t("InputValue")} placeholderTextColor={"#777"}
+                    }} placeholder={t('InputValue')} placeholderTextColor={'#777'}
                     ></TextInput>
                 </View>
                 {/*scale*/}
@@ -161,18 +161,42 @@ export default function ConverterScreen() {
             <View style={{padding: 20, flex: 1, flexDirection: 'column'}}>
                 <View style={styles.result}>
                     <Text style={styles.resultHeader}>{t('Calculated indicators')}</Text>
-                    <View style={{margin: 0, ...styles.horizontal}}>
-                        <Text style={styles.resultText}>{t('Weight')}:</Text>
-                        <Text style={styles.resultValue}>{result.weight} {t('Kg-small')}</Text>
-                    </View>
-                    <View style={{margin: 0, ...styles.horizontal}}>
-                        <Text style={styles.resultText}>{t('Gas')}:</Text>
-                        <Text style={styles.resultValue}>{result.gas} M{'\u00B3'}</Text>
-                    </View>
-                    <View style={{margin: 0, ...styles.horizontal}}>
-                        <Text style={styles.resultText}>{t('Liquid')}:</Text>
-                        <Text style={styles.resultValue}>{result.liquid} {t('L-small')}</Text>
-                    </View>
+                    {Number.parseInt(selectedScale.value) !== 1 &&
+                        <>
+                            <View style={{margin: 0, ...styles.horizontal}}>
+                                <Text style={styles.resultText}>{t('Liquid')}:</Text>
+                                <Text style={styles.resultValue}>{result.liquid} {t('L-small')}</Text>
+                            </View>
+                            <View style={{margin: 0, ...styles.horizontal}}>
+                                <Text style={styles.resultText}>{t('Gas')}:</Text>
+                                <Text style={styles.resultValue}>{result.gas} M{'\u00B3'}</Text>
+                            </View>
+                        </>
+                    }
+                    {Number.parseInt(selectedScale.value) !== 2 &&
+                        <>
+                            <View style={{margin: 0, ...styles.horizontal}}>
+                                <Text style={styles.resultText}>{t('Weight')}:</Text>
+                                <Text style={styles.resultValue}>{result.weight} {t('Kg-small')}</Text>
+                            </View>
+                            <View style={{margin: 0, ...styles.horizontal}}>
+                                <Text style={styles.resultText}>{t('Liquid')}:</Text>
+                                <Text style={styles.resultValue}>{result.liquid} {t('L-small')}</Text>
+                            </View>
+                        </>
+                    }
+                    {Number.parseInt(selectedScale.value) !== 3 &&
+                        <>
+                            <View style={{margin: 0, ...styles.horizontal}}>
+                                <Text style={styles.resultText}>{t('Weight')}:</Text>
+                                <Text style={styles.resultValue}>{result.weight} {t('Kg-small')}</Text>
+                            </View>
+                            <View style={{margin: 0, ...styles.horizontal}}>
+                                <Text style={styles.resultText}>{t('Gas')}:</Text>
+                                <Text style={styles.resultValue}>{result.gas} M{'\u00B3'}</Text>
+                            </View>
+                        </>
+                    }
                 </View>
             </View>
         </Container>
