@@ -9,7 +9,9 @@ export function InputGroup({
                                data,
                                onSelect,
                                value,
-                               onTextChange
+                               onTextChange,
+                               style,
+                               append = false,
                            }) {
     const [label, setLabel] = useState(labelText ?? '');
     const [type, setType] = useState(inputType ?? 'text');
@@ -18,18 +20,22 @@ export function InputGroup({
         switch (params) {
             case 'text':
                 return (
-                    <>
+                    <View style={{paddingHorizontal: 10, ...style}}>
                         {label && <Text style={styles.inputLabel}>{label}</Text>}
-                        <TextInput
-                            style={styles.inputText}
-                            onChangeText={onTextChange}
-                        >
-                            {value}
-                        </TextInput>
-                    </>);
+                        <View style={styles.horizontal}>
+                            <TextInput
+                                style={append ? styles.inputText : styles.inputTextFull}
+                                onChangeText={onTextChange}
+                            >
+                                {value}
+                            </TextInput>
+                            <Text style={styles.inputTextAppend}>{append}</Text>
+                        </View>
+                    </View>);
             case 'dropdown':
                 return (
-                    <>{label && <Text style={styles.inputLabel}>{label}</Text>}
+                    <View style={{paddingHorizontal: 10, ...style}}>
+                        {label && <Text style={styles.inputLabel}>{label}</Text>}
                         <SelectDropdown
                             onSelect={(selectedItem, index) => {
                                 if (onSelect) {
@@ -54,14 +60,15 @@ export function InputGroup({
                                     </View>
                                 );
                             }}
-                            data={data} style={styles.inputText}/>
-                    </>);
+                            data={data} style={append ? styles.inputText : styles.inputTextFull}/>
+                    </View>);
             case 'button':
                 return (
                     <View style={styles.inputSubmitContainer}>
-                        <Button title={label} onPress={onPress} style={styles.inputSubmit} />
+                        <Button title={label} onPress={onPress}
+                                style={append ? styles.inputText : styles.inputTextFull}/>
                     </View>
-                )
+                );
         }
     }
 
@@ -114,6 +121,7 @@ const styles = StyleSheet.create({
     inputLabel: {
         color: '#0C68A9',
         padding: 5,
+        fontWeight: 'bold',
     },
     inputText: {
         backgroundColor: '#fff',
@@ -124,6 +132,18 @@ const styles = StyleSheet.create({
         height: 35,
         zIndex: 5,
         elevation: 5,
+        width: '80%',
+    },
+    inputTextFull: {
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        color: '#000',
+        height: 35,
+        zIndex: 5,
+        elevation: 5,
+        width: '100%',
     },
     inputContainer: {
         width: '100%',
@@ -131,11 +151,22 @@ const styles = StyleSheet.create({
     },
     inputSubmitContainer: {
         marginTop: 10,
-        marginHorizontal: (Dimensions.get("screen").width * .4) / 2
+        marginHorizontal: (Dimensions.get('screen').width * .4) / 2,
     },
     inputSubmit: {
         zIndex: 999,
-        width: "100%",
+        width: '100%',
         backgroundColor: '#0C68A9',
+    },
+    horizontal: {
+        flex: 1,
+        flexDirection: 'row',
+        color: '#000',
+    },
+    inputTextAppend: {
+        color: '#000',
+        textAlign: 'center',
+        paddingTop: 8,
+        width: '19%',
     },
 });

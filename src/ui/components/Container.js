@@ -1,13 +1,40 @@
-import {Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {
+    Dimensions,
+    Image,
+    KeyboardAvoidingView,
+    Linking,
+    Pressable,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    View,
+} from 'react-native';
 import {LogoText} from './Logo';
+import React from 'react';
 
 export default function Container({children}) {
     return (
         <View style={styles.container}>
-            <LogoText style={styles.headerLogo}/>
-            {children}
+            <View>
+                <Image style={styles.bgHeader} source={require('../../assets/bg-car.png')}
+                       resizeMode={'center'}/>
+            </View>
+            <ScrollView>
+                <KeyboardAvoidingView style={{flex: 1}}
+                                      behavior="height"
+                                      enabled
+                                      keyboardVerticalOffset={100}>
+                    {children}
+                </KeyboardAvoidingView>
+            </ScrollView>
+            <View style={styles.footer}>
+                <Pressable onPress={() => Linking.openURL('https://gasgo.pro/')}>
+                    <Image source={require('../../assets/footer-gas.png')} style={{height: 30}}
+                           resizeMode={'contain'}/>
+                </Pressable>
+            </View>
             <Image style={styles.bgLogo} source={require('../../assets/logo-mini.png')} resizeMode={'stretch'}
-                   resizeMethod={'resize'} height={600} width={600} blurRadius={3}/>
+                   resizeMethod={'resize'} height={600} width={600} blurRadius={2}/>
         </View>
     );
 }
@@ -17,13 +44,24 @@ const styles = StyleSheet.create({
         backgroundColor: '#E4E4E4',
         flex: 1,
         flexDirection: 'column',
-        minHeight: '100%',
-        justifyContent: 'flex-start',
+        minHeight: Dimensions.get('window').height,
+        minWidth: Dimensions.get('window').width,
     },
     headerLogo: {
-        minHeight: 100,
-        minWidth: '100%',
-        marginVertical: 10,
+        zIndex: 2,
+        minHeight: 50,
+        minWidth: 100,
+        top: 0,
+        right: 10,
+    },
+    footer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    bgHeader: {
+        width: '100%',
+        height: 274,
     },
     bgLogo: {
         zIndex: -1,
@@ -32,7 +70,7 @@ const styles = StyleSheet.create({
         height: 600,
         resizeMode: 'cover',
         right: -250,
-        top: Dimensions.get("screen").height - 450,
+        top: Dimensions.get('screen').height - 450,
         opacity: .5,
         transform: [
             {rotate: '40deg'},

@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
         clipRule: "evenodd",
     },
     fil1: {
-        fill: "#0C68A9",
+        fill: "#FFF",
         fillRule: "evenodd",
         clipRule: "evenodd",
     },
     fil0: {
-        fill: "#66807F",
+        fill: "#FFF",
         fillRule: "evenodd",
         clipRule: "evenodd",
     }
