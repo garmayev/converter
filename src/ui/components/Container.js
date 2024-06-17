@@ -16,10 +16,9 @@ export default function Container({children}) {
     return (
         <View style={styles.container}>
             <View>
-                <Image style={styles.bgHeader} source={require('../../assets/bg-car.png')}
-                       resizeMode={'center'}/>
+                <Image style={styles.bgHeader} source={require('../../assets/bg-car.png')}/>
             </View>
-            <ScrollView>
+            <ScrollView style={{paddingTop: 10}}>
                 <KeyboardAvoidingView style={{flex: 1}}
                                       behavior="height"
                                       enabled
@@ -61,7 +60,9 @@ const styles = StyleSheet.create({
     },
     bgHeader: {
         width: '100%',
-        height: 274,
+        height: Dimensions.get('window').width / 1.5,
+        top: 0,
+        resizeMode: "contain",
     },
     bgLogo: {
         zIndex: -1,

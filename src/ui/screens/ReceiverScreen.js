@@ -157,7 +157,7 @@ export default function ReceiverScreen() {
                     {/*<Text style={styles.inputLabel}>{t('Value')}</Text>*/}
                     <TextInput style={styles.inputText} onChangeText={(e, target, text) => {
                         setValue(e);
-                    }} placeholder={t('Value')}></TextInput>
+                    }} placeholderTextColor={"#777"} placeholder={t('Value')}></TextInput>
                 </View>
                 {/*scale*/}
                 <SelectDropdown

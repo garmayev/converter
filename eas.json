@@ -5,19 +5,14 @@
     },
     "build":
     {
-        "development-ios":
+        "preview":
         {
             "developmentClient": true,
             "distribution": "internal",
-            "ios": {
-            	"simulator": true
-            }
-        },
-        "preview":
-        {
             "ios":
             {
-                "simulator": true
+                "simulator": true,
+                "resourceClass": "m-medium"
             }
         },
         "production":

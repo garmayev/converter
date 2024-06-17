@@ -113,7 +113,7 @@ export default function ConverterScreen() {
             <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
                 <TextInput style={styles.inputText} placeholder={t("InputTemperature")} onChangeText={(text) => {
                     setTemperature(Number.parseInt(text))
-                }} />
+                }} placeholderTextColor={"#777"}/>
             </View>
             <View style={{
                 paddingHorizontal: 10,
@@ -125,7 +125,7 @@ export default function ConverterScreen() {
                 <View style={{width: '70%'}}>
                     <TextInput style={styles.inputText} onChangeText={(e) => {
                         setCount(Number.parseInt(e));
-                    }} placeholder={t("InputValue")}
+                    }} placeholder={t("InputValue")} placeholderTextColor={"#777"}
                     ></TextInput>
                 </View>
                 {/*scale*/}
