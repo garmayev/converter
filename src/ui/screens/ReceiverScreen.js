@@ -15,6 +15,7 @@ export default function ReceiverScreen() {
             title: t('Oxygen'),
             moll: 0.032,
             density: 1.141,
+            availableScale: 'w',
             scales: [
                 {title: t('Kg-small'), value: 'kg'},
                 {title: t('T-small'), value: 't'},
@@ -28,9 +29,66 @@ export default function ReceiverScreen() {
             ],
         },
         {
+            title: t('Argon'),
+            moll: 0.039948,
+            density: 1.392,
+            scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
+            ],
+            balloons: [
+                {title: t('balloonWeight', {value: 50}), value: 7.8},
+                {title: t('balloonWeight', {value: 40}), value: 6},
+                {title: t('balloonWeight', {value: 20}), value: 3.16},
+                {title: t('balloonWeight', {value: 10}), value: 2},
+                {title: t('balloonWeight', {value: 5}), value: 0.8},
+            ],
+            availableScale: 'w',
+        },
+        {
+            title: t('Air'),
+            moll: 0.02896,
+            density: 0.873,
+            balloons: [],
+            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            availableScale: 'w',
+        },
+        {
+            title: t('Hydrogen'),
+            moll: 0.0020156,
+            density: 0.0708,
+            balloons: [],
+            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            availableScale: 'w',
+        },
+        {
+            title: t('Helium'),
+            moll: 0.004003,
+            density: 0.145,
+            balloons: [],
+            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            availableScale: 'w',
+        },
+        {
+            title: t('Nitrogen'),
+            moll: 0.028016,
+            density: 0.808,
+            availableScale: 'l',
+            scales: [
+                {title: t('L-small'), value: 'l'},
+            ],
+            balloons: [
+                {title: t('balloonWeight', {value: 40}), value: 6.4},
+                {title: t('balloonWeight', {value: 20}), value: 2.86},
+                {title: t('balloonWeight', {value: 10}), value: 1.2},
+                {title: t('balloonWeight', {value: 5}), value: 0.71},
+            ],
+        },
+        {
             title: t('CarbonDioxide'),
             moll: 0.04401,
             density: 0.771,
+            availableScale: 'w',
             scales: [
                 {title: t('Kg-small'), value: 'kg'},
                 {title: t('T-small'), value: 't'},
@@ -44,18 +102,36 @@ export default function ReceiverScreen() {
             ],
         },
         {
-            title: t('Nitrogen'),
-            moll: 0.028016,
-            density: 0.808,
-            scales: [
-                {title: t('L-small'), value: 'l'},
-            ],
-            balloons: [
-                {title: t('balloonWeight', {value: 40}), value: 6.4},
-                {title: t('balloonWeight', {value: 20}), value: 2.86},
-                {title: t('balloonWeight', {value: 10}), value: 1.2},
-                {title: t('balloonWeight', {value: 5}), value: 0.71},
-            ],
+            title: t('Methane'),
+            moll: 0.01604,
+            density: 0.415,
+            balloons: [],
+            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            availableScale: 'w',
+        },
+        {
+            title: t('Xenon'),
+            moll: 0.132108,
+            density: 3.520,
+            balloons: [],
+            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            availableScale: 'w',
+        },
+        {
+            title: t('Krypton'),
+            moll: 0.0838283,
+            density: 2.1550,
+            balloons: [],
+            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            availableScale: 'w',
+        },
+        {
+            title: t('Neon'),
+            moll: 0.02698644,
+            density: 0.9,
+            balloons: [],
+            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            availableScale: 'w',
         },
     ];
     const scales = [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}];
@@ -77,30 +153,35 @@ export default function ReceiverScreen() {
         {title: '35', value: 35, density: 160},
     ];
 
-    const [result, setResult] = useState({value: 0, K: 0, weight: 0, gas: 0, liquid: 0});
+    const [result, setResult] = useState({value: 0, K: 0, weight: -1000.0, gas: -1000.0, liquid: -1000.0});
     const [value, _setValue] = useState(1);
     const [gas, _setGas] = useState(gases[0]);
     const [scale, _setScale] = useState(scales[0]);
     const [balloon, setBalloon] = useState(balloonList[0]);
-    const [temperature, setTemperature] = useState(temperatureList[0]);
+    const [temperature, setTemperature] = useState(temperatureList[7]);
     const setValue = (data) => {
         _setValue(Number.parseInt(data));
     };
     const setGas = (value) => {
         _setGas(value);
-        _setScale(value.scales[0]);
-        setBalloon(value.balloons[0]);
+        if (value.scales) {
+            _setScale(value.scales[0]);
+        }
+        if (value.balloons.length) {
+            setBalloon(value.balloons[0]);
+        } else {
+            setBalloon(undefined)
+        }
     };
 
     useEffect(() => {
         setGas(gases[0]);
-        _setScale(gas.scales[0]);
         setBalloon(gas.balloons[0]);
     }, []);
 
 
     function calculate() {
-        let cubic = 0;
+        let cubic = 0, w = -1000.0, l = -1000.0, g = -1000.0;
 
         function getKelvinTemperature(temp) {
             return temp + 273.15;
@@ -112,19 +193,40 @@ export default function ReceiverScreen() {
 
         switch (scale.value) {
             case 'kg':
-                cubic = (value / getDensity(gas, temperature.value)).toFixed(afterDot);
+                if (balloon) {
+                    cubic = (value / getDensity(gas, temperature.value)).toFixed(afterDot);
+                }
+                console.log(gas.availableScale)
+                if (gas.availableScale === 'w') {
+                    l = value / gas.density;
+                    g = value / getDensity(gas, temperature.value);
+                }
                 break;
             case 't':
-                cubic = ((value * 1000) / getDensity(gas, temperature.value)).toFixed(afterDot);
+                if (balloon) {
+                    cubic = ((value * 1000) / getDensity(gas, temperature.value)).toFixed(afterDot);
+                }
+                if (gas.availableScale === 'w') {
+                    l = (value * 1000) / gas.density;
+                    g = (value * 1000) / getDensity(gas, temperature.value);
+                }
                 break;
             case 'l':
-                cubic = ((value * gas.density) / getDensity(gas, temperature.value)).toFixed(afterDot);
+                if (balloon) {
+                    cubic = ((value * gas.density) / getDensity(gas, temperature.value)).toFixed(afterDot);
+                }
+                if (gas.availableScale === 'l') {
+                    w = value * gas.density;
+                    g = value * getDensity(gas, temperature.value);
+                }
                 break;
         }
 
-        console.log(temperature);
-        console.log(balloon);
-        setResult({value: cubic / balloon.value});
+        if (balloon) {
+            setResult({value: (cubic / balloon.value), weight: w, liquid: l, gas: g});
+        } else {
+            setResult({weight: w, liquid: l, gas: g});
+        }
     }
 
     return (
@@ -133,6 +235,7 @@ export default function ReceiverScreen() {
             <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
                 {/*<Text style={styles.inputLabel}>{t('SelectGas')}</Text>*/}
                 <SelectDropdown
+                    defaultValue={gas}
                     onSelect={(selectedItem) => {
                         setGas(selectedItem);
                     }}
@@ -172,7 +275,7 @@ export default function ReceiverScreen() {
                     {/*<Text style={styles.inputLabel}>{t('Value')}</Text>*/}
                     <TextInput style={styles.inputText} onChangeText={(e, target, text) => {
                         setValue(e);
-                    }} placeholderTextColor={'#777'} placeholder={t('Value')}></TextInput>
+                    }} placeholderTextColor={'#777'} placeholder={t('Value')}>1</TextInput>
                 </View>
                 {/*scale*/}
                 <SelectDropdown
@@ -205,7 +308,8 @@ export default function ReceiverScreen() {
             <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
                 {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
                 <SelectDropdown
-                    // defaultValue={balloon}
+                    defaultValue={balloon}
+                    // disabled={gas.balloons.length > 0}
                     onSelect={(selectedItem) => {
                         setBalloon(selectedItem);
                     }}
@@ -233,7 +337,7 @@ export default function ReceiverScreen() {
             <View style={{paddingHorizontal: 10}}>
                 {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
                 <SelectDropdown
-                    // defaultValue={balloon}
+                    defaultValue={temperature}
                     onSelect={(selectedItem) => {
                         setTemperature(selectedItem);
                     }}
@@ -265,17 +369,36 @@ export default function ReceiverScreen() {
                 }}/>
             </View>
             <View style={styles.result}>
-                <View style={styles.horizontal}>
-                    <Text style={styles.resultText}>{t('Balloon count')}:</Text>
-                    <Text style={styles.resultValue}>{result.value.toFixed(2)} {t('Object')}</Text>
-                </View>
-                <Text style={{
-                    paddingHorizontal: 20,
-                    fontSize: 21,
-                    flex: 1,
-                    justifyContent: 'flex-end',
-                    alignItems: 'flex-end',
-                }}>*{t('with density', {dens: temperature.density})}</Text>
+                <Text style={styles.resultHeader}>{t('Calculated indicators')}</Text>
+                {result.weight > -1 &&
+                    <View style={styles.horizontal}>
+                        <Text style={styles.resultText}>{t('Weight')}:</Text>
+                        <Text style={styles.resultValue}>{result.weight.toFixed(afterDot)}</Text>
+                    </View>}
+                {result.liquid > -1 &&
+                    <View style={styles.horizontal}>
+                        <Text style={styles.resultText}>{t('Liquid')}:</Text>
+                        <Text style={styles.resultValue}>{result.liquid.toFixed(afterDot)}</Text>
+                    </View>}
+                {result.gas > -1 &&
+                    <View style={styles.horizontal}>
+                        <Text style={styles.resultText}>{t('Gas')}:</Text>
+                        <Text style={styles.resultValue}>{result.gas.toFixed(afterDot)}</Text>
+                    </View>}
+                {result.value !== undefined ?
+                    <>
+                        <View style={{paddingTop: 15, ...styles.horizontal}}>
+                            <Text style={styles.resultText}>{t('Balloon count')}:</Text>
+                            <Text style={styles.resultValue}>{result.value.toFixed(2)} {t('Object')}</Text>
+                        </View>
+                        <Text style={{
+                            paddingHorizontal: 20,
+                            fontSize: 16,
+                            textAlign: 'right',
+                            color: '#666',
+                        }}>{t('with density', {dens: temperature.density})} *</Text>
+                    </>
+                    : <Text style={{color: 'red', textAlign: "center"}}>{t('System Fail! Not enough data!')}</Text>}
             </View>
         </Container>
     );
@@ -286,16 +409,15 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20,
-        margin: 0,
+        alignItems: 'flex-start'
     },
     result: {
         margin: 20,
         borderRadius: 8,
         backgroundColor: 'rgba(255, 255, 255, .3)',
-        height: 120,
+        height: 150,
+        paddingHorizontal: 10,
         fontSize: 24,
-        flex: 1,
     },
     resultText: {
         color: '#000',

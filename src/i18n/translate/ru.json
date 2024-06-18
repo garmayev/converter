@@ -59,6 +59,7 @@
     "Andrey Konovalov": "Андрей Коновалов",
     "Vladislav Ivanuk": "Владислав Иванюк",
     "Bato Garmayev": "Бато Гармаев",
-    "with density": "При давлении {{dens}} атм."
+    "with density": "При давлении {{dens}} атм",
+    "System Fail! Not enough data!": "Ошибка!\nДля рассчета не хватает проверенных данных"
   }
 }
