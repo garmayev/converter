@@ -231,7 +231,7 @@ export default function ReceiverScreen() {
 
     return (
         <Container>
-            {/*Gas*/}
+            {/* Gas */}
             <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
                 {/*<Text style={styles.inputLabel}>{t('SelectGas')}</Text>*/}
                 <SelectDropdown
@@ -260,7 +260,7 @@ export default function ReceiverScreen() {
                     }}
                     data={gases}/>
             </View>
-            {/*Value-Scale*/}
+            {/* Value-Scale */}
             <View style={{
                 paddingHorizontal: 10,
                 flex: 1,
@@ -304,7 +304,36 @@ export default function ReceiverScreen() {
                     }}
                     data={gas.scales}/>
             </View>
-            {/*balloon*/}
+            {/* Temperature */}
+            <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
+                {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
+                <SelectDropdown
+                    defaultValue={temperature}
+                    onSelect={(selectedItem) => {
+                        setTemperature(selectedItem);
+                    }}
+                    renderButton={(selectedItem, isOpened) => {
+                        return (
+                            <View style={styles.dropdownButtonStyle}>
+                                {
+                                    (selectedItem && (selectedItem.title != t('Temperature'))) ?
+                                        (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
+                                        (<Text style={styles.dropdownPlaceholderStyle}>{t('Temperature')}</Text>)
+                                }
+                            </View>
+                        );
+                    }}
+                    renderItem={(item, index, isSelected) => {
+                        return (
+                            <View
+                                style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
+                                <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+                            </View>
+                        );
+                    }}
+                    data={temperatureList}/>
+            </View>
+            {/* Balloon */}
             <View style={{paddingHorizontal: 10, paddingBottom: 10}}>
                 {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
                 <SelectDropdown
@@ -334,34 +363,7 @@ export default function ReceiverScreen() {
                     }}
                     data={gas.balloons}/>
             </View>
-            <View style={{paddingHorizontal: 10}}>
-                {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
-                <SelectDropdown
-                    defaultValue={temperature}
-                    onSelect={(selectedItem) => {
-                        setTemperature(selectedItem);
-                    }}
-                    renderButton={(selectedItem, isOpened) => {
-                        return (
-                            <View style={styles.dropdownButtonStyle}>
-                                {
-                                    (selectedItem && (selectedItem.title != t('Temperature'))) ?
-                                        (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
-                                        (<Text style={styles.dropdownPlaceholderStyle}>{t('Temperature')}</Text>)
-                                }
-                            </View>
-                        );
-                    }}
-                    renderItem={(item, index, isSelected) => {
-                        return (
-                            <View
-                                style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
-                                <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
-                            </View>
-                        );
-                    }}
-                    data={temperatureList}/>
-            </View>
+            {/* Submit */}
             <View style={{paddingHorizontal: 10, paddingTop: 10, elevation: 10}}>
                 <Button title={t('Calculate')} onPress={() => {
                     Keyboard.dismiss();
@@ -415,25 +417,26 @@ const styles = StyleSheet.create({
         margin: 20,
         borderRadius: 8,
         backgroundColor: 'rgba(255, 255, 255, .3)',
-        height: 150,
         paddingHorizontal: 10,
         fontSize: 24,
     },
     resultText: {
         color: '#000',
-        fontSize: 16,
+        fontSize: 14,
         margin: 0,
         padding: 0,
     },
     resultValue: {
         color: '#000',
+        fontSize: 14,
     },
     resultHeader: {
         color: '#000',
-        fontSize: 21,
+        fontSize: 18,
         margin: 0,
         padding: 0,
         textAlign: 'center',
+        paddingBottom: 4,
     },
     inputLabel: {
         color: '#0C68A9',

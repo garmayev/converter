@@ -15,7 +15,7 @@ import React from 'react';
 export default function Container({children}) {
     return (
         <View style={styles.container}>
-            <View>
+            <View style={styles.imageContainer}>
                 <Image style={styles.bgHeader} source={require('../../assets/bg-car.png')}/>
             </View>
             <ScrollView style={{paddingTop: 10}}>
@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         minHeight: Dimensions.get('window').height,
         minWidth: Dimensions.get('window').width,
+    },
+    imageContainer: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').width / 1.5
     },
     headerLogo: {
         zIndex: 2,

@@ -89,23 +89,23 @@ function App() {
                 }}/>
                 <Drawer.Screen name={'AboutScreen'} component={AboutScreen}
                                options={{title: t('About us'), drawerItemStyle: {display: 'none'}}}/>
-                <Drawer.Screen name={'ConverterScreen'} component={ConverterScreen} options={{
-                    title: t('Converter'),
-                    headerShown: true,
-                    headerTransparent: true,
-                    headerRight: () => <LogoText style={{
-                        zIndex: 2,
-                        minHeight: 50,
-                        minWidth: 100,
-                        position: 'absolute',
-                        top: 0,
-                        right: 10,
-                        elevation: 10,
-                    }}/>,
-                    drawerIcon: () => {
-                        return (<FontAwesomeIcon icon={faArrowsRotate}/>);
-                    },
-                }}/>
+                {/*<Drawer.Screen name={'ConverterScreen'} component={ConverterScreen} options={{*/}
+                {/*    title: t('Converter'),*/}
+                {/*    headerShown: true,*/}
+                {/*    headerTransparent: true,*/}
+                {/*    headerRight: () => <LogoText style={{*/}
+                {/*        zIndex: 2,*/}
+                {/*        minHeight: 50,*/}
+                {/*        minWidth: 100,*/}
+                {/*        position: 'absolute',*/}
+                {/*        top: 0,*/}
+                {/*        right: 10,*/}
+                {/*        elevation: 10,*/}
+                {/*    }}/>,*/}
+                {/*    drawerIcon: () => {*/}
+                {/*        return (<FontAwesomeIcon icon={faArrowsRotate}/>);*/}
+                {/*    },*/}
+                {/*}}/>*/}
             </Drawer.Navigator>
         </NavigationContainer>
     );
