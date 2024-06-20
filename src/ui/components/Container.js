@@ -61,6 +61,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',
+        textAlign: 'center',
+        left: 0,
+        right: 0,
+        bottom: 10,
+        position: 'absolute',
     },
     bgHeader: {
         width: '100%',
@@ -81,4 +87,8 @@ const styles = StyleSheet.create({
             {rotate: '40deg'},
         ],
     },
+    corporateLogo: {
+        position: 'absolute',
+        bottom: 0,
+    }
 });

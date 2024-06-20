@@ -24,7 +24,7 @@
     "T": "Тонн",
     "T-small": "T",
     "CubicMeter": "Кубический метр",
-    "CubicMeter-small": "M",
+    "CubicMeter-small": "M\u00B3",
 
     "InputTemperature": "Введите температуру",
     "InputValue": "Введите количество",

@@ -49,7 +49,9 @@ export default function ReceiverScreen() {
             title: t('Air'),
             moll: 0.02896,
             density: 0.873,
-            balloons: [],
+            balloons: [
+                {title: t('balloonWeight', {value: 40}), value: 6.3},
+            ],
             scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
             availableScale: 'w',
         },
@@ -57,7 +59,10 @@ export default function ReceiverScreen() {
             title: t('Hydrogen'),
             moll: 0.0020156,
             density: 0.0708,
-            balloons: [],
+            balloons: [
+                {title: t('balloonWeight', {value: 40}), value: 6.3},
+                {title: t('balloonWeight', {value: 10}), value: 3.5},
+            ],
             scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
             availableScale: 'w',
         },
@@ -141,16 +146,16 @@ export default function ReceiverScreen() {
         {title: t('balloonWeight', {value: 10}), value: 40},
     ];
     const temperatureList = [
-        {title: '-50', value: -50, density: 94},
-        {title: '-40', value: -40, density: 103},
-        {title: '-30', value: -30, density: 111},
-        {title: '-20', value: -20, density: 120},
-        {title: '-10', value: -10, density: 127},
-        {title: '0', value: 0, density: 135},
-        {title: '10', value: 10, density: 143},
-        {title: '20', value: 20, density: 150},
-        {title: '30', value: 30, density: 157},
-        {title: '35', value: 35, density: 160},
+        {title: '-50 \u2103', value: -50, density: 94},
+        {title: '-40 \u2103', value: -40, density: 103},
+        {title: '-30 \u2103', value: -30, density: 111},
+        {title: '-20 \u2103', value: -20, density: 120},
+        {title: '-10 \u2103', value: -10, density: 127},
+        {title: '0 \u2103', value: 0, density: 135},
+        {title: '10 \u2103', value: 10, density: 143},
+        {title: '20 \u2103', value: 20, density: 150},
+        {title: '30 \u2103', value: 30, density: 157},
+        {title: '35 \u2103', value: 35, density: 160},
     ];
 
     const [result, setResult] = useState({value: 0, K: 0, weight: -1000.0, gas: -1000.0, liquid: -1000.0});
@@ -375,17 +380,17 @@ export default function ReceiverScreen() {
                 {result.weight > -1 &&
                     <View style={styles.horizontal}>
                         <Text style={styles.resultText}>{t('Weight')}:</Text>
-                        <Text style={styles.resultValue}>{result.weight.toFixed(afterDot)}</Text>
+                        <Text style={styles.resultValue}>{result.weight.toFixed(afterDot)} {t('Kg-small')}</Text>
                     </View>}
                 {result.liquid > -1 &&
                     <View style={styles.horizontal}>
                         <Text style={styles.resultText}>{t('Liquid')}:</Text>
-                        <Text style={styles.resultValue}>{result.liquid.toFixed(afterDot)}</Text>
+                        <Text style={styles.resultValue}>{result.liquid.toFixed(afterDot)} {t('L-small')}</Text>
                     </View>}
                 {result.gas > -1 &&
                     <View style={styles.horizontal}>
                         <Text style={styles.resultText}>{t('Gas')}:</Text>
-                        <Text style={styles.resultValue}>{result.gas.toFixed(afterDot)}</Text>
+                        <Text style={styles.resultValue}>{result.gas.toFixed(afterDot)} {t('CubicMeter-small')}</Text>
                     </View>}
                 {result.value !== undefined ?
                     <>

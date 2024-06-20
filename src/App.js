@@ -15,7 +15,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCalculator, faArrowsRotate, faArrowsTurnToDots, faCogs, faUser} from '@fortawesome/free-solid-svg-icons';
-import {AppRegistry as Navigation, Image, SafeAreaView, Text, View} from 'react-native';
+import {AppRegistry as Navigation, Image, Linking, SafeAreaView, Text, View} from 'react-native';
 import ReceiverScreen from './ui/screens/ReceiverScreen';
 import SettingsScreen from './ui/screens/SettingsScreen';
 import AboutScreen from './ui/screens/AboutScreen';
@@ -34,7 +34,7 @@ function CustomDrawerContent(props) {
                 <DrawerItem label={() => <Text style={{color: '#000'}}>{t('About us')}</Text>}
                             icon={() => <FontAwesomeIcon icon={faUser}/>}
                             onPress={() => {
-                                props.navigation.navigate('AboutScreen');
+                                Linking.openURL("https://gasgo.pro")
                             }}/>
             </View>
         </DrawerContentScrollView>
@@ -67,45 +67,6 @@ function App() {
                         return (<FontAwesomeIcon icon={faArrowsTurnToDots}/>);
                     },
                 }}/>
-                {/*<Drawer.Screen name={t('Calculator')} component={CalculatorScreen} options={{*/}
-                {/*    title: t('Calculator'),*/}
-                {/*    drawerIcon: () => {*/}
-                {/*        return (<FontAwesomeIcon icon={faCalculator}/>);*/}
-                {/*    },*/}
-                {/*}}/>*/}
-                <Drawer.Screen name={'SettingsScreen'} component={SettingsScreen} options={{
-                    drawerItemStyle: {display: 'none'},
-                    headerShown: true,
-                    headerTransparent: true,
-                    headerRight: () => <LogoText style={{
-                        zIndex: 2,
-                        minHeight: 50,
-                        minWidth: 100,
-                        position: 'absolute',
-                        top: 0,
-                        right: 10,
-                        elevation: 10,
-                    }}/>,
-                }}/>
-                <Drawer.Screen name={'AboutScreen'} component={AboutScreen}
-                               options={{title: t('About us'), drawerItemStyle: {display: 'none'}}}/>
-                {/*<Drawer.Screen name={'ConverterScreen'} component={ConverterScreen} options={{*/}
-                {/*    title: t('Converter'),*/}
-                {/*    headerShown: true,*/}
-                {/*    headerTransparent: true,*/}
-                {/*    headerRight: () => <LogoText style={{*/}
-                {/*        zIndex: 2,*/}
-                {/*        minHeight: 50,*/}
-                {/*        minWidth: 100,*/}
-                {/*        position: 'absolute',*/}
-                {/*        top: 0,*/}
-                {/*        right: 10,*/}
-                {/*        elevation: 10,*/}
-                {/*    }}/>,*/}
-                {/*    drawerIcon: () => {*/}
-                {/*        return (<FontAwesomeIcon icon={faArrowsRotate}/>);*/}
-                {/*    },*/}
-                {/*}}/>*/}
             </Drawer.Navigator>
         </NavigationContainer>
     );
