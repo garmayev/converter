@@ -51,7 +51,6 @@ function App() {
             <Drawer.Navigator initialRouteName={initialRoute}
                               drawerContent={props => <CustomDrawerContent {...props}/>}>
                 <Drawer.Screen name={'ReceiverScreen'} component={ReceiverScreen} options={{
-                    title: t('Receiver'),
                     headerShown: true,
                     headerTransparent: true,
                     headerRight: () => <LogoText style={{

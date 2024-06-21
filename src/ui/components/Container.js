@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 10,
         position: 'absolute',
+        marginBottom: 20
     },
     bgHeader: {
         width: '100%',

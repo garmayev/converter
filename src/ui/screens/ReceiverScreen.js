@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {InputGroup} from '../components/InputGroup';
 import SelectDropdown from 'react-native-select-dropdown';
 
-export default function ReceiverScreen() {
+export default function ReceiverScreen({navigation}) {
     const {t} = useTranslation();
     const afterDot = 6,
         P = 101325,
@@ -16,6 +16,7 @@ export default function ReceiverScreen() {
             moll: 0.032,
             density: 1.141,
             availableScale: 'w',
+            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             scales: [
                 {title: t('Kg-small'), value: 'kg'},
                 {title: t('T-small'), value: 't'},
@@ -36,6 +37,7 @@ export default function ReceiverScreen() {
                 {title: t('Kg-small'), value: 'kg'},
                 {title: t('T-small'), value: 't'},
             ],
+            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             balloons: [
                 {title: t('balloonWeight', {value: 50}), value: 7.8},
                 {title: t('balloonWeight', {value: 40}), value: 6},
@@ -49,6 +51,7 @@ export default function ReceiverScreen() {
             title: t('Air'),
             moll: 0.02896,
             density: 0.873,
+            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             balloons: [
                 {title: t('balloonWeight', {value: 40}), value: 6.3},
             ],
@@ -59,6 +62,7 @@ export default function ReceiverScreen() {
             title: t('Hydrogen'),
             moll: 0.0020156,
             density: 0.0708,
+            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             balloons: [
                 {title: t('balloonWeight', {value: 40}), value: 6.3},
                 {title: t('balloonWeight', {value: 10}), value: 3.5},
@@ -82,6 +86,7 @@ export default function ReceiverScreen() {
             scales: [
                 {title: t('L-small'), value: 'l'},
             ],
+            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             balloons: [
                 {title: t('balloonWeight', {value: 40}), value: 6.4},
                 {title: t('balloonWeight', {value: 20}), value: 2.86},
@@ -98,6 +103,7 @@ export default function ReceiverScreen() {
                 {title: t('Kg-small'), value: 'kg'},
                 {title: t('T-small'), value: 't'},
             ],
+            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             balloons: [
                 {title: t('balloonWeight', {value: 50}), value: 7.8},
                 {title: t('balloonWeight', {value: 40}), value: 12},
@@ -143,7 +149,7 @@ export default function ReceiverScreen() {
     const balloonList = [
         {title: t('balloonWeight', {value: 40}), value: 40},
         {title: t('balloonWeight', {value: 25}), value: 25},
-        {title: t('balloonWeight', {value: 10}), value: 40},
+        {title: t('balloonWeight', {value: 10}), value: 10},
     ];
     const temperatureList = [
         {title: '-50 \u2103', value: -50, density: 94},
@@ -173,7 +179,7 @@ export default function ReceiverScreen() {
             _setScale(value.scales[0]);
         }
         if (value.balloons.length) {
-            setBalloon(value.balloons[0]);
+                setBalloon(value.balloons[0]);
         } else {
             setBalloon(undefined)
         }
@@ -181,9 +187,15 @@ export default function ReceiverScreen() {
 
     useEffect(() => {
         setGas(gases[0]);
-        setBalloon(gas.balloons[0]);
+        if (gas.defaultBalloon) {
+            setBalloon(gas.defaultBalloon)
+        } else {
+            setBalloon(gas.balloons[0]);
+        }
+        navigation.setOptions({
+            title: ""
+        })
     }, []);
-
 
     function calculate() {
         let cubic = 0, w = -1000.0, l = -1000.0, g = -1000.0;
@@ -248,7 +260,7 @@ export default function ReceiverScreen() {
                         return (
                             <View style={styles.dropdownButtonStyle}>
                                 {
-                                    (selectedItem && (selectedItem.title != t('SelectGas'))) ?
+                                    (selectedItem && (selectedItem.title !== t('SelectGas'))) ?
                                         (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
                                         (<Text style={styles.dropdownPlaceholderStyle}>{t('SelectGas')}</Text>)
                                 }
@@ -292,7 +304,7 @@ export default function ReceiverScreen() {
                         return (
                             <View style={{width: '27%', marginLeft: 10, ...styles.dropdownButtonStyle}}>
                                 {
-                                    (selectedItem && (selectedItem.title != t('SelectScale'))) ?
+                                    (selectedItem && (selectedItem.title !== t('SelectScale'))) ?
                                         (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
                                         (<Text style={styles.dropdownPlaceholderStyle}>{t('SelectScale')}</Text>)
                                 }
@@ -321,7 +333,7 @@ export default function ReceiverScreen() {
                         return (
                             <View style={styles.dropdownButtonStyle}>
                                 {
-                                    (selectedItem && (selectedItem.title != t('Temperature'))) ?
+                                    (selectedItem && (selectedItem.title !== t('Temperature'))) ?
                                         (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
                                         (<Text style={styles.dropdownPlaceholderStyle}>{t('Temperature')}</Text>)
                                 }
@@ -351,7 +363,7 @@ export default function ReceiverScreen() {
                         return (
                             <View style={styles.dropdownButtonStyle}>
                                 {
-                                    (selectedItem && (selectedItem.title != t('Balloon Value'))) ?
+                                    (selectedItem && (selectedItem.title !== t('Balloon Value'))) ?
                                         (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
                                         (<Text style={styles.dropdownPlaceholderStyle}>{t('Balloon Value')}</Text>)
                                 }
@@ -376,7 +388,6 @@ export default function ReceiverScreen() {
                 }}/>
             </View>
             <View style={styles.result}>
-                <Text style={styles.resultHeader}>{t('Calculated indicators')}</Text>
                 {result.weight > -1 &&
                     <View style={styles.horizontal}>
                         <Text style={styles.resultText}>{t('Weight')}:</Text>
@@ -427,13 +438,13 @@ const styles = StyleSheet.create({
     },
     resultText: {
         color: '#000',
-        fontSize: 14,
+        fontSize: 18,
         margin: 0,
         padding: 0,
     },
     resultValue: {
         color: '#000',
-        fontSize: 14,
+        fontSize: 18,
     },
     resultHeader: {
         color: '#000',
