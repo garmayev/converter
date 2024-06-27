@@ -193,7 +193,7 @@ export default function ReceiverScreen({navigation}) {
             setBalloon(gas.balloons[0]);
         }
         navigation.setOptions({
-            title: ""
+            title: " "
         })
     }, []);
 

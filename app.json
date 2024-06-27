@@ -1,6 +1,7 @@
 {
   "name": "Converter",
   "displayName": "Converter",
+  "version": "1.0",
   "expo": {
     "extra": {
       "eas": {
