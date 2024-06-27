@@ -49,8 +49,11 @@ function App() {
     return (
         <NavigationContainer>
             <Drawer.Navigator initialRouteName={initialRoute}
+                              screenOptions={{
+                                  headerTitle: ""
+                              }}
                               drawerContent={props => <CustomDrawerContent {...props}/>}>
-                <Drawer.Screen name={'ReceiverScreen'} component={ReceiverScreen} options={{
+                <Drawer.Screen name={t('Converter')} component={ReceiverScreen} options={{
                     headerShown: true,
                     headerTransparent: true,
                     headerRight: () => <LogoText style={{
