@@ -1,26 +1,31 @@
-import * as React from "react";
+import * as React from 'react';
 import {StyleSheet} from 'react-native';
-import Svg, { Polygon, Path } from "react-native-svg";
+import Svg, {Polygon, Path, Circle} from 'react-native-svg';
 
 const styles = StyleSheet.create({
     svg: {
-        shapeRendering: "geometricPrecision",
-        textRendering: "geometricPrecision",
-        imageRendering: "optimizeQuality",
-        fillRule: "evenodd",
-        clipRule: "evenodd",
+        shapeRendering: 'geometricPrecision',
+        textRendering: 'geometricPrecision',
+        imageRendering: 'optimizeQuality',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd',
+    },
+    fil2: {
+        fill: '#85B6FF',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd',
     },
     fil1: {
-        fill: "#FFF",
-        fillRule: "evenodd",
-        clipRule: "evenodd",
+        fill: '#FFF',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd',
     },
     fil0: {
-        fill: "#FFF",
-        fillRule: "evenodd",
-        clipRule: "evenodd",
-    }
-})
+        fill: '#FFF',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd',
+    },
+});
 
 export const LogoText = (props) => (
     <Svg
@@ -144,5 +149,52 @@ export const LogoSmall = (props) => (
             style={styles.fil1}
             d="M1433.32 17.14c-532.41,121.77 -476.5,371.37 -545.53,402.02 14.07,-4.84 28.17,-9.57 42.25,-14.37 21.95,63.84 43.98,127.77 65.94,191.64 52.66,-117.88 129.65,-247.29 234.8,-252.4 -47.37,97.16 52.84,219.9 1.36,361.49 64.96,-49.43 129.91,-98.9 194.87,-148.34 9.36,13.71 18.68,27.4 28.04,41.12 195.56,-340.18 -213.85,-453.22 -21.73,-581.16z"
         />
+    </Svg>
+);
+
+export const EcoLogo = (props) => (
+    <Svg
+        xmlSpace="preserve"
+        width="1000"
+        height="1000"
+        viewBox="0 0 1000 1000"
+        {...props}
+    >
+        <Path
+            style={{transform: [{rotate: '360deg'}], ...styles.fil1}}
+            d="M413.26 44.08c44.37,-25.62 116.28,-25.64 160.7,0l283 163.38c44.38,25.62 80.36,87.88 80.36,139.16l0 326.76c0,51.24 -35.94,113.52 -80.36,139.17l-283 163.37c-44.38,25.62 -116.29,25.65 -160.7,0l-283.01 -163.37c-44.37,-25.62 -80.35,-87.88 -80.35,-139.17l0 -326.76c0,-51.24 35.94,-113.52 80.35,-139.16l283.01 -163.38z"/>
+        <Path
+            style={styles.fil2}
+            d="M492.37 701.74c-41.05,0 -80.42,-17.4 -109.45,-48.36 -29.03,-30.96 -45.34,-72.95 -45.34,-116.74 0,-72.27 52.44,-130.08 98.54,-183.05l56.25 -64.6 56.24 64.6c46.1,52.99 98.54,110.8 98.54,183.05 0,43.79 -16.31,85.78 -45.34,116.74 -29.02,30.96 -68.39,48.36 -109.44,48.36z"/>
+    </Svg>
+);
+
+export const GasLogo = (props) => (
+    <Svg
+        xmlSpace="preserve"
+        width="1100"
+        height="1100"
+        viewBox="0 0 1100 1100"
+        {...props}>
+        <Path style={styles.fil0}
+              d="M469.66 84.08c44.38,-25.62 116.29,-25.64 160.7,0l283.01 163.38c44.37,25.62 80.35,87.88 80.35,139.16l0 326.76c0,51.24 -35.94,113.52 -80.35,139.17l-283.01 163.37c-44.37,25.62 -116.28,25.65 -160.7,0l-283 -163.37c-44.38,-25.62 -80.35,-87.88 -80.35,-139.17l0 -326.76c0,-51.24 35.93,-113.52 80.35,-139.16l283 -163.38z"/>
+        <Path style={styles.fil2}
+              d="M428.34 395.2c-33.1,0 -60.19,27.09 -60.19,60.2l0 180.57c0,15.97 6.34,31.28 17.63,42.57 11.29,11.28 26.6,17.63 42.56,17.63l90.29 0 0 -60.2 -90.29 0 0 -180.57 90.29 0 0 -60.2 -90.29 0zm180.58 0c-33.1,0 -60.19,27.09 -60.19,60.2l0 180.57c0,15.97 6.34,31.28 17.63,42.57 11.29,11.28 26.6,17.63 42.56,17.63l60.2 0c33.4,0 60.19,-26.79 60.19,-60.2l0 -180.57c0,-15.97 -6.34,-31.28 -17.63,-42.57 -11.29,-11.29 -26.6,-17.63 -42.56,-17.63l-60.2 0zm0 60.2l60.2 0 0 180.57 -60.2 0 0 -180.57z"/>
+
+    </Svg>
+)
+
+export const BalloonLogo = (props) => (
+    <Svg
+        xmlSpace="preserve"
+        width="1100"
+        height="1100"
+        viewBox="0 0 1100 1100"
+        {...props}>
+        <Path style={styles.fil0}
+              d="M411.64 42.08c44.38,-25.62 116.29,-25.64 160.71,0l283 163.38c44.38,25.62 80.35,87.88 80.35,139.16l0 326.76c0,51.24 -35.93,113.52 -80.35,139.17l-283 163.37c-44.38,25.62 -116.29,25.65 -160.71,0l-283 -163.37c-44.38,-25.62 -80.35,-87.88 -80.35,-139.17l0 -326.76c0,-51.24 35.93,-113.52 80.35,-139.16l283 -163.38z"/>
+        <Path style={styles.fil2}
+              d="M593.92 439.19l0 255.39c0,12.32 -5.43,24.13 -15.11,32.83 -9.68,8.71 -22.8,13.6 -36.48,13.6l-103.19 0c-13.68,0 -26.81,-4.89 -36.48,-13.6 -9.68,-8.7 -15.11,-20.51 -15.11,-32.83l0 -255.39c0,-43.18 32.76,-79.63 77.39,-89.85l0 -26.24 -51.6 0 0 -46.43 154.78 0 0 46.43 -51.59 0 0 26.24c44.63,10.22 77.39,46.67 77.39,89.85z"/>
+
     </Svg>
 )

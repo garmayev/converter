@@ -19,12 +19,7 @@ export default function Container({children}) {
                 <Image style={styles.bgHeader} source={require('../../assets/bg-car.png')}/>
             </View>
             <ScrollView style={{paddingTop: 10}}>
-                <KeyboardAvoidingView style={{flex: 1}}
-                                      behavior="height"
-                                      enabled
-                                      keyboardVerticalOffset={100}>
                     {children}
-                </KeyboardAvoidingView>
             </ScrollView>
             <View style={styles.footer}>
                 <Pressable onPress={() => Linking.openURL('https://gasgo.pro/')}>
