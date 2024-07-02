@@ -8,7 +8,6 @@ import Oxygen from '../components/svg/Oxygen';
 import Argon from '../components/svg/Argon';
 import Hydrogen from '../components/svg/Hydrogen';
 import AndrowNative from 'react-native-androw/src/Androw-native';
-import AndrowAndroid from 'react-native-androw/src/Androw';
 
 export default function ReceiverScreen({navigation}) {
     const {t} = useTranslation();

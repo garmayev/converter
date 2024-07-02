@@ -5,6 +5,7 @@ import {
     Argon, CarbonDioxide, Helium, Hydrogen, Krypton, Liquid, Methane, Neon, Nitrogen, Oxygen, Weight, Xenon,
 } from './svg';
 import {Balloon} from './svg/Balloon';
+import Air from './svg/Air';
 
 export default function ResultContainer({
                                             gas,
@@ -26,6 +27,8 @@ export default function ResultContainer({
                 return <Argon width={logoSize} height={logoSize}/>;
             case t('Hydrogen'):
                 return <Hydrogen width={logoSize} height={logoSize}/>;
+            case t('Air'):
+                return <Air width={logoSize} height={logoSize} />
             case t('Helium'):
                 return <Helium width={logoSize} height={logoSize}/>;
             case t('CarbonDioxide'):
