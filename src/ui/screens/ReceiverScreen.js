@@ -1,4 +1,14 @@
-import {View, StyleSheet, Text, TextInput, Keyboard, Button, Animated} from 'react-native';
+import {
+    View,
+    StyleSheet,
+    Text,
+    TextInput,
+    Keyboard,
+    Button,
+    Animated,
+    TouchableOpacity,
+    TouchableHighlight,
+} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import Container from '../components/Container';
 import {useTranslation} from 'react-i18next';
@@ -7,7 +17,7 @@ import ResultContainer from '../components/ResultContainer';
 import Oxygen from '../components/svg/Oxygen';
 import Argon from '../components/svg/Argon';
 import Hydrogen from '../components/svg/Hydrogen';
-import AndrowNative from 'react-native-androw/src/Androw-native';
+import {TouchableRipple} from 'react-native-paper';
 
 export default function ReceiverScreen({navigation}) {
     const {t} = useTranslation();
@@ -423,7 +433,7 @@ export default function ReceiverScreen({navigation}) {
                 {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
                 <SelectDropdown
                     defaultValue={balloon}
-                    disabled={gas.balloons.length > 0}
+                    // disabled={gas.balloons.length > 0}
                     onSelect={(selectedItem) => {
                         setBalloon(selectedItem);
                     }}
@@ -449,36 +459,34 @@ export default function ReceiverScreen({navigation}) {
                     data={gas.balloons}/>
             </View>
             {/* Submit */}
-            <AndrowNative style={styles.shadow1}>
-                <View style={styles.submitContainer}>
-                    {/* Submit */}
-                    <View style={styles.submit}>
-                        <Button title={t('Calculate')} onPress={() => {
-                            Keyboard.dismiss();
-                            calculate();
-                        }} style={{borderRadius: 16, elevation: 0, color: '#2196F3'}}/>
-                    </View>
-                    {/*Result*/}
+            <View style={styles.submitContainer}>
+                {/* Submit */}
+                <View style={styles.submit}>
+                    <TouchableRipple onPress={() => {
+                        Keyboard.dismiss();
+                        calculate();
+                    }} style={{elevation: 3, backgroundColor: '#2196F3', paddingVertical: 5}}>
+                        <Text style={{textAlign:"center", color: "white", fontSize: 16, textTransform: "uppercase", letterSpacing: 1.5}}>{t('Calculate')}</Text>
+                    </TouchableRipple>
                 </View>
-            </AndrowNative>
+                {/*Result*/}
+            </View>
             {/* Result */}
-            <AndrowNative style={styles.shadow2}>
-                <View style={styles.resultContainer}>
-                    <ResultContainer
-                        logoSize={LogoSize}
-                        gas={gas}
-                        scale={scale}
-                        afterDot={3}
-                        valueResult={valueResult}
-                        weightResult={weightResult}
-                        liquidResult={liquidResult}
-                        gasResult={gasResult}/>
-                    {/*{gas.balloons.length === 0 &&*/}
-                    {/*    <Text style={styles.resultComment}>{t('System Fail! Not enough data!')}</Text>*/}
-                    {/*}*/}
-                    <Text style={styles.resultComment}>{t('with density', {dens: temperature.density})} *</Text>
-                </View>
-            </AndrowNative>
+            <View style={styles.resultContainer}>
+                <ResultContainer
+                    logoSize={LogoSize}
+                    gas={gas}
+                    scale={scale}
+                    afterDot={2}
+                    valueResult={valueResult}
+                    weightResult={weightResult}
+                    liquidResult={liquidResult}
+                    gasResult={gasResult}/>
+                {/*{gas.balloons.length === 0 &&*/}
+                {/*    <Text style={styles.resultComment}>{t('System Fail! Not enough data!')}</Text>*/}
+                {/*}*/}
+                <Text style={styles.resultComment}>{t('with density', {dens: temperature.density})} *</Text>
+            </View>
         </Container>
     );
 }
@@ -491,8 +499,6 @@ const styles = StyleSheet.create({
         marginHorizontal: -45,
         paddingBottom: 30,
         marginBottom: 25,
-        // marginTop: 5,
-        // height: 260,
         width: '120%',
         flex: 1,
         justifyContent: 'space-around',
@@ -607,7 +613,7 @@ const styles = StyleSheet.create({
         width: '120%',
         transform: [{rotate: rotate}],
         marginLeft: '-10%',
-        marginTop: 5,
+        marginTop: 15,
         // Shadow
         shadowColor: '#000',
         shadowOffset: {

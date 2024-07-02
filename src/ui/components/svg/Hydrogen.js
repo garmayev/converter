@@ -1,10 +1,8 @@
 import Svg, {Path} from 'react-native-svg';
 import {styles} from './styles';
-import AndrowNative from 'react-native-androw/src/Androw-native';
 
 export default function Hydrogen(props) {
     return (
-        <AndrowNative style={styles.shadow}>
             <Svg
                 xmlSpace="preserve"
                 width="13mm"
@@ -18,6 +16,5 @@ export default function Hydrogen(props) {
                 <Path style={styles.fil1}
                       d="M793.99 928.29c-18.52,0 -30.96,-12.44 -30.96,-30.96 0,-89.43 104.51,-81.23 104.51,-128.06 0,-11.91 -6.61,-17.99 -19.05,-17.99 -11.11,0 -19.05,8.73 -19.05,20.9 0,16.93 -12.44,27.78 -30.96,27.78 -18.52,0 -30.96,-12.44 -30.96,-30.96 0,-22.23 7.67,-40.22 23.02,-53.45 15.35,-13.23 34.66,-20.11 57.68,-20.11 23.81,0 42.86,6.09 57.94,18.52 15.08,11.91 22.75,29.37 22.75,51.86 0,25.93 -9,46.3 -23.81,58.47 -7.14,6.09 -14.55,11.38 -21.96,15.61 -7.14,4.23 -15.08,9 -24.08,13.49 -9,4.49 -15.35,8.73 -20.11,12.44l62.19 0.02c18.52,0 30.96,12.44 30.96,30.96 0,18.52 -12.44,30.96 -30.96,30.96l-107.15 -0.01 0 0.53z"/>
             </Svg>
-        </AndrowNative>
     );
 }

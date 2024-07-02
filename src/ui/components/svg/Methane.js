@@ -1,10 +1,8 @@
 import Svg, {Path} from 'react-native-svg';
 import {styles} from './styles';
-import AndrowNative from 'react-native-androw/src/Androw-native';
 
 export default function Methane(props) {
     return (
-        <AndrowNative style={styles.shadow}>
         <Svg
             xmlSpace="preserve"
             width="13mm"
@@ -20,6 +18,5 @@ export default function Methane(props) {
             <Path style={styles.fil1}
                   d="M1087.42 870.08l0 10.85c0,18.52 -12.44,30.96 -30.96,30.96 -18.52,0 -30.96,-12.44 -30.96,-30.96l0 -10.85 -74.61 0c-16.93,0 -27.78,-10.85 -27.78,-27.78l0 -11.38c0,-18.52 5.56,-35.19 16.93,-49.74l59 -76.2c11.11,-14.55 25.93,-21.96 44.71,-21.96l12.71 0c18.52,0 30.96,12.44 30.96,30.96l0 100.54 5.55 0c16.93,0 27.78,10.85 27.78,27.78 0,16.93 -10.85,27.78 -27.78,27.78l-5.55 0zm-61.92 -106.1l-39.69 50.54 39.69 0 0 -50.54z"/>
         </Svg>
-        </AndrowNative>
     );
 }

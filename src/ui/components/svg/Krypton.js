@@ -1,10 +1,8 @@
 import Svg, {Path} from 'react-native-svg';
 import {styles} from './styles';
-import AndrowNative from 'react-native-androw/src/Androw-native';
 
 export default function Krypton(props) {
     return (
-        <AndrowNative style={styles.shadow}>
         <Svg
             xmlSpace="preserve"
             width="13mm"
@@ -18,6 +16,5 @@ export default function Krypton(props) {
             <Path style={styles.fil1}
                   d="M779.7 894.16c-31.75,0 -52.92,-21.17 -52.92,-52.92l0 -203.2c0,-31.75 21.17,-52.92 52.92,-52.92 19.58,0 34.4,7.41 43.92,22.23 20.64,-19.05 44.98,-28.58 72.5,-28.58l2.11 0c31.75,0 52.92,21.17 52.92,52.92 0,30.16 -21.17,51.33 -52.92,51.33l-13.76 0c-29.1,0 -51.86,25.4 -51.86,57.15l0 101.07c0.27,31.75 -21.16,52.92 -52.91,52.92z"/>
         </Svg>
-        </AndrowNative>
     );
 }

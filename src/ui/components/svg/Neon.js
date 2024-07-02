@@ -1,10 +1,8 @@
 import Svg, {Path} from 'react-native-svg';
 import {styles} from './styles';
-import AndrowNative from 'react-native-androw/src/Androw-native';
 
 export default function Neon(props) {
     return (
-        <AndrowNative style={styles.shadow}>
         <Svg
             xmlSpace="preserve"
             width="13mm"
@@ -18,6 +16,5 @@ export default function Neon(props) {
             <Path style={styles.fil1}
                   d="M972.85 762.39c27.52,20.64 32.28,47.1 6.35,83.61 -27.52,34.4 -73.55,54.5 -124.35,54.5 -44.45,0 -82.55,-15.35 -113.77,-46.57 -31.22,-31.22 -46.57,-69.32 -46.57,-113.77 0,-44.45 15.35,-82.02 46.57,-113.24 31.22,-31.22 69.32,-47.1 113.77,-47.1 40.22,0 74.08,11.11 102.13,33.34 28.05,21.7 42.33,48.15 42.33,79.38 0,30.16 -21.7,50.8 -52.92,50.8l-143.4 0c1.59,32.28 17.99,53.98 51.86,53.98 17.99,0 31.75,-7.41 41.28,-21.7 17.46,-26.99 49.21,-33.87 74.61,-14.82l2.11 1.59zm-85.19 -80.43c-7.94,-16.93 -20.64,-25.4 -38.1,-25.4 -15.88,0 -28.05,8.47 -36.51,25.4l74.61 0z"/>
         </Svg>
-        </AndrowNative>
     );
 }
