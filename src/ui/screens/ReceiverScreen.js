@@ -7,6 +7,8 @@ import ResultContainer from '../components/ResultContainer';
 import Oxygen from '../components/svg/Oxygen';
 import Argon from '../components/svg/Argon';
 import Hydrogen from '../components/svg/Hydrogen';
+import AndrowNative from 'react-native-androw/src/Androw-native';
+import AndrowAndroid from 'react-native-androw/src/Androw';
 
 export default function ReceiverScreen({navigation}) {
     const {t} = useTranslation();
@@ -42,6 +44,8 @@ export default function ReceiverScreen({navigation}) {
             scales: [
                 {title: t('Kg-small'), value: 'kg'},
                 {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
             ],
             defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             // icon: () => (<Argon width={LogoSize} height={LogoSize}/>),
@@ -63,7 +67,12 @@ export default function ReceiverScreen({navigation}) {
                 {title: t('balloonWeight', {value: 10}), value: 1.58},
                 {title: t('balloonWeight', {value: 5}), value: 0.79},
             ],
-            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
+            ],
             availableScale: 'w',
         },
         {
@@ -76,15 +85,24 @@ export default function ReceiverScreen({navigation}) {
                 {title: t('balloonWeight', {value: 10}), value: 1.58},
                 {title: t('balloonWeight', {value: 5}), value: 0.79},
             ],
-            // icon: () => (<Hydrogen width={LogoSize} height={LogoSize} />),
-            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
+            ],
             availableScale: 'w',
         },
         {
             title: t('Helium'),
             moll: 0.004003,
             density: 0.145,
-            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
+            ],
             balloons: [
                 {title: t('balloonWeight', {value: 40}), value: 5.25},
                 {title: t('balloonWeight', {value: 20}), value: 2.85},
@@ -99,7 +117,10 @@ export default function ReceiverScreen({navigation}) {
             density: 0.808,
             availableScale: 'l',
             scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
                 {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
             ],
             defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             balloons: [
@@ -116,6 +137,8 @@ export default function ReceiverScreen({navigation}) {
             scales: [
                 {title: t('Kg-small'), value: 'kg'},
                 {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
             ],
             defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
             balloons: [
@@ -134,7 +157,12 @@ export default function ReceiverScreen({navigation}) {
                 {title: t('balloonWeight', {value: 40}), value: 6},
                 {title: t('balloonWeight', {value: 10}), value: 1.5},
             ],
-            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
+            ],
             availableScale: 'w',
         },
         {
@@ -142,7 +170,12 @@ export default function ReceiverScreen({navigation}) {
             moll: 0.132108,
             density: 3.520,
             balloons: [],
-            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
+            ],
             availableScale: 'w',
         },
         {
@@ -150,7 +183,12 @@ export default function ReceiverScreen({navigation}) {
             moll: 0.0838283,
             density: 2.1550,
             balloons: [],
-            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
+            ],
             availableScale: 'w',
         },
         {
@@ -158,7 +196,12 @@ export default function ReceiverScreen({navigation}) {
             moll: 0.02698644,
             density: 0.9,
             balloons: [],
-            scales: [{title: t('Kg-small'), value: 'kg'}, {title: t('T-small'), value: 't'}],
+            scales: [
+                {title: t('Kg-small'), value: 'kg'},
+                {title: t('T-small'), value: 't'},
+                {title: t('L-small'), value: 'l'},
+                {title: t('CubicMeter-small'), value: 'm3'},
+            ],
             availableScale: 'w',
         },
     ];
@@ -186,7 +229,6 @@ export default function ReceiverScreen({navigation}) {
         {title: '35 \u2103', value: 35, density: 160},
     ];
 
-    const [result, setResult] = useState({value: 0, K: 0, weight: 0.0, gas: 0.0, liquid: 0.0});
     const [gasResult, setGasResult] = useState(0.0);
     const [weightResult, setWeightResult] = useState(0.0);
     const [liquidResult, setLiquidResult] = useState(0.0);
@@ -237,7 +279,7 @@ export default function ReceiverScreen({navigation}) {
                 g = value / getDensity(gas, temperature.value);
                 w = value;
                 if (balloon) {
-                    cubic = (w / getDensity(gas, temperature.value)).toFixed(afterDot);
+                    cubic = (w / getDensity(gas, temperature.value));
                 }
                 break;
             case 't':
@@ -245,7 +287,7 @@ export default function ReceiverScreen({navigation}) {
                 g = (value * 1000) / getDensity(gas, temperature.value);
                 w = value * 1000;
                 if (balloon) {
-                    cubic = (w / getDensity(gas, temperature.value)).toFixed(afterDot);
+                    cubic = (w / getDensity(gas, temperature.value));
                 }
                 break;
             case 'l':
@@ -253,7 +295,7 @@ export default function ReceiverScreen({navigation}) {
                 g = (value * gas.density) / getDensity(gas, temperature.value);
                 l = value;
                 if (balloon) {
-                    cubic = ((w * gas.density) / getDensity(gas, temperature.value)).toFixed(afterDot);
+                    cubic = ((w * gas.density) / getDensity(gas, temperature.value));
                 }
                 break;
             case 'm3':
@@ -261,23 +303,23 @@ export default function ReceiverScreen({navigation}) {
                 g = value;
                 l = (w * getDensity(gas, temperature.value)) / gas.density;
                 if (balloon) {
-                    cubic = ((w * gas.density) / getDensity(gas, temperature.value)).toFixed(afterDot);
+                    cubic = ((w * gas.density) / getDensity(gas, temperature.value));
                 }
                 break;
         }
 
         if (balloon) {
-            setResult({value: (cubic / balloon.value), weight: w, liquid: l, gas: g});
+            // setResult({value: (cubic / balloon.value), weight: w, liquid: l, gas: g});
             setGasResult(g);
             setLiquidResult(l);
             setWeightResult(w);
             setValueResult(cubic / balloon.value);
         } else {
-            setResult({weight: w, liquid: l, gas: g});
+            // setResult({weight: w, liquid: l, gas: g});
             setGasResult(g);
             setLiquidResult(l);
             setWeightResult(w);
-            setValueResult(cubic / balloon.value)
+            setValueResult(0.0);
         }
     }
 
@@ -382,7 +424,7 @@ export default function ReceiverScreen({navigation}) {
                 {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
                 <SelectDropdown
                     defaultValue={balloon}
-                    // disabled={gas.balloons.length > 0}
+                    disabled={gas.balloons.length > 0}
                     onSelect={(selectedItem) => {
                         setBalloon(selectedItem);
                     }}
@@ -407,42 +449,51 @@ export default function ReceiverScreen({navigation}) {
                     }}
                     data={gas.balloons}/>
             </View>
-            <View style={styles.submitContainer}>
-                {/* Submit */}
-                <View style={styles.submit}>
-                    <Button title={t('Calculate')} onPress={() => {
-                        Keyboard.dismiss();
-                        calculate();
-                    }} style={{borderRadius: 16, elevation: 0}}/>
+            {/* Submit */}
+            <AndrowNative style={styles.shadow1}>
+                <View style={styles.submitContainer}>
+                    {/* Submit */}
+                    <View style={styles.submit}>
+                        <Button title={t('Calculate')} onPress={() => {
+                            Keyboard.dismiss();
+                            calculate();
+                        }} style={{borderRadius: 16, elevation: 0, color: '#2196F3'}}/>
+                    </View>
+                    {/*Result*/}
                 </View>
-                {/*Result*/}
-            </View>
-            <View style={styles.resultContainer}>
-                <ResultContainer
-                    logoSize={LogoSize}
-                    gas={gas}
-                    scale={scale}
-                    afterDot={3}
-                    valueResult={valueResult}
-                    weightResult={weightResult}
-                    liquidResult={liquidResult}
-                    gasResult={gasResult}/>
-                {gas.balloons.length === 0 &&
-                    <Text style={styles.resultComment}>{t('System Fail! Not enough data!')}</Text>
-                }
-                <Text style={styles.resultComment}>{t('with density', {dens: temperature.density})} *</Text>
-            </View>
+            </AndrowNative>
+            {/* Result */}
+            <AndrowNative style={styles.shadow2}>
+                <View style={styles.resultContainer}>
+                    <ResultContainer
+                        logoSize={LogoSize}
+                        gas={gas}
+                        scale={scale}
+                        afterDot={3}
+                        valueResult={valueResult}
+                        weightResult={weightResult}
+                        liquidResult={liquidResult}
+                        gasResult={gasResult}/>
+                    {/*{gas.balloons.length === 0 &&*/}
+                    {/*    <Text style={styles.resultComment}>{t('System Fail! Not enough data!')}</Text>*/}
+                    {/*}*/}
+                    <Text style={styles.resultComment}>{t('with density', {dens: temperature.density})} *</Text>
+                </View>
+            </AndrowNative>
         </Container>
     );
 }
-
+const rotate = '0.025rad';
 const styles = StyleSheet.create({
     resultContainer: {
-        transform: [{rotate: '-0.05rad'}],
+        transform: [{rotate: `-${rotate}`}],
         backgroundColor: '#5599EE',
-        marginVertical: -40,
+        marginVertical: -10,
         marginHorizontal: -45,
-        height: 260,
+        paddingBottom: 30,
+        marginBottom: 25,
+        // marginTop: 5,
+        // height: 260,
         width: '120%',
         flex: 1,
         justifyContent: 'space-around',
@@ -453,7 +504,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '80%',
         marginTop: -34,
-        transform: [{rotate: '0.05rad'}],
+        transform: [{rotate: rotate}],
     },
     resultText: {
         color: '#000',
@@ -475,13 +526,13 @@ const styles = StyleSheet.create({
     },
     resultComment: {
         position: 'relative',
-        color: '#fff',
+        color: '#E4E4E4',
         fontSize: 16,
         textAlign: 'right',
         width: '80%',
-        bottom: 40,
+        bottom: -10,
         transform: [
-            {rotate: '0.05rad'},
+            {rotate: rotate},
         ],
     },
     inputLabel: {
@@ -554,17 +605,44 @@ const styles = StyleSheet.create({
     },
     submitContainer: {
         backgroundColor: '#3578CB',
-        height: 120,
         width: '120%',
-        transform: [{rotate: '.05rad'}],
+        transform: [{rotate: rotate}],
         marginLeft: '-10%',
-        marginTop: 10,
+        marginTop: 5,
+        // Shadow
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 5,
+            height: 5,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 15,
+        elevation: 15,
     },
     submit: {
         marginHorizontal: 50,
         paddingHorizontal: 3,
-        paddingTop: 15,
+        paddingTop: 10,
+        paddingBottom: 30,
         elevation: 0,
-        transform: [{rotate: '-0.05rad'}],
+        transform: [{rotate: `-${rotate}`}],
+    },
+    shadow1: {
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: -5,
+        },
+        shadowOpacity: .5,
+        shadowRadius: 5,
+    },
+    shadow2: {
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: .5,
+        shadowRadius: 10,
     },
 });

@@ -18,13 +18,12 @@ export default function Container({children}) {
             <View style={styles.imageContainer}>
                 <Image style={styles.bgHeader} source={require('../../assets/bg-car.png')}/>
             </View>
-            <ScrollView style={{paddingTop: 10}}>
-                    {children}
+            <ScrollView style={{paddingVertical: 5}}>
+                {children}
             </ScrollView>
             <View style={styles.footer}>
                 <Pressable onPress={() => Linking.openURL('https://gasgo.pro/')}>
-                    <Image source={require('../../assets/footer-gas.png')} style={{height: 30}}
-                           resizeMode={'contain'}/>
+                    <Image source={require('../../assets/footer-gas.png')} style={{height: 25}} resizeMode={'contain'}/>
                 </Pressable>
             </View>
             <Image style={styles.bgLogo} source={require('../../assets/logo-mini.png')} resizeMode={'stretch'}
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').width / 1.5
+        height: Dimensions.get('window').width / 1.5,
     },
     headerLogo: {
         zIndex: 2,
@@ -62,13 +61,13 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 10,
         position: 'absolute',
-        marginBottom: 20
+        marginBottom: 20,
     },
     bgHeader: {
         width: '100%',
         height: Dimensions.get('window').width / 1.5,
         top: 0,
-        resizeMode: "contain",
+        resizeMode: 'contain',
     },
     bgLogo: {
         zIndex: -1,
@@ -86,5 +85,5 @@ const styles = StyleSheet.create({
     corporateLogo: {
         position: 'absolute',
         bottom: 0,
-    }
+    },
 });
