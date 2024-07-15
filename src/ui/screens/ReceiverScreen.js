@@ -3,227 +3,67 @@ import {
     StyleSheet,
     Text,
     TextInput,
-    Keyboard,
-    Button,
-    Animated,
-    TouchableOpacity,
-    TouchableHighlight,
+    Keyboard, TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Container from '../components/Container';
 import {useTranslation} from 'react-i18next';
 import SelectDropdown from 'react-native-select-dropdown';
 import ResultContainer from '../components/ResultContainer';
-import Oxygen from '../components/svg/Oxygen';
-import Argon from '../components/svg/Argon';
-import Hydrogen from '../components/svg/Hydrogen';
+import Oxygen from '../icons/Oxygen';
+import Argon from '../icons/Argon';
 import {TouchableRipple} from 'react-native-paper';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import Autocomplete from '../components/Autocomplete';
+import Scale from '../../classes/Scale';
+import Balloon from '../../classes/Balloon';
+import Gas from '../../classes/Gas';
 
 export default function ReceiverScreen({navigation}) {
     const {t} = useTranslation();
     const LogoSize = 60;
-    const afterDot = 6,
+    const
         P = 101325,
         R = 8.314462;
     const gases = [
-        {
-            title: t('Oxygen'),
+        new Gas({
+            title:t('Oxygen'),
             moll: 0.032,
             density: 1.141,
-            availableScale: 'w',
-            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
+            defaultBalloon: 1,
             scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
+                new Scale({title: t('Kg-small'), value: 'kg'}),
+                new Scale({title: t('T-small'), value: 't'}),
+                new Scale({title: t('L-small'), value: 'l'}),
+                new Scale({title: t('CubicMeter-small'), value: 'm3'}),
             ],
             balloons: [
-                {title: t('balloonWeight', {value: 50}), value: 7.8},
-                {title: t('balloonWeight', {value: 40}), value: 6},
-                {title: t('balloonWeight', {value: 20}), value: 3.16},
-                {title: t('balloonWeight', {value: 10}), value: 2},
-                {title: t('balloonWeight', {value: 5}), value: 0.8},
+                new Balloon({title: t('balloonWeight', {value: 50}), value: 7.8}),
+                new Balloon({title: t('balloonWeight', {value: 40}), value: 6}),
+                new Balloon({title: t('balloonWeight', {value: 20}), value: 3.16}),
+                new Balloon({title: t('balloonWeight', {value: 10}), value: 2}),
+                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.8}),
             ],
-        },
-        {
+        }),
+        new Gas({
             title: t('Argon'),
             moll: 0.039948,
             density: 1.392,
             scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
+                new Scale({title: t('Kg-small'), value: 'kg'}),
+                new Scale({title: t('T-small'), value: 't'}),
+                new Scale({title: t('L-small'), value: 'l'}),
+                new Scale({title: t('CubicMeter-small'), value: 'm3'}),
             ],
-            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
-            // icon: () => (<Argon width={LogoSize} height={LogoSize}/>),
+            defaultBalloon: 0,
             balloons: [
-                {title: t('balloonWeight', {value: 40}), value: 6.2},
-                {title: t('balloonWeight', {value: 20}), value: 3.1},
-                {title: t('balloonWeight', {value: 10}), value: 1.55},
-                {title: t('balloonWeight', {value: 5}), value: 0.78},
+                new Balloon({title: t('balloonWeight', {value: 40}), value: 6.2}),
+                new Balloon({title: t('balloonWeight', {value: 20}), value: 3.1}),
+                new Balloon({title: t('balloonWeight', {value: 10}), value: 1.55}),
+                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.78}),
             ],
-            availableScale: 'w',
-        },
-        {
-            title: t('Air'),
-            moll: 0.02896,
-            density: 0.873,
-            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
-            balloons: [
-                {title: t('balloonWeight', {value: 40}), value: 6.3},
-                {title: t('balloonWeight', {value: 10}), value: 1.58},
-                {title: t('balloonWeight', {value: 5}), value: 0.79},
-            ],
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            availableScale: 'w',
-        },
-        {
-            title: t('Hydrogen'),
-            moll: 0.0020156,
-            density: 0.0708,
-            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
-            balloons: [
-                {title: t('balloonWeight', {value: 40}), value: 6.3},
-                {title: t('balloonWeight', {value: 10}), value: 1.58},
-                {title: t('balloonWeight', {value: 5}), value: 0.79},
-            ],
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            availableScale: 'w',
-        },
-        {
-            title: t('Helium'),
-            moll: 0.004003,
-            density: 0.145,
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            balloons: [
-                {title: t('balloonWeight', {value: 40}), value: 5.25},
-                {title: t('balloonWeight', {value: 20}), value: 2.85},
-                {title: t('balloonWeight', {value: 10}), value: 1.43},
-                {title: t('balloonWeight', {value: 5}), value: 0.72},
-            ],
-            availableScale: 'w',
-        },
-        {
-            title: t('Nitrogen'),
-            moll: 0.028016,
-            density: 0.808,
-            availableScale: 'l',
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
-            balloons: [
-                {title: t('balloonWeight', {value: 50}), value: 7.12},
-                {title: t('balloonWeight', {value: 40}), value: 5.7},
-                {title: t('balloonWeight', {value: 5}), value: 0.72},
-            ],
-        },
-        {
-            title: t('CarbonDioxide'),
-            moll: 0.04401,
-            density: 0.771,
-            availableScale: 'w',
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            defaultBalloon: {title: t('balloonWeight', {value: 40}), value: 6},
-            balloons: [
-                {title: t('balloonWeight', {value: 50}), value: 12},
-                {title: t('balloonWeight', {value: 40}), value: 7.8},
-                {title: t('balloonWeight', {value: 20}), value: 3.16},
-                {title: t('balloonWeight', {value: 10}), value: 2},
-                {title: t('balloonWeight', {value: 5}), value: 0.8},
-            ],
-        },
-        {
-            title: t('Methane'),
-            moll: 0.01604,
-            density: 0.415,
-            balloons: [
-                {title: t('balloonWeight', {value: 40}), value: 6},
-                {title: t('balloonWeight', {value: 10}), value: 1.5},
-            ],
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            availableScale: 'w',
-        },
-        {
-            title: t('Xenon'),
-            moll: 0.132108,
-            density: 3.520,
-            balloons: [],
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            availableScale: 'w',
-        },
-        {
-            title: t('Krypton'),
-            moll: 0.0838283,
-            density: 2.1550,
-            balloons: [],
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            availableScale: 'w',
-        },
-        {
-            title: t('Neon'),
-            moll: 0.02698644,
-            density: 0.9,
-            balloons: [],
-            scales: [
-                {title: t('Kg-small'), value: 'kg'},
-                {title: t('T-small'), value: 't'},
-                {title: t('L-small'), value: 'l'},
-                {title: t('CubicMeter-small'), value: 'm3'},
-            ],
-            availableScale: 'w',
-        },
-    ];
-    const scales = [
-        {title: t('Kg-small'), value: 'kg'},
-        {title: t('T-small'), value: 't'},
-        {title: t('L-small'), value: 'l'},
-        {title: t('CubicMeter-small'), value: 'm3'},
-    ];
-    const balloonList = [
-        {title: t('balloonWeight', {value: 40}), value: 40},
-        {title: t('balloonWeight', {value: 25}), value: 25},
-        {title: t('balloonWeight', {value: 10}), value: 10},
+        })
     ];
     const temperatureList = [
         {title: '-50 \u2103', value: -50, density: 94},
@@ -237,18 +77,26 @@ export default function ReceiverScreen({navigation}) {
         {title: '30 \u2103', value: 30, density: 157},
         {title: '35 \u2103', value: 35, density: 160},
     ];
+    const dataList = [
+        {title: 'item 1', value: 0, uid: '0-000'},
+        {title: 'item 2', value: 1, uid: '0-001'},
+        {title: 'item 3', value: 2, uid: '0-002'},
+        {title: 'item 4', value: 3, uid: '0-003'},
+        {title: 'item 5', value: 4, uid: '0-004'},
+    ];
 
     const [gasResult, setGasResult] = useState(0.0);
     const [weightResult, setWeightResult] = useState(0.0);
     const [liquidResult, setLiquidResult] = useState(0.0);
     const [valueResult, setValueResult] = useState(0.0);
     const [value, _setValue] = useState(1);
-    const [gas, _setGas] = useState(gases[0]);
-    const [scale, _setScale] = useState(scales[0]);
-    const [balloon, setBalloon] = useState(balloonList[0]);
-    const [temperature, setTemperature] = useState(temperatureList[7]);
-    const setValue = (data) => {
-        _setValue(Number.parseInt(data));
+    const [gas, _setGas] = useState<Gas>(gases[0]);
+    const [scale, _setScale] = useState<Scale>(gases[0].scales[0]);
+    const [balloon, _setBalloon] = useState<Balloon>(gases[0].balloons[gases[0].defaultBalloon]);
+    const [temperature, _setTemperature] = useState(temperatureList[7]);
+    const setValue = (value) => {
+        _setValue(Number.parseFloat(value));
+        // calculate()
     };
     const setGas = (value) => {
         _setGas(value);
@@ -256,19 +104,32 @@ export default function ReceiverScreen({navigation}) {
             _setScale(value.scales[0]);
         }
         if (value.balloons.length) {
-            setBalloon(value.balloons[0]);
+            _setBalloon(value.balloons[value.defaultBalloon]);
         } else {
-            setBalloon(undefined);
+            _setBalloon(undefined);
         }
+    };
+    const setBalloon = (value) => {
+        _setBalloon(value);
+        // calculate()
+    };
+    const setTemperature = (value) => {
+        _setTemperature(value);
+        // calculate()
+    };
+    const setScale = (value) => {
+        _setScale(value);
+        // calculate()
     };
 
     useEffect(() => {
-        setGas(gases[0]);
+        _setGas(gases[0]);
         if (gas.defaultBalloon) {
-            setBalloon(gas.defaultBalloon);
+            _setBalloon(gas.balloons[gas.defaultBalloon]);
         } else {
-            setBalloon(gas.balloons[0]);
+            _setBalloon(gas.balloons[0]);
         }
+        calculate();
     }, []);
 
     function calculate() {
@@ -284,17 +145,20 @@ export default function ReceiverScreen({navigation}) {
 
         switch (scale.value) {
             case 'kg':
-                l = value / gas.density;
-                g = value / getDensity(gas, temperature.value);
-                w = value;
+                gas.temperature(20, true)
+                gas.fromWeight(value)
+                console.log(gas.weight, gas.liquid, gas.gas)
+                // w = value;
+                // l = value / gas.density;
+                // g = value / getDensity(gas, temperature.value);
                 if (balloon) {
                     cubic = (w / getDensity(gas, temperature.value));
                 }
                 break;
             case 't':
+                w = value * 1000;
                 l = (value * 1000) / gas.density;
                 g = (value * 1000) / getDensity(gas, temperature.value);
-                w = value * 1000;
                 if (balloon) {
                     cubic = (w / getDensity(gas, temperature.value));
                 }
@@ -316,27 +180,28 @@ export default function ReceiverScreen({navigation}) {
                 }
                 break;
         }
-
         if (balloon) {
-            // setResult({value: (cubic / balloon.value), weight: w, liquid: l, gas: g});
             setGasResult(g);
             setLiquidResult(l);
             setWeightResult(w);
             setValueResult(cubic / balloon.value);
+            console.log(cubic, balloon);
         } else {
-            // setResult({weight: w, liquid: l, gas: g});
             setGasResult(g);
             setLiquidResult(l);
             setWeightResult(w);
             setValueResult(0.0);
         }
+        console.log(g, l, w, valueResult);
     }
 
     return (
         <Container>
+            <View style={styles.inlineContainer}>
+                <Autocomplete data={dataList} placeholder={"Select item"} />
+            </View>
             {/* Gas */}
             <View style={styles.inlineContainer}>
-                {/*<Text style={styles.inputLabel}>{t('SelectGas')}</Text>*/}
                 <SelectDropdown
                     defaultValue={gas}
                     onSelect={(selectedItem) => {
@@ -347,8 +212,20 @@ export default function ReceiverScreen({navigation}) {
                             <View style={styles.dropdownButtonStyle}>
                                 {
                                     selectedItem ?
-                                        (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
-                                        (<Text style={styles.dropdownPlaceholderStyle}>{t('SelectGas')}</Text>)
+                                        (
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text
+                                                    style={{marginLeft: 5, ...styles.dropdownPlaceholderStyle}}>{selectedItem.title}</Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={{marginTop: 2, marginRight: 3, color: '#AAA'}}/>
+                                            </View>
+                                        ) : (
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text
+                                                    style={{marginLeft: 5, ...styles.dropdownPlaceholderStyle}}>{t('SelectGas')}</Text>
+                                                <FontAwesomeIcon icon={faChevronDown} style={{paddingTop: 2}}/>
+                                            </View>
+                                        )
                                 }
                             </View>
                         );
@@ -356,7 +233,7 @@ export default function ReceiverScreen({navigation}) {
                     renderItem={(item, index, isSelected) => {
                         return (
                             <View
-                                style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
+                                style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#DDD'})}}>
                                 <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
                             </View>
                         );
@@ -370,21 +247,35 @@ export default function ReceiverScreen({navigation}) {
                     {/*<Text style={styles.inputLabel}>{t('Value')}</Text>*/}
                     <TextInput style={styles.inputText} onChangeText={(e, target, text) => {
                         setValue(e);
-                    }} placeholderTextColor={'#777'} placeholder={t('Value')}>1</TextInput>
+                    }} inputMode={'numeric'} placeholderTextColor={'#777'} placeholder={t('Value')}>1</TextInput>
                 </View>
                 {/*scale*/}
                 <SelectDropdown
                     defaultValue={scale}
                     onSelect={(selectedItem) => {
-                        _setScale(selectedItem);
+                        setScale(selectedItem);
                     }}
                     renderButton={(selectedItem, isOpened) => {
                         return (
                             <View style={{width: '27%', marginLeft: 10, ...styles.dropdownButtonStyle}}>
                                 {
                                     (selectedItem && (selectedItem.title !== t('SelectScale'))) ?
-                                        (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
-                                        (<Text style={styles.dropdownPlaceholderStyle}>{t('SelectScale')}</Text>)
+                                        (
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text
+                                                    style={{marginLeft: 5, ...styles.dropdownPlaceholderStyle}}>{selectedItem.title}</Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={{marginTop: 2, marginRight: 3, color: '#AAA'}}/>
+                                            </View>
+                                        ) :
+                                        (
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text
+                                                    style={{marginLeft: 5, ...styles.dropdownPlaceholderStyle}}>{t('SelectedScale')}</Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={{marginTop: 2, marginRight: 3, color: '#AAA'}}/>
+                                            </View>
+                                        )
                                 }
                             </View>
                         );
@@ -412,8 +303,21 @@ export default function ReceiverScreen({navigation}) {
                             <View style={styles.dropdownButtonStyle}>
                                 {
                                     (selectedItem && (selectedItem.title !== t('Temperature'))) ?
-                                        (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
-                                        (<Text style={styles.dropdownPlaceholderStyle}>{t('Temperature')}</Text>)
+                                        (
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text
+                                                    style={{marginLeft: 5, ...styles.dropdownPlaceholderStyle}}>{selectedItem.title}</Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={{marginTop: 2, marginRight: 3, color: '#AAA'}}/>
+                                            </View>
+                                        ) : (
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text
+                                                    style={{marginLeft: 5, ...styles.dropdownPlaceholderStyle}}>{t('Temperature')}</Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={{marginTop: 2, marginRight: 3, color: '#AAA'}}/>
+                                            </View>
+                                        )
                                 }
                             </View>
                         );
@@ -432,18 +336,31 @@ export default function ReceiverScreen({navigation}) {
             <View style={styles.inlineContainer}>
                 {/*<Text style={styles.inputLabel}>{t('Balloon value')}</Text>*/}
                 <SelectDropdown
-                    defaultValue={balloon}
+                    defaultValue={gas.balloons[gas.defaultBalloon]}
                     // disabled={gas.balloons.length > 0}
-                    onSelect={(selectedItem) => {
-                        setBalloon(selectedItem);
+                    onSelect={(selectedItem, index) => {
+                        setBalloon(gas.balloons[index]);
                     }}
                     renderButton={(selectedItem, isOpened) => {
                         return (
                             <View style={styles.dropdownButtonStyle}>
                                 {
                                     (selectedItem && (selectedItem.title !== t('Balloon Value'))) ?
-                                        (<Text style={styles.dropdownButtonTxtStyle}>{selectedItem.title}</Text>) :
-                                        (<Text style={styles.dropdownPlaceholderStyle}>{t('Balloon Value')}</Text>)
+                                        (
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text
+                                                    style={{marginLeft: 5, ...styles.dropdownPlaceholderStyle}}>{selectedItem.title}</Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={{marginTop: 2, marginRight: 3, color: '#AAA'}}/>
+                                            </View>
+                                        ) : (
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text
+                                                    style={{marginLeft: 5, ...styles.dropdownPlaceholderStyle}}>{t('Balloon Value')}</Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={{marginTop: 2, marginRight: 3, color: '#AAA'}}/>
+                                            </View>
+                                        )
                                 }
                             </View>
                         );
@@ -460,31 +377,37 @@ export default function ReceiverScreen({navigation}) {
             </View>
             {/* Submit */}
             <View style={styles.submitContainer}>
-                {/* Submit */}
                 <View style={styles.submit}>
                     <TouchableRipple onPress={() => {
                         Keyboard.dismiss();
                         calculate();
-                    }} style={{elevation: 3, backgroundColor: '#2196F3', paddingVertical: 5}}>
-                        <Text style={{textAlign:"center", color: "white", fontSize: 16, textTransform: "uppercase", letterSpacing: 1.5}}>{t('Calculate')}</Text>
+                    }} style={{
+                        elevation: 5,
+                        backgroundColor: '#5599EE',
+                        paddingVertical: 5,
+                        width: '50%',
+                        left: '25%',
+                        borderRadius: 5,
+                    }}>
+                        <Text style={{
+                            textAlign: 'center',
+                            color: 'white',
+                            fontSize: 18,
+                            letterSpacing: .9,
+                        }}>{t('Calculate')}</Text>
                     </TouchableRipple>
                 </View>
-                {/*Result*/}
             </View>
             {/* Result */}
             <View style={styles.resultContainer}>
                 <ResultContainer
                     logoSize={LogoSize}
-                    gas={gas}
+                    selectedGas={gas}
                     scale={scale}
-                    afterDot={2}
                     valueResult={valueResult}
                     weightResult={weightResult}
                     liquidResult={liquidResult}
                     gasResult={gasResult}/>
-                {/*{gas.balloons.length === 0 &&*/}
-                {/*    <Text style={styles.resultComment}>{t('System Fail! Not enough data!')}</Text>*/}
-                {/*}*/}
                 <Text style={styles.resultComment}>{t('with density', {dens: temperature.density})} *</Text>
             </View>
         </Container>
@@ -510,6 +433,7 @@ const styles = StyleSheet.create({
         width: '80%',
         marginTop: -34,
         transform: [{rotate: rotate}],
+
     },
     resultText: {
         color: '#000',
@@ -549,8 +473,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 5,
         paddingVertical: 5,
-        paddingHorizontal: 15,
-        color: '#000',
+        paddingHorizontal: 10,
+        color: '#777',
         height: 35,
         zIndex: 5,
         elevation: 5,
@@ -559,11 +483,11 @@ const styles = StyleSheet.create({
         height: 35,
         backgroundColor: '#fff',
         borderRadius: 5,
-        elevation: 5,
+        elevation: 15,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 15,
+        paddingHorizontal: 5,
     },
     dropdownButtonTxtStyle: {
         flex: 1,
@@ -572,6 +496,8 @@ const styles = StyleSheet.create({
     dropdownPlaceholderStyle: {
         flex: 1,
         color: '#777',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     dropdownButtonIconStyle: {
         marginRight: 8,
@@ -602,52 +528,33 @@ const styles = StyleSheet.create({
     comboContainer: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         alignItems: 'flex-end',
         width: '100%',
         paddingHorizontal: 10,
         paddingBottom: 10,
     },
     submitContainer: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+
         backgroundColor: '#3578CB',
         width: '120%',
         transform: [{rotate: rotate}],
         marginLeft: '-10%',
         marginTop: 15,
-        // Shadow
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 5,
-            height: 5,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 15,
-        elevation: 15,
     },
     submit: {
         marginHorizontal: 50,
         paddingHorizontal: 3,
         paddingTop: 10,
         paddingBottom: 30,
-        elevation: 0,
         transform: [{rotate: `-${rotate}`}],
-    },
-    shadow1: {
-        shadowColor: '#000000',
-        shadowOffset: {
-            width: 0,
-            height: -5,
-        },
-        shadowOpacity: .5,
-        shadowRadius: 5,
-    },
-    shadow2: {
-        shadowColor: '#000000',
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: .5,
-        shadowRadius: 10,
     },
 });

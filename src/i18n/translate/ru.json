@@ -39,6 +39,9 @@
 
     "SelectGas": "Выберите газ",
     "SelectScale": "Ед.изм.",
+    "SelectTemperature": "Выберите температуру",
+    "SelectBalloonValue": "Выберите объем баллона",
+    "InputGasName": "Введите название газа",
     "Loading": "Загрузка",
     "Balloon Value": "Объем баллона",
     "Temperature": "Температура",
@@ -53,14 +56,12 @@
     "Balloon count": "Баллоны, шт",
     "About us": "О разработчиках",
     "Object": "Шт",
-    "CreatedGroup": "Группа разработчиков",
-    "GeneralDirector": "Генеральный директор",
-    "CommercialDirector": "Коммерческий директор",
-    "Programmer": "Программист",
-    "Andrey Konovalov": "Андрей Коновалов",
-    "Vladislav Ivanuk": "Владислав Иванюк",
-    "Bato Garmayev": "Бато Гармаев",
-    "with density": "При давлении {{dens}} кг/с",
-    "System Fail! Not enough data!": "Ошибка!\nДля рассчета не хватает проверенных данных"
+    "with density": "При давлении {{dens}} кгс/см\u00B2",
+    "System Fail! Not enough data!": "Ошибка!\nДля рассчета не хватает проверенных данных",
+    "News": "Новости",
+    "Advertisements": "Объявления",
+    "Density": "Давление",
+    "BalloonDensity": "Давление в баллоне",
+    "ViewNews": "Просмотр новости"
   }
 }

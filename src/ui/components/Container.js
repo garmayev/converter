@@ -9,23 +9,19 @@ import {
     StyleSheet,
     View,
 } from 'react-native';
-import {LogoText} from './Logo';
+import {Logo} from '../icons/Logo';
 import React from 'react';
 
 export default function Container({children}) {
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image style={styles.bgHeader} source={require('../../assets/bg-car.png')}/>
+                <Image style={styles.bgHeader} source={require('../../assets/bg-car2.png')}/>
+                <Logo style={styles.headerLogo} />
             </View>
             <ScrollView style={{paddingVertical: 5}}>
                 {children}
             </ScrollView>
-            <View style={styles.footer}>
-                <Pressable onPress={() => Linking.openURL('https://gasgo.pro/')}>
-                    <Image source={require('../../assets/footer-gas.png')} style={{height: 25}} resizeMode={'contain'}/>
-                </Pressable>
-            </View>
             <Image style={styles.bgLogo} source={require('../../assets/logo-mini.png')} resizeMode={'stretch'}
                    resizeMethod={'resize'} height={600} width={600} blurRadius={2}/>
         </View>
@@ -45,6 +41,7 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width / 1.5,
     },
     headerLogo: {
+        position: 'absolute',
         zIndex: 2,
         minHeight: 50,
         minWidth: 100,
@@ -65,7 +62,7 @@ const styles = StyleSheet.create({
     },
     bgHeader: {
         width: '100%',
-        height: Dimensions.get('window').width / 1.5,
+        height: Dimensions.get('window').width / 1.47,
         top: 0,
         resizeMode: 'contain',
     },

@@ -1,8 +1,12 @@
 import {Float} from "react-native/Libraries/Types/CodegenTypes";
+import {Scale} from "./Scale";
+import {Balloon} from "./Balloon";
 
-export type Gas = {
+export type GasType = {
     title: String,
     moll: Float,
     density: Float,
-    scales: 
+    scales: Scale[],
+    balloons: Balloon[],
+    defaultBalloon: number
 }

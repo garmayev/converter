@@ -19,6 +19,13 @@ export const styles = StyleSheet.create({
         shadowRadius: 15,
         elevation: 15
     },
+    str0: {
+        stroke: 'black',
+        strokeWidth:8.82,
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round',
+        strokeMiterlimit:22.9256
+    },
     shadow: {
         shadowColor: '#FFFFFF',
         shadowOffset: {

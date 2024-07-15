@@ -1,34 +1,48 @@
 import {FlatList, Text, TextInput, View, StyleSheet, SafeAreaView, Pressable, TouchableOpacity} from 'react-native';
 import {useState} from 'react';
-import Input from './Input';
+import Input from '../../types/Input';
 
 export default function Autocomplete({data, placeholder, renderItem}) {
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState<String>('');
     const [filteredList, setFilteredList] = useState<Input[]>(data);
-    const [status, setStatus] = useState(false);
+    const [status, setStatus] = useState<Boolean>(false);
 
     const onChangeText = (value) => {
         setInput(value)
-        setFilteredList(data)
-        console.log(value);
+        const regex = new RegExp(`${value.trim()}`, 'i')
+        setFilteredList(data.filter((item) => {
+            return item.title.search(regex) >= 0
+        }))
     };
     const onSelect = (value) => {
-        console.log(value);
+        console.log(value.item)
+        setInput(value.item.title)
+        setStatus(false)
+        setFilteredList(data)
     };
 
     return (
         <View style={styles.autoCompleteContainer}>
-            <TextInput placeholder={placeholder} onChangeText={onChangeText} style={styles.autoCompleteTextField}
+            <TextInput placeholder={placeholder}
+                       defaultValue={input}
+                       onChangeText={onChangeText}
+                       style={styles.autoCompleteTextField}
+                       onFocus={() => setStatus(true)}
+                // onEndEditing={() => setStatus(false)}
                        placeholderTextColor={'#000'}/>
-            <SafeAreaView>
-                <FlatList data={filteredList} renderItem={(item, index) => {
-                    return (
-                            <TouchableOpacity onPress={onSelect}>
-                                <Text style={styles.autoCompleteItemText}>{item.title}</Text>
-                            </TouchableOpacity>
-                    );
-                }} style={styles.autoCompleteFlatList}/>
-            </SafeAreaView>
+            <FlatList data={filteredList} renderItem={(element, index) => {
+                return (
+                    <View style={styles.autoCompleteItem}>
+                        <TouchableOpacity onPress={(event) => {
+                            onSelect(element)
+                        }}>
+                            <Text style={styles.autoCompleteItemText}>{element.item.title}</Text>
+                        </TouchableOpacity>
+                    </View>
+                );
+            }} keyExtractor={item => item.uid} showVerticalScrollIndicator={true} style={
+                status ? styles.showAutoCompleteFlatList : styles.hideAutoCompleteFlatList
+            } scrollEnabled={false}/>
         </View>
     );
 }
@@ -42,7 +56,11 @@ const styles = StyleSheet.create({
     autoCompleteItemText: {
         color: '#000',
     },
-    autoCompleteFlatList: {
+    showAutoCompleteFlatList: {
         color: '#000',
+        flex: 1,
     },
+    hideAutoCompleteFlatList: {
+        display: 'none',
+    }
 });

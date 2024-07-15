@@ -19,7 +19,7 @@ export default class Balloon {
     }
 
     constructor(props) {
-        this.title = props.title
-        this.value = props.value
+        this.title = props.title ?? ""
+        this.value = props.value ?? 0
     }
 }
