@@ -1,6 +1,5 @@
 import {
     Dimensions,
-    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -9,32 +8,20 @@ import {
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
-import {SharedTransition, withSpring} from 'react-native-reanimated';
+import Animated, {SharedTransition, withSpring} from 'react-native-reanimated';
+import {baseUrl} from '../../const';
+import News from '../classes/News';
 import {useTranslation} from 'react-i18next';
-import Animated from 'react-native-reanimated';
-
-const customTransition = SharedTransition.custom(
-    (values) => {
-        'worklet';
-        return {
-            height: withSpring(values.targetHeight),
-            width: withSpring(values.targetWidth),
-            originX: withSpring(values.targetOriginX),
-            originY: withSpring(values.targetOriginY),
-        };
-    }
-);
 
 export default function NewsScreen({route, navigation}) {
-    const baseUrl = 'https://clover.amgcompany.ru';
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [focusedIndex, setFocusedIndex] = useState(null);
+    const [error, setError] = useState(false);
+    const [errorDescription, setErrorDescription] = useState('');
     const {t} = useTranslation();
 
-    useEffect(() => {
-
-        const result = axios.get(`${baseUrl}/news/?p=0`, {
+    const request = () => {
+        axios.get(`${baseUrl}/post/index?sort=-created_at`, {
             header: {
                 'Content-Type': 'application/json',
                 'accept': 'application/json',
@@ -42,16 +29,49 @@ export default function NewsScreen({route, navigation}) {
         }).then(response => {
             return response.data;
         }).then(response => {
-            setData(response);
-            setLoading(true);
+            let d = []
+            if (response.length) {
+                for (const key in response) {
+                    d.push(new News(response[key]))
+                }
+                setData(d);
+                setLoading(true);
+                setError(false)
+                setErrorDescription("");
+            } else {
+                setError(true)
+                setErrorDescription(t('No data found'));
+                setLoading(false);
+            }
         }).catch(error => {
             console.error(error)
         });
+    }
+
+    const customTransition = SharedTransition.custom((values) => {
+        'worklet';
+        return {
+            height: withSpring(values.targetHeight),
+            width: withSpring(values.targetWidth),
+            originX: withSpring(values.targetOriginX),
+            originY: withSpring(values.targetOriginY),
+        };
+    });
+
+    useEffect(() => {
+        navigation.setOptions({
+            title: t('News'),
+        });
+        request();
+        const intervalId = setInterval(() => {
+            request();
+        }, 5000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     function show(element) {
-        // navigation.navigate("ViewNews", {id: element})
-        navigation.push("ViewNews", {id:element})
+        navigation.navigate(t("View News"), {id:element})
     }
 
     return (
@@ -63,18 +83,17 @@ export default function NewsScreen({route, navigation}) {
                 maxWidth: Dimensions.get('window').width,
                 flexWrap: 'wrap',
                 paddingHorizontal: 5,
-                backgroundColor: '#E4E4E4',
+                paddingBottom: 70,
             }}>
                 {loading &&
                     data.map((item, index) => {
                         return (
                             <TouchableOpacity style={styles.card} onPress={() => {
-                                // setFocusedIndex(index)
-                                show(index)
+                                show(item.id)
                             }} key={index}>
                                 <View style={styles.cardContainer}>
                                     <Animated.Image
-                                        sharedTransitionTag={`${item.id}`}
+                                        sharedTransitionTag={`view_${item.id}`}
                                         sharedTransitionStyle={customTransition}
                                         style={styles.cardPicture}
                                         resizeMethod={'resize'}
@@ -88,39 +107,36 @@ export default function NewsScreen({route, navigation}) {
                         );
                     })
                 }
+                {error &&
+                    <Text style={{width: "100%", fontStyle:"italic", textAlign: 'center', color:'red'}}>{errorDescription}</Text>
+                }
             </View>
         </ScrollView>
     );
 }
-const mt = -40;
 const styles = StyleSheet.create({
     card: {
         padding: 5,
         paddingBottom: 5,
-        // width: '49%',
+        width: '100%',
     },
     cardContainer: {
-        backgroundColor: "#fff",
-        padding: 5
+        backgroundColor: '#fff',
+        padding: 5,
+        borderRadius: 24,
+        borderWidth: 2,
+        borderColor: '#CCC',
     },
     cardItem: {
-        // backgroundColor: '#CCC',
         width: '100%',
-        // borderRadius: 20,
         padding: 5,
-        // marginTop: mt,
     },
-    // cardItemHidden: {
-    //     display: 'none'
-    // },
     cardTitle: {
-        // width: (Dimensions.get('window').width / 2) - 30,
-        textAlign: 'justify',
+        textAlign: 'center',
         paddingHorizontal: 5,
         color: '#000'
     },
     cardPicture: {
-        // width: (Dimensions.get('window').width / 2) - 20,
         height: 150,
         borderRadius: 20,
     },

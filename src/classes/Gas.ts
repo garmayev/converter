@@ -17,6 +17,7 @@ export default class Gas {
     _scales: []
     _defaultBalloon: number
     _balloons: []
+    private _liter: Float
     private _balloonDensity: number
     _state: String
 
@@ -72,6 +73,14 @@ export default class Gas {
         this._balloonDensity = value;
     }
 
+    get liter(): Float {
+        return this._liter;
+    }
+
+    set liter(value: Float) {
+        this._liter = value;
+    }
+
     constructor(props) {
         this.title = props.title
         this.moll = props.moll
@@ -81,6 +90,7 @@ export default class Gas {
         this.defaultBalloon = props.defaultBalloon
         this.mollValue = props.mollValue
         this.balloonDensity = props.balloonDensity
+        this.liter = props.liter
     }
 
     get kelvin(): Float {

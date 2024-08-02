@@ -9,9 +9,10 @@ import React, {useState} from 'react';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList} from '@react-navigation/drawer';
 import {useTranslation} from 'react-i18next';
 import TabNavigation from './TabNavigation';
-import {Linking, Text, View} from 'react-native';
+import {Image, Linking, Text, View} from 'react-native';
 import News from '../icons/News';
 import Icon from '../icons/Icon';
+import CalendarScreen from '../screens/CalendarScreen';
 
 function CustomDrawerContent(props) {
     const {t} = useTranslation();
@@ -48,19 +49,39 @@ export default function DrawerNavigation({route, navigation}) {
                 <Drawer.Screen name={t('Converter')} component={TestScreen} options={{
                     headerShown: true,
                     headerTransparent: true,
-                    drawerIcon: () => {
-                        return (<FontAwesomeIcon icon={faArrowsTurnToDots} size={21}/>);
-                    },
-                }}/>
-                <Drawer.Screen name={t('News')} component={TabNavigation} options={{
-                    headerShown: true,
-                    headerTransparent: false,
-                    headerTitle: t('News'),
-                    drawerIcon: () => {
-                        return (<FontAwesomeIcon icon={faNewspaper} size={21} />);
+                    drawerIcon: ({tintColor}) => {
+                        return (
+                            <FontAwesomeIcon icon={faArrowsTurnToDots} size={21} />
+                            // <View>
+                            //     <Image
+                            //         source={require('../../assets/convert-icon.png')}
+                            //         icon={faArrowsTurnToDots}
+                            //         size={25}/>
+                            // </View>
+                        );
                     },
                 }}/>
             </Drawer.Group>
+            {/*<Drawer.Group>*/}
+            {/*    <Drawer.Screen name={t('News')} component={TabNavigation} options={{*/}
+            {/*        headerShown: true,*/}
+            {/*        headerTransparent: false,*/}
+            {/*        headerTitle: t('News'),*/}
+            {/*        drawerIcon: () => {*/}
+            {/*            return (<FontAwesomeIcon icon={faNewspaper} size={21} />);*/}
+            {/*        },*/}
+            {/*    }}/>*/}
+            {/*</Drawer.Group>*/}
+            {/*<Drawer.Group>*/}
+            {/*    <Drawer.Screen name={t('Calendar')} component={CalendarScreen} options={{*/}
+            {/*        headerShown: true,*/}
+            {/*        headerTransparent: false,*/}
+            {/*        headerTitle: t('Calendar'),*/}
+            {/*        drawerIcon: () => {*/}
+            {/*            return (<FontAwesomeIcon icon={faNewspaper} size={21} />);*/}
+            {/*        },*/}
+            {/*    }} />*/}
+            {/*</Drawer.Group>*/}
         </Drawer.Navigator>
     );
 }

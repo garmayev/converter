@@ -9,18 +9,15 @@ import './i18n/config';
 import 'react-native-gesture-handler';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import StackNavigation from './ui/navigations/StackNavigation';
+import DrawerNavigation from './ui/navigations/DrawerNavigation';
 
 function App() {
     return (
         <SafeAreaProvider>
             <NavigationContainer>
-                <StackNavigation />
-                <StatusBar barStyle={"light-content"} />
+                <DrawerNavigation />
             </NavigationContainer>
-            <StatusBar barStyle={"light-content"} />
         </SafeAreaProvider>
     );
 }

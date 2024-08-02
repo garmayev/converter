@@ -30,11 +30,56 @@ export default function TestScreen({navigation}) {
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
             ],
             balloons: [
-                new Balloon({title: t('balloonWeight', {value: 50}), value: 7.8, density: 200}),
-                new Balloon({title: t('balloonWeight', {value: 40}), value: 6, density: 200}),
-                new Balloon({title: t('balloonWeight', {value: 20}), value: 3.16, density: 200}),
-                new Balloon({title: t('balloonWeight', {value: 10}), value: 2, density: 200}),
-                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.8, density: 200}),
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.15},
+                {title: t('density', {density: 200}), value: 200, step: 0.2},
+                {title: t('density', {density: 250}), value: 250, step: 0.25},
+                {title: t('density', {density: 300}), value: 300, step: 0.3},
             ],
         }),
         new Gas({
@@ -51,10 +96,56 @@ export default function TestScreen({navigation}) {
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
             ],
             balloons: [
-                new Balloon({title: t('balloonWeight', {value: 40}), value: 6.2}),
-                new Balloon({title: t('balloonWeight', {value: 20}), value: 3.1}),
-                new Balloon({title: t('balloonWeight', {value: 10}), value: 1.55}),
-                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.78}),
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.15},
+                {title: t('density', {density: 200}), value: 200, step: 0.2},
+                {title: t('density', {density: 250}), value: 250, step: 0.25},
+                {title: t('density', {density: 300}), value: 300, step: 0.3},
             ],
         }),
         new Gas({
@@ -63,16 +154,63 @@ export default function TestScreen({navigation}) {
             density: 0.873,
             defaultBalloon: 0,
             balloonDensity: 200,
-            balloons: [
-                new Balloon({title: t('balloonWeight', {value: 40}), value: 6.3}),
-                new Balloon({title: t('balloonWeight', {value: 10}), value: 1.58}),
-                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.79}),
-            ],
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
+            ],
+            balloons: [
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.002},
+                {title: t('density', {density: 200}), value: 200, step: 0.002666667},
+                {title: t('density', {density: 250}), value: 250, step: 0.003333333},
+                {title: t('density', {density: 300}), value: 300, step: 0.004},
             ],
         }),
         new Gas({
@@ -81,16 +219,63 @@ export default function TestScreen({navigation}) {
             mollValue: 22.430,
             density: 0.0708,
             defaultBalloon: 0,
-            balloons: [
-                new Balloon({title: t('balloonWeight', {value: 40}), value: 6.3}),
-                new Balloon({title: t('balloonWeight', {value: 10}), value: 1.58}),
-                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.79}),
-            ],
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
+            ],
+            balloons: [
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.15},
+                {title: t('density', {density: 200}), value: 200, step: 0.2},
+                {title: t('density', {density: 250}), value: 250, step: 0.25},
+                {title: t('density', {density: 300}), value: 300, step: 0.3},
             ],
         }),
         new Gas({
@@ -98,18 +283,64 @@ export default function TestScreen({navigation}) {
             moll: 0.004003,
             mollValue: 22.426,
             density: 0.145,
+            defaultBalloon: 0,
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
             ],
-            defaultBalloon: 0,
             balloons: [
-                new Balloon({title: t('balloonWeight', {value: 40}), value: 5.25}),
-                new Balloon({title: t('balloonWeight', {value: 20}), value: 2.85}),
-                new Balloon({title: t('balloonWeight', {value: 10}), value: 1.43}),
-                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.72}),
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.1425},
+                {title: t('density', {density: 200}), value: 200, step: 0.15},
+                {title: t('density', {density: 250}), value: 250, step: 0.2375},
+                {title: t('density', {density: 300}), value: 300, step: 0.285},
             ],
         }),
         new Gas({
@@ -117,17 +348,64 @@ export default function TestScreen({navigation}) {
             moll: 0.028016,
             mollValue: 22.260,
             density: 0.808,
+            defaultBalloon: 1,
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
             ],
-            defaultBalloon: 1,
             balloons: [
-                new Balloon({title: t('balloonWeight', {value: 50}), value: 7.12}),
-                new Balloon({title: t('balloonWeight', {value: 40}), value: 5.7}),
-                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.72}),
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.1425},
+                {title: t('density', {density: 200}), value: 200, step: 0.15},
+                {title: t('density', {density: 250}), value: 250, step: 0.2375},
+                {title: t('density', {density: 300}), value: 300, step: 0.285},
             ],
         }),
         new Gas({
@@ -135,19 +413,64 @@ export default function TestScreen({navigation}) {
             moll: 0.04401,
             mollValue: 22.262,
             density: 0.771,
+            defaultBalloon: 1,
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
             ],
-            defaultBalloon: 1,
             balloons: [
-                new Balloon({title: t('balloonWeight', {value: 50}), value: 12}),
-                new Balloon({title: t('balloonWeight', {value: 40}), value: 7.8}),
-                new Balloon({title: t('balloonWeight', {value: 20}), value: 3.16}),
-                new Balloon({title: t('balloonWeight', {value: 10}), value: 2}),
-                new Balloon({title: t('balloonWeight', {value: 5}), value: 0.8}),
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.15},
+                {title: t('density', {density: 200}), value: 200, step: 0.2},
+                {title: t('density', {density: 250}), value: 250, step: 0.25},
+                {title: t('density', {density: 300}), value: 300, step: 0.3},
             ],
         }),
         new Gas({
@@ -156,15 +479,63 @@ export default function TestScreen({navigation}) {
             mollValue: 22.376,
             density: 0.415,
             defaultBalloon: 0,
-            balloons: [
-                new Balloon({title: t('balloonWeight', {value: 40}), value: 6}),
-                new Balloon({title: t('balloonWeight', {value: 10}), value: 1.5}),
-            ],
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
+            ],
+            balloons: [
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.24},
+                {title: t('density', {density: 200}), value: 200, step: 0.32},
+                {title: t('density', {density: 250}), value: 250, step: 0.4},
+                {title: t('density', {density: 300}), value: 300, step: 0.48},
             ],
         }),
         new Gas({
@@ -172,13 +543,64 @@ export default function TestScreen({navigation}) {
             moll: 0.132108,
             mollValue: 22.266,
             density: 3.520,
-            defaultBalloon: null,
-            balloons: [],
+            defaultBalloon: 0,
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
+            ],
+            balloons: [
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.002},
+                {title: t('density', {density: 200}), value: 200, step: 0.002666667},
+                {title: t('density', {density: 250}), value: 250, step: 0.003333333},
+                {title: t('density', {density: 300}), value: 300, step: 0.004},
             ],
         }),
         new Gas({
@@ -186,13 +608,64 @@ export default function TestScreen({navigation}) {
             moll: 0.0838283,
             mollValue: 22.388,
             density: 2.1550,
-            defaultBalloon: null,
-            balloons: [],
+            defaultBalloon: 0,
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
+            ],
+            balloons: [
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.002},
+                {title: t('density', {density: 200}), value: 200, step: 0.002666667},
+                {title: t('density', {density: 250}), value: 250, step: 0.003333333},
+                {title: t('density', {density: 300}), value: 300, step: 0.004},
             ],
         }),
         new Gas({
@@ -200,13 +673,64 @@ export default function TestScreen({navigation}) {
             moll: 0.02698644,
             mollValue: 22.428,
             density: 0.9,
-            defaultBalloon: null,
-            balloons: [],
+            defaultBalloon: 0,
             scales: [
                 new Scale({title: t('Kg-small'), value: 'kg'}),
                 new Scale({title: t('T-small'), value: 't'}),
                 new Scale({title: t('L-small'), value: 'l'}),
                 new Scale({title: t('CubicMeter-small'), value: 'm3'}),
+            ],
+            balloons: [
+                new Balloon({
+                    title: t('balloonWeight', {value: 50}),
+                    liter: 50,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 40}),
+                    liter: 40,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 30}),
+                    liter: 30,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 20}),
+                    liter: 20,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 15}),
+                    liter: 15,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 10}),
+                    liter: 10,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 8}),
+                    liter: 8,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 5}),
+                    liter: 5,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 3}),
+                    liter: 3,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 2}),
+                    liter: 2,
+                }),
+                new Balloon({
+                    title: t('balloonWeight', {value: 1}),
+                    liter: 1,
+                }),
+            ],
+            liter: [
+                {title: t('density', {density: 150}), value: 150, step: 0.002},
+                {title: t('density', {density: 200}), value: 200, step: 0.002666667},
+                {title: t('density', {density: 250}), value: 250, step: 0.003333333},
+                {title: t('density', {density: 300}), value: 300, step: 0.004},
             ],
         }),
     ];
@@ -222,17 +746,25 @@ export default function TestScreen({navigation}) {
         new Temperature({title: '30 \u2103', value: 30, density: 157}),
         new Temperature({title: '35 \u2103', value: 35, density: 160}),
     ];
+    const scaleList = [
+        new Scale({title: t('Kg-small'), value: 'kg'}),
+        new Scale({title: t('T-small'), value: 't'}),
+        new Scale({title: t('L-small'), value: 'l'}),
+        new Scale({title: t('CubicMeter-small'), value: 'm3'}),
+    ];
 
     const [gas, _setGas] = useState(gases[0]);
     const [value, setValue] = useState(1);
-    const [scale, _setScale] = useState(gases[0].scales[1]);
+    const [scale, _setScale] = useState(gas.scales[1]);
     const [temperature, setTemperature] = useState(temperatureList[7]);
-    const [balloon, _setBalloon] = useState(gases[0].balloons[gases[0].defaultBalloon]);
+    const [balloon, _setBalloon] = useState(gas.balloons[gas.defaultBalloon]);
+    const [density, setDensity] = useState(gas.liter[0]);
     const [result, setResult] = useState({weight: 0.0, liquid: 0.0, gas: 0.0, count: 0.0});
     const [error, setError] = useState(false);
     const setGas = value => {
         _setGas(value);
         _setScale(value.scales[0]);
+        setDensity(value.liter[0]);
     };
     const setScale = value => {
         _setScale(value);
@@ -240,8 +772,8 @@ export default function TestScreen({navigation}) {
     const setBalloon = value => {
         _setBalloon(value);
     };
+
     useEffect(() => {
-        // calculate();
         setGas(gases[0]);
     }, []);
 
@@ -261,7 +793,12 @@ export default function TestScreen({navigation}) {
                 gas.fromGas(value);
         }
         if (balloon) {
-            setResult({weight: gas.weight, liquid: gas.liquid, gas: gas.gas, count: gas.gas / balloon.value});
+            setResult({
+                weight: gas.weight,
+                liquid: gas.liquid,
+                gas: gas.gas,
+                count: gas.gas / (balloon.liter * density.step),
+            });
         } else {
             setError(true);
             setResult({weight: gas.weight, liquid: gas.liquid, gas: gas.gas, count: 0.0});
@@ -282,11 +819,11 @@ export default function TestScreen({navigation}) {
                         return (
                             <View style={styles.dropdownButtonStyle}>
                                 {
-                                    selectedItem ?
+                                    gas ?
                                         (
                                             <View style={styles.dropdownPlaceholderStyle}>
                                                 <Text style={styles.dropdownPlaceholderTextStyle}>
-                                                    {selectedItem.title}
+                                                    {gas.title}
                                                 </Text>
                                                 <FontAwesomeIcon icon={faChevronDown}
                                                                  style={styles.dropdownItemIconStyle}/>
@@ -330,7 +867,7 @@ export default function TestScreen({navigation}) {
                 {/* Scale */}
                 <View style={{width: '47%', marginLeft: 10}}>
                     <SelectDropdown
-                        defaultValue={gases[0].scales[0]}
+                        defaultValue={scale}
                         onSelect={(selectedItem) => {
                             setScale(selectedItem);
                         }}
@@ -367,7 +904,7 @@ export default function TestScreen({navigation}) {
                                 </View>
                             );
                         }}
-                        data={gases[0].scales}/>
+                        data={scaleList}/>
                     {/*<Text style={[styles.inputLabel, {top: -10, left: 10}]}>{t('SelectScale')}</Text>*/}
                 </View>
             </View>
@@ -388,7 +925,11 @@ export default function TestScreen({navigation}) {
                                             <View style={styles.dropdownPlaceholderStyle}>
                                                 <Text
                                                     style={{...styles.dropdownPlaceholderStyle}}>{selectedItem.title}</Text>
-                                                <Text style={{...styles.dropdownPlaceholderTextStyle, fontSize: 12, color: '#999'}}>{t('with density', {dens: selectedItem.density})}</Text>
+                                                <Text style={{
+                                                    ...styles.dropdownPlaceholderTextStyle,
+                                                    fontSize: 12,
+                                                    color: '#999',
+                                                }}>{t('with density', {dens: density.value})}</Text>
                                                 <FontAwesomeIcon icon={faChevronDown}
                                                                  style={styles.dropdownItemIconStyle}/>
                                             </View>
@@ -409,7 +950,11 @@ export default function TestScreen({navigation}) {
                             <View
                                 style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#D2D9DF'})}}>
                                 <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
-                                <Text style={{...styles.dropdownPlaceholderTextStyle, fontSize: 12, color: '#999'}}>{t('with density', {dens: item.density})}</Text>
+                                <Text style={{
+                                    ...styles.dropdownPlaceholderTextStyle,
+                                    fontSize: 12,
+                                    color: '#999',
+                                }}>{t('with density', {dens: density.value})}</Text>
                             </View>
                         );
                     }}
@@ -456,12 +1001,21 @@ export default function TestScreen({navigation}) {
                                 </View>
                             );
                         }}
+                        addCustomItem={true}
+                        search={true}
+                        searchInputStyle={styles.dropdownSearchInputStyle}
+                        searchInputTxtColor={'#151E26'}
+                        searchPlaceHolder={t('Balloon value')}
+                        searchPlaceHolderColor={'#72808D'}
                         data={gas.balloons}/>
                     {/*<Text style={{...styles.inputLabel, top: -13, left: 5}}>{t('Balloon Value')}</Text>*/}
                 </View>
                 <View style={{width: '47%'}}>
                     <SelectDropdown
-                        defaultValue={{title: '150 кгс/см\u00B2', value: 150}}
+                        defaultValue={density}
+                        onSelect={(selectedItem) => {
+                            setDensity(selectedItem);
+                        }}
                         renderButton={(selectedItem, isOpened) => {
                             return (
                                 <View style={styles.dropdownButtonStyle}>
@@ -500,7 +1054,7 @@ export default function TestScreen({navigation}) {
                                 </View>
                             );
                         }}
-                        data={[{title: '150 кгс/см\u00B2', value: 150}]}/>
+                        data={gas.liter}/>
                     {/*<Text style={{...styles.inputLabel, top: -13, left: 5, color: '#000071'}}>{t('BalloonDensity')}</Text>*/}
                 </View>
             </View>

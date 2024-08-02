@@ -2,7 +2,6 @@
   "translation": {
     "loginScreen": "Авторизация",
     "dashboardScreen": "Главная",
-
     "Oxygen": "Кислород",
     "Argon": "Аргон",
     "Nitrogen": "Азот",
@@ -16,7 +15,6 @@
     "Neon": "Неон",
     "Gas Nitrogen and liquid Nitrogen": "Газ азот и жидкий азот",
     "Gas Helium": "Газ гелий",
-
     "Kg": "Килограмм",
     "Kg-small": "Кг",
     "L": "Литр",
@@ -25,18 +23,15 @@
     "T-small": "T",
     "CubicMeter": "Кубический метр",
     "CubicMeter-small": "M\u00B3",
-
     "InputTemperature": "Введите температуру",
     "InputValue": "Введите количество",
     "Calculate": "Рассчитать",
     "Weight": "Масса",
     "Gas": "Газ",
     "Liquid": "Жидкость",
-
     "Calculator": "Калькулятор",
     "Converter": "Конвертер",
     "Receiver": "Распределить",
-
     "SelectGas": "Выберите газ",
     "SelectScale": "Ед.изм.",
     "SelectTemperature": "Выберите температуру",
@@ -57,11 +52,18 @@
     "About us": "О разработчиках",
     "Object": "Шт",
     "with density": "При давлении {{dens}} кгс/см\u00B2",
+    "density": "{{density}} кгс/см\u00B2",
     "System Fail! Not enough data!": "Ошибка!\nДля рассчета не хватает проверенных данных",
     "News": "Новости",
     "Advertisements": "Объявления",
     "Density": "Давление",
     "BalloonDensity": "Давление в баллоне",
-    "ViewNews": "Просмотр новости"
+    "ViewNews": "Просмотр новости",
+    "Calendar": "Календарь",
+    "Event`s details": "Подробности события",
+    "Event": "Событие",
+    "Description": "Описание",
+    "Date": "Дата",
+    "View more": "Подробнее"
   }
 }

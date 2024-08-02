@@ -1,6 +1,7 @@
 export default class Balloon {
-    _title
-    _value
+    private _title
+    private _value
+    private _liter
 
     get title() {
         return this._title;
@@ -18,8 +19,17 @@ export default class Balloon {
         this._value = value;
     }
 
+    get liter() {
+        return this._liter;
+    }
+
+    set liter(value) {
+        this._liter = value;
+    }
+
     constructor(props) {
         this.title = props.title ?? ""
         this.value = props.value ?? 0
+        this.liter = props.liter ?? 0
     }
 }
