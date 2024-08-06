@@ -21,7 +21,7 @@ export default function CalendarScreen({navigation}) {
             .then(response => response.data)
             .then(response => {
                 setCustomEvent(response);
-                console.log(response);
+                // console.log(response);
                 return response;
             })
             .catch(error => {
@@ -64,7 +64,6 @@ export default function CalendarScreen({navigation}) {
         });
         request();
         const intervalId = setInterval(() => {
-            console.log("Test");
             request();
         }, 5000);
 
@@ -93,17 +92,20 @@ export default function CalendarScreen({navigation}) {
                     'Ноябрь',
                     'Декабрь',
                 ]}
+                selectMonthTitle={t("Select Month")}
+                selectYearTitle={t("Select Year")}
                 customDatesStyles={events}
-                todayBackgroundColor={'transparent'}
-                previousTitle={<FontAwesomeIcon icon={faChevronLeft}/>}
-                nextTitle={<FontAwesomeIcon icon={faChevronRight}/>}
+                todayBackgroundColor={'#e6ffe6'}
+                selectedDayColor={'#66ff33'}
+                previousComponent={<FontAwesomeIcon icon={faChevronLeft}/>}
+                nextComponent={<FontAwesomeIcon icon={faChevronRight}/>}
             />
             {(customEvent.length > 0) && customEvent.map((item, index) => {
                 return (
                     <TouchableOpacity onPress={() => {
                         view(item.id);
                     }} key={index}>
-                        <EventView item={item} index={index}/>
+                        <EventView label={''} item={item} index={index}/>
                     </TouchableOpacity>
                 );
             })}
@@ -111,16 +113,23 @@ export default function CalendarScreen({navigation}) {
     );
 }
 
-function EventView(item, index) {
+function EventView({item, index}) {
     const {t} = useTranslation();
 
     return (
         <View style={styles.eventContainer}>
-            <Text><Text style={styles.header}>{t('Event')}: </Text><Text style={styles.text}>{item.item.title}</Text></Text>
-            <Text><Text style={styles.header}>{t('Description')}: </Text><Text
-                style={styles.text}>{item.item.description}</Text></Text>
-            <Text><Text style={styles.header}>{t('Date')}: </Text><Text
-                style={styles.text}>{new Date(item.item.date * 1000).toLocaleString()}</Text></Text>
+            <Text>
+                <Text style={styles.header}>{t('Event')}: </Text>
+                <Text style={styles.text}>{item.title}</Text>
+            </Text>
+            <Text>
+                <Text style={styles.header}>{t('Description')}: </Text>
+                <Text style={styles.text}>{item.description}</Text>
+            </Text>
+            <Text>
+                <Text style={styles.header}>{t('Date')}: </Text>
+                <Text style={styles.text}>{new Date(item.date * 1000).toLocaleString()}</Text>
+            </Text>
             <Text style={styles.submit}>{t('View more')}</Text>
         </View>
     );

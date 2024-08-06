@@ -64,6 +64,11 @@
     "Event": "Событие",
     "Description": "Описание",
     "Date": "Дата",
-    "View more": "Подробнее"
+    "View more": "Подробнее",
+    "Select Month": "Выберите месяц ",
+    "Select Year": "Выберите год",
+    "Details": "Детали",
+    "View News": "Просмотр новостей",
+    "View Adv": "Просмотр объявлений"
   }
 }

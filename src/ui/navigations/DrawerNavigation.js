@@ -1,17 +1,12 @@
-import {NavigationContainer} from '@react-navigation/native';
 import TestScreen from '../screens/TestScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAd, faArrowsTurnToDots, faNewspaper, faUser} from '@fortawesome/free-solid-svg-icons';
-import NewsScreen from '../screens/NewsScreen';
-import AdvScreen from '../screens/AdvScreen';
-import ViewNewsScreen from '../screens/ViewNewsScreen';
 import React, {useState} from 'react';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList} from '@react-navigation/drawer';
 import {useTranslation} from 'react-i18next';
 import TabNavigation from './TabNavigation';
 import {Image, Linking, Text, View} from 'react-native';
 import News from '../icons/News';
-import Icon from '../icons/Icon';
 import CalendarScreen from '../screens/CalendarScreen';
 
 function CustomDrawerContent(props) {
@@ -49,7 +44,7 @@ export default function DrawerNavigation({route, navigation}) {
                 <Drawer.Screen name={t('Converter')} component={TestScreen} options={{
                     headerShown: true,
                     headerTransparent: true,
-                    drawerIcon: ({tintColor}) => {
+                    drawerIcon: ({}) => {
                         return (
                             <FontAwesomeIcon icon={faArrowsTurnToDots} size={21} />
                             // <View>

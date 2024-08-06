@@ -56,8 +56,8 @@ export default class News {
     constructor(props) {
         this.id = props.id
         this.title = props.title
-        this.date = props.date
-        this.content = props.content
+        this.date = new Date(props.created_at * 1000)
+        this.content = props.body
         this.author = props.author
         this.picture = props.picture ?? ""
     }

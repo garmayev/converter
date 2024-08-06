@@ -11,12 +11,13 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import DrawerNavigation from './ui/navigations/DrawerNavigation';
+import StackNavigation from './ui/navigations/StackNavigation';
 
 function App() {
     return (
         <SafeAreaProvider>
             <NavigationContainer>
-                <DrawerNavigation />
+                <StackNavigation />
             </NavigationContainer>
         </SafeAreaProvider>
     );

@@ -12,6 +12,7 @@ import Animated, {SharedTransition, withSpring} from 'react-native-reanimated';
 import {baseUrl} from '../../const';
 import News from '../classes/News';
 import {useTranslation} from 'react-i18next';
+import {SharedElement} from 'react-navigation-shared-element';
 
 export default function NewsScreen({route, navigation}) {
     const [data, setData] = useState([]);
@@ -29,24 +30,24 @@ export default function NewsScreen({route, navigation}) {
         }).then(response => {
             return response.data;
         }).then(response => {
-            let d = []
+            let d = [];
             if (response.length) {
                 for (const key in response) {
-                    d.push(new News(response[key]))
+                    d.push(new News(response[key]));
                 }
                 setData(d);
                 setLoading(true);
-                setError(false)
-                setErrorDescription("");
+                setError(false);
+                setErrorDescription('');
             } else {
-                setError(true)
+                setError(true);
                 setErrorDescription(t('No data found'));
                 setLoading(false);
             }
         }).catch(error => {
-            console.error(error)
+            console.error(error);
         });
-    }
+    };
 
     const customTransition = SharedTransition.custom((values) => {
         'worklet';
@@ -71,7 +72,7 @@ export default function NewsScreen({route, navigation}) {
     }, []);
 
     function show(element) {
-        navigation.navigate(t("View News"), {id:element})
+        navigation.navigate(t('View News'), {item: JSON.stringify(element)});
     }
 
     return (
@@ -89,16 +90,31 @@ export default function NewsScreen({route, navigation}) {
                     data.map((item, index) => {
                         return (
                             <TouchableOpacity style={styles.card} onPress={() => {
-                                show(item.id)
+                                // show(item);
+                                navigation.navigate(t('View News'), {
+                                    item: JSON.stringify(item),
+                                    sharedElements: [
+                                        {
+                                            id: `item_${item.id}`,
+                                            uri: item.picture,
+                                        },
+                                    ],
+                                });
+                                navigation.setOptions({
+                                    title: item.title,
+                                    headerBackTitle: null,
+                                });
+
                             }} key={index}>
                                 <View style={styles.cardContainer}>
-                                    <Animated.Image
-                                        sharedTransitionTag={`view_${item.id}`}
-                                        sharedTransitionStyle={customTransition}
-                                        style={styles.cardPicture}
-                                        resizeMethod={'resize'}
-                                        resizeMode={'cover'}
-                                        source={{uri: item.picture}} />
+                                    <SharedElement id={`item_${item.id}`}>
+                                        <Animated.Image
+                                            sharedTransitionTag={`view_${item.id}`}
+                                            sharedTransitionStyle={customTransition}
+                                            style={styles.cardPicture}
+                                            resizeMode={'cover'}
+                                            source={{uri: item.picture}}/>
+                                    </SharedElement>
                                     <View style={styles.cardItem}>
                                         <Text style={styles.cardTitle}>{item.title}</Text>
                                     </View>
@@ -108,7 +124,12 @@ export default function NewsScreen({route, navigation}) {
                     })
                 }
                 {error &&
-                    <Text style={{width: "100%", fontStyle:"italic", textAlign: 'center', color:'red'}}>{errorDescription}</Text>
+                    <Text style={{
+                        width: '100%',
+                        fontStyle: 'italic',
+                        textAlign: 'center',
+                        color: 'red',
+                    }}>{errorDescription}</Text>
                 }
             </View>
         </ScrollView>
@@ -126,6 +147,8 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         borderWidth: 2,
         borderColor: '#CCC',
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
     },
     cardItem: {
         width: '100%',
@@ -134,7 +157,9 @@ const styles = StyleSheet.create({
     cardTitle: {
         textAlign: 'center',
         paddingHorizontal: 5,
-        color: '#000'
+        fontWeight: 'bold',
+        fontSize: 16,
+        color: '#000',
     },
     cardPicture: {
         height: 150,
@@ -146,6 +171,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 5,
         right: 5,
-        color: '#fff'
+        color: '#fff',
     },
 });
