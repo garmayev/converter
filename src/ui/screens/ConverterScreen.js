@@ -12,7 +12,7 @@ import {faChevronDown, faSearch} from '@fortawesome/free-solid-svg-icons';
 import {TouchableRipple} from 'react-native-paper';
 import ResultContainer from '../components/ResultContainer';
 
-export default function TestScreen({navigation}) {
+export default function ConverterScreen({navigation}) {
     const {t} = useTranslation();
     const LogoSize = 60;
     const gases = [

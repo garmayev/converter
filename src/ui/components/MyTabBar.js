@@ -1,6 +1,8 @@
 import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 
-export default function MyTabBar({state, descriptors, navigation}) {
+export default function MyTabBar({state, descriptors, navigation, visible}) {
+
+    if (visible)
     return (
         <View style={styles.container}>
             {state.routes.map((route, index) => {
@@ -31,7 +33,6 @@ export default function MyTabBar({state, descriptors, navigation}) {
                         target: route.key,
                     });
                 };
-
                 return (
                     <TouchableOpacity
                         accessibilityRole="button"
@@ -68,10 +69,10 @@ const styles = StyleSheet.create({
         bottom: 5,
         left: 10,
         right: 10,
-        elevation: 10
+        elevation: 10,
     },
     touchable: {
         flex: 1,
-        alignItems: 'center'
-    }
-})
+        alignItems: 'center',
+    },
+});

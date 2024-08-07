@@ -53,7 +53,7 @@ export default function CalendarScreen({navigation}) {
         });
     };
     const view = (id) => {
-        navigation.navigate('ViewEvent', {id: id});
+        navigation.navigate('modal', {screen: 'ViewEvent', params: {id: id}});
         // request(id)
         // console.log(id);
     };

@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
         marginTop: -90,
     },
     comment: {
-        color: 'white',
+        color: '#fff',
         fontSize: 16,
     },
     result: {

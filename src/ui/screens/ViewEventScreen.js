@@ -2,14 +2,19 @@ import {Text, View, StyleSheet} from 'react-native';
 import {useEffect, useState} from 'react';
 import {baseUrl} from '../../const';
 import axios from 'axios';
+import {useTranslation} from 'react-i18next';
 
 export default function ViewEventScreen({route, navigation}) {
     const [loading, setLoading] = useState(false);
     const [event, setEvent] = useState({});
     const [error, setError] = useState(false);
     const [errorDescription, setErrorDescription] = useState('');
+    const {t} = useTranslation();
 
     useEffect(() => {
+        navigation.setOptions({
+            title: t('ViewEvent')
+        })
         axios.get(`${baseUrl}/event/view?id=${route.params.id}`)
             .then(response => response.data)
             .then(response => {
