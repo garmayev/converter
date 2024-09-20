@@ -15,7 +15,7 @@ export default function ViewEventScreen({route, navigation}) {
         navigation.setOptions({
             title: t('ViewEvent')
         })
-        axios.get(`${baseUrl}/event/view?id=${route.params.id}`)
+        axios.get(`https://tgko.gasgo.pro/web/api/event/view?id=${route.params.id}`)
             .then(response => response.data)
             .then(response => {
                 console.log(response);

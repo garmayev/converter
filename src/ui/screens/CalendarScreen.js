@@ -15,7 +15,7 @@ export default function CalendarScreen({navigation}) {
 
     const setDate = (newDate) => {
         _setDate(newDate);
-        let url = `${baseUrl}/event/search-by-date?date=${newDate.getTime() / 1000}`;
+        let url = `https://tgko.gasgo.pro/web/api/event/search-by-date?date=${newDate.getTime() / 1000}`;
         // console.log(`${baseUrl}/event/view?date=${newDate.getTime() / 1000}`);
         axios.get(url)
             .then(response => response.data)
@@ -30,7 +30,7 @@ export default function CalendarScreen({navigation}) {
     };
 
     const request = () => {
-        axios.get(`${baseUrl}/event/index`, {
+        axios.get(`https://tgko.gasgo.pro/web/api/event/index`, {
             header: {
                 'Content-Type': 'application/json',
                 'accept': 'application/json',

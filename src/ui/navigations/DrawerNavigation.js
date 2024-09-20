@@ -1,6 +1,6 @@
 import ConverterScreen from '../screens/ConverterScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faCalendar, faNewspaper, faUser, faCircleDot} from '@fortawesome/free-regular-svg-icons';
+import {faCalendar, faNewspaper, faUser, faCircleDot, faBell} from '@fortawesome/free-regular-svg-icons';
 import React, {useState} from 'react';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList} from '@react-navigation/drawer';
 import {useTranslation} from 'react-i18next';
@@ -8,6 +8,8 @@ import TabNavigation from './TabNavigation';
 import {Linking, Text, View} from 'react-native';
 import News from '../icons/News';
 import CalendarScreen from '../screens/CalendarScreen';
+import RemainderScreen from '../screens/RemainderScreen';
+import ValueScreen from '../screens/ValueScreen';
 
 function CustomDrawerContent(props) {
     const {t} = useTranslation();
@@ -44,16 +46,52 @@ export default function DrawerNavigation({route, navigation}) {
                 headerShown: true,
                 headerTransparent: true,
                 drawerLabel: t('Converter'),
+                drawerLabelStyle: {
+                    fontSize: 16,
+                    fontFamily: 'Roboto'
+                },
                 drawerIcon: ({}) => {
                     return (
                         <FontAwesomeIcon icon={faCircleDot} size={21}/>
                     );
                 },
             }}/>
+            <Drawer.Screen name={'Value'} component={ValueScreen} options={{
+                headerShown: true,
+                headerTransparent: true,
+                drawerLabel: t('ValueInBalloon'),
+                drawerLabelStyle: {
+                    fontSize: 16,
+                    fontFamily: 'Roboto'
+                },
+                drawerIcon: ({}) => {
+                    return (
+                        <FontAwesomeIcon icon={faBell} size={21}/>
+                    );
+                },
+            }} />
+            {/*<Drawer.Screen name={'Remainder'} component={RemainderScreen} options={{*/}
+            {/*    headerShown: true,*/}
+            {/*    headerTransparent: false,*/}
+            {/*    drawerLabel: t('Remainder'),*/}
+            {/*    drawerLabelStyle: {*/}
+            {/*        fontSize: 16,*/}
+            {/*        fontFamily: 'Roboto'*/}
+            {/*    },*/}
+            {/*    drawerIcon: ({}) => {*/}
+            {/*        return (*/}
+            {/*            <FontAwesomeIcon icon={faBell} size={21}/>*/}
+            {/*        );*/}
+            {/*    },*/}
+            {/*}} />*/}
             <Drawer.Screen name={'TabNavigator'} component={TabNavigation} options={{
                 headerShown: true,
                 headerTransparent: true,
                 drawerLabel: t('News'),
+                drawerLabelStyle: {
+                    fontSize: 16,
+                    fontFamily: 'Roboto'
+                },
                 drawerIcon: () => {
                     return (<FontAwesomeIcon icon={faNewspaper} size={21}/>);
                 },
@@ -62,6 +100,10 @@ export default function DrawerNavigation({route, navigation}) {
                 headerShown: true,
                 headerTransparent: false,
                 headerTitle: t('Calendar'),
+                drawerLabelStyle: {
+                    fontSize: 16,
+                    fontFamily: 'Roboto'
+                },
                 drawerIcon: () => {
                     return (<FontAwesomeIcon icon={faCalendar} size={21}/>);
                 },

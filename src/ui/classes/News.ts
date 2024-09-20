@@ -2,7 +2,7 @@ export default class News {
     private _id
     private _title
     private _date
-    private _content
+    private _content = []
     private _author
     private _picture
     get id() {
@@ -34,6 +34,12 @@ export default class News {
     }
 
     set content(value) {
+        // const regexp = new RegExp('<p.*?>(.*?)<\/p>', "mg");
+        // let result = [];
+        // for (const item of value.matchAll(regexp)) {
+        //
+        //     result.push(item[1].replaceAll(/<[.*?]>*?/gmi, ""));
+        // }
         this._content = value;
     }
 

@@ -1,4 +1,5 @@
 import {
+    ActivityIndicator,
     Animated,
     Dimensions, Image, SafeAreaView,
     ScrollView,
@@ -7,23 +8,16 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
-import {useSharedValue} from 'react-native-reanimated';
-import {baseUrl} from '../../const';
 import News from '../classes/News';
 import {useTranslation} from 'react-i18next';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Modal, PaperProvider, Portal} from 'react-native-paper';
-import {Gesture} from 'react-native-gesture-handler';
-import {GestureDetector} from 'react-native-gesture-handler/src/handlers/gestures/GestureDetector';
 import {useRef} from 'react';
 import DynamicHeader from '../components/DynamicHeader';
-import {useFocusEffect} from '@react-navigation/native';
-
-const TOUCH_SLOP = 5;
-const TIME_TO_ACTIVATE_PAN = 400;
+import WebView from 'react-native-webview';
 
 export default function NewsScreen({route, navigation}) {
     const [data, setData] = useState([]);
@@ -36,7 +30,7 @@ export default function NewsScreen({route, navigation}) {
     const scrollOffsetY = useRef(new Animated.Value(0)).current;
 
     const request = () => {
-        axios.get(`${baseUrl}/post/index?sort=-created_at`, {
+        axios.get(`https://tgko.gasgo.pro/web/api/post/index?sort=-created_at`, {
             header: {
                 'Content-Type': 'application/json',
                 'accept': 'application/json',
@@ -86,13 +80,13 @@ export default function NewsScreen({route, navigation}) {
 
     return (
         <SafeAreaView style={{minHeight: Dimensions.get("window").height}}>
-            <DynamicHeader title={t('News')} description={'Последние новости журнала "Мир Газов"'}
+            <DynamicHeader title={t('News')} description={''}
                            animatedValue={scrollOffsetY} step={100}
             />
             <PaperProvider>
                 <Animated.View style={{
                     top: scrollViewTop,
-                    paddingBottom: 20
+                    // paddingBottom: 20
                 }}>
                     <ScrollView
                         style={{
@@ -100,6 +94,7 @@ export default function NewsScreen({route, navigation}) {
                             flexDirection: 'column',
                             paddingHorizontal: 5,
                             marginBottom: 100,
+                            // paddingBottom: 40
                         }}
                         scrollEventThrottle={16}
                         onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollOffsetY}}}], {useNativeDriver: false})}
@@ -142,11 +137,12 @@ export default function NewsScreen({route, navigation}) {
 }
 
 function MyModal({data, active, onClose}) {
+    const {width, height} = Dimensions.get('window')
     return (
         <Modal
             style={{
-                zIndex: 99999,
-                maxHeight: Dimensions.get('window').height,
+                zIndex: 99,
+                maxHeight: height,
             }}
             visible={active}
             onDismiss={() => {
@@ -155,23 +151,37 @@ function MyModal({data, active, onClose}) {
             contentContainerStyle={styles.modalContainer}
             dismissable={true}
         >
-            <View style={styles.modalInnerContainer}>
-                <Image source={{uri: data._picture}} width={Dimensions.get('window').width} height={200}/>
-                <TouchableOpacity onPress={() => {
-                    onClose(false);
-                }} style={styles.modalCloseBtn}>
-                    <FontAwesomeIcon icon={faTimes} size={24}/>
-                </TouchableOpacity>
-                <Text style={styles.modalTitle}>{data._title}</Text>
-                <Text style={styles.modalText}>{data._content}</Text>
-                <View
-                    style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 15}}>
-                    {/*<Text style={styles.modalDate}>{data._date}</Text>*/}
-                    <Text style={styles.modalAuthor}>{data._author}</Text>
+            <TouchableOpacity onPress={() => {
+                onClose(false);
+            }} style={styles.modalCloseBtn}>
+                <FontAwesomeIcon icon={faTimes} size={24}/>
+            </TouchableOpacity>
+            <Image source={{uri: data.picture}} width={width} height={200}/>
+            <ScrollView style={styles.modalInnerContainer}>
+                <Text style={styles.modalTitle}>{data.title}</Text>
+                {/*<Text style={styles.modalText}>{data._content}</Text>*/}
+                <View style={{paddingHorizontal: 20, width: width, backgroundColor: '#fff'}}>
+                    <WebView originWhitelist={['*']} source={{html: `<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body>${data.content}</body></html>`}}
+                             containerStyle={{minHeight: 250}} automaticallyAdjustContentInsets={true}/>
+                    {/*{data._content && data._content.map((contentItem, contentIndex) => {*/}
+                    {/*    return (*/}
+                    {/*        <Text key={contentIndex} style={{...styles.modalText, color: "#000"}}>{contentItem}</Text>*/}
+                    {/*    );*/}
+                    {/*})}*/}
                 </View>
-            </View>
+                <View style={{paddingBottom: 80, paddingHorizontal: 20, flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
+                    {data._date && <Text style={styles.modalDate}>{data._date.toLocaleDateString()}</Text>}
+                    <Text style={styles.modalAuthor}>{data.author}</Text>
+                </View>
+            </ScrollView>
         </Modal>
     );
+}
+
+function LoadingIndicatorComponent() {
+    return (
+        <ActivityIndicator color='#009b88' size='large' />
+    )
 }
 
 const styles = StyleSheet.create({
@@ -198,7 +208,7 @@ const styles = StyleSheet.create({
     cardTitle: {
         textAlign: 'center',
         paddingHorizontal: 5,
-        fontWeight: 'bold',
+        fontFamily: 'Roboto-Regular',
         fontSize: 16,
         color: '#000',
     },
@@ -222,7 +232,6 @@ const styles = StyleSheet.create({
     },
     modalInnerContainer: {
         flex: 1,
-        justifyContent: 'flex-start',
         backgroundColor: '#fff',
     },
     modalCloseBtn: {
@@ -236,6 +245,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
         borderRadius: 20,
         padding: 5,
+        zIndex: 999
     },
     modalTitle: {
         paddingTop: 10,

@@ -34,9 +34,7 @@ export default function DynamicHeader({title, description, animatedValue, step})
                 <Animated.View style={{
                     opacity: descriptionOpacity,
                 }}>
-                    <Text style={{
-                        color: '#666',
-                    }}>{description}</Text>
+                    <Text style={styles.description}>{description}</Text>
                 </Animated.View>
             </Animated.View>
     );
@@ -65,5 +63,6 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 16,
         color: '#666',
+        fontFamily: 'Jura-Light'
     },
 })

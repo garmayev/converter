@@ -31,7 +31,7 @@ export default function AdvScreen({navigation}) {
     const {t} = useTranslation();
 
     const request = () => {
-        axios.get(`${baseUrl}/adv/index`, {
+        axios.get(`https://tgko.gasgo.pro/web/api/adv/index`, {
             header: {
                 'Content-Type': 'application/json',
                 'accept': 'application/json',

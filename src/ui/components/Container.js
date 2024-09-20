@@ -12,11 +12,11 @@ import {
 import {Logo} from '../icons/Logo';
 import React from 'react';
 
-export default function Container({children}) {
+export default function Container({children, image}) {
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image style={styles.bgHeader} source={require('../../assets/bg-car2.png')}/>
+                <Image style={styles.bgHeader} source={image}/>
                 <Logo style={styles.headerLogo} />
             </View>
             <ScrollView style={{paddingVertical: 5}}>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     bgHeader: {
         width: '100%',
         height: Dimensions.get('window').width / 1.47,
-        top: 0,
+        top: -2,
         resizeMode: 'contain',
     },
     bgLogo: {

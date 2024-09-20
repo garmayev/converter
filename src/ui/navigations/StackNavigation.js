@@ -2,6 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DrawerNavigation from './DrawerNavigation';
 import {useTranslation} from 'react-i18next';
 import ViewEventScreen from '../screens/ViewEventScreen';
+import RemainderViewScreen from '../screens/RemainderViewScreen';
 
 const config = {
     animation: 'switch',
@@ -37,6 +38,9 @@ export default function StackNavigation() {
             <Stack.Screen name={'Converter'} component={DrawerNavigation} />
             <Stack.Screen name={'modal'} component={ModalNavigation} options={{
                 headerShown: false
+            }} />
+            <Stack.Screen name={'remainderView'} component={RemainderViewScreen} options={{
+                headerShown: true,
             }} />
         </Stack.Navigator>
     );
