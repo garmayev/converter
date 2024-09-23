@@ -79,7 +79,7 @@ export default function NewsScreen({route, navigation}) {
     });
 
     return (
-        <SafeAreaView style={{minHeight: Dimensions.get("window").height}}>
+        <SafeAreaView style={{minHeight: Dimensions.get('window').height}}>
             <DynamicHeader title={t('News')} description={''}
                            animatedValue={scrollOffsetY} step={100}
             />
@@ -137,7 +137,16 @@ export default function NewsScreen({route, navigation}) {
 }
 
 function MyModal({data, active, onClose}) {
-    const {width, height} = Dimensions.get('window')
+    const {width, height} = Dimensions.get('window');
+    const [webViewHeight, setWebViewHeight] = useState(null);
+    const onMessage = event => {
+        setWebViewHeight(Number(event.nativeEvent.data));
+    };
+    const injectedJavaScript = `
+    window.ReactNativeWebView.postMessage(
+        Math.max(document.body.scrollHeight, document.body.offsetHeight)
+    );
+    `;
     return (
         <Modal
             style={{
@@ -157,31 +166,33 @@ function MyModal({data, active, onClose}) {
                 <FontAwesomeIcon icon={faTimes} size={24}/>
             </TouchableOpacity>
             <Image source={{uri: data.picture}} width={width} height={200}/>
-            <ScrollView style={styles.modalInnerContainer}>
-                <Text style={styles.modalTitle}>{data.title}</Text>
-                {/*<Text style={styles.modalText}>{data._content}</Text>*/}
-                <View style={{paddingHorizontal: 20, width: width, backgroundColor: '#fff'}}>
-                    <WebView originWhitelist={['*']} source={{html: `<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body>${data.content}</body></html>`}}
-                             containerStyle={{minHeight: 250}} automaticallyAdjustContentInsets={true}/>
-                    {/*{data._content && data._content.map((contentItem, contentIndex) => {*/}
-                    {/*    return (*/}
-                    {/*        <Text key={contentIndex} style={{...styles.modalText, color: "#000"}}>{contentItem}</Text>*/}
-                    {/*    );*/}
-                    {/*})}*/}
-                </View>
-                <View style={{paddingBottom: 80, paddingHorizontal: 20, flex: 1, justifyContent: 'space-between', flexDirection: 'row'}}>
-                    {data._date && <Text style={styles.modalDate}>{data._date.toLocaleDateString()}</Text>}
-                    <Text style={styles.modalAuthor}>{data.author}</Text>
-                </View>
-            </ScrollView>
+            {/*<Text style={styles.modalText}>{data._content}</Text>*/}
+            <View style={{paddingHorizontal: 20, width: width, backgroundColor: '#fff', minHeight: 400}}>
+                <WebView originWhitelist={['*']}
+                         source={{html: `<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>p {font-size: 120%} h1 {font-size: 130%; text-align: justify}</style></head><body><h1>${data.title}</h1>${data.content}</body></html>`}}
+                         containerStyle={{minHeight: 250}} automaticallyAdjustContentInsets={true}
+                         scrollEnabled={false} onMessage={onMessage} injectedJavaScript={injectedJavaScript}/>
+            </View>
+            <View style={{
+                paddingHorizontal: 20,
+                flex: 1,
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                backgroundColor: '#fff',
+                width: '100%',
+            }}>
+                {data._date && <Text style={styles.modalDate}>{data._date.toLocaleDateString()}</Text>}
+                <Text style={styles.modalAuthor}>{data.author}</Text>
+            </View>
         </Modal>
-    );
+    )
+        ;
 }
 
 function LoadingIndicatorComponent() {
     return (
-        <ActivityIndicator color='#009b88' size='large' />
-    )
+        <ActivityIndicator color="#009b88" size="large"/>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -245,7 +256,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
         borderRadius: 20,
         padding: 5,
-        zIndex: 999
+        zIndex: 999,
     },
     modalTitle: {
         paddingTop: 10,

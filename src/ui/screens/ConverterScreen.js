@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next';
-import {Text, View, StyleSheet, TextInput, Keyboard} from 'react-native';
+import {Text, View, StyleSheet, TextInput, Keyboard, SafeAreaView} from 'react-native';
 import Scale from '../../classes/Scale';
 import Gas from '../../classes/Gas';
 import Balloon from '../../classes/Balloon';
@@ -806,7 +806,8 @@ export default function ConverterScreen({navigation}) {
     }
     let image = require('../../assets/bg-car2.png');
     return (
-        <Container image={image}>
+        <SafeAreaView>
+            <Container image={image}>
             {/* Gas */}
             <View style={styles.inlineContainer}>
                 <SelectDropdown
@@ -1091,6 +1092,7 @@ export default function ConverterScreen({navigation}) {
                     result={result}/>
             </View>
         </Container>
+        </SafeAreaView>
     );
 }
 
