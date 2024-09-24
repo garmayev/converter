@@ -804,9 +804,10 @@ export default function ConverterScreen({navigation}) {
             setResult({weight: gas.weight, liquid: gas.liquid, gas: gas.gas, count: 0.0});
         }
     }
+
     let image = require('../../assets/bg-car2.png');
     return (
-            <Container image={image}>
+        <Container image={image}>
             {/* Gas */}
             <View style={styles.inlineContainer}>
                 <SelectDropdown

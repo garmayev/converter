@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         zIndex: 2,
         minHeight: 50,
         minWidth: 100,
-        top: Platform.OS === "ios" ? 15 : 0,
+        top: Platform.OS === "ios" ? 25 : 0,
         right: 10,
     },
     footer: {

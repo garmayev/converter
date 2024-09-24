@@ -28,8 +28,8 @@ export default function ValueScreen() {
     const [advancedVisible, setAdvancedVisible] = useState(false);
 
     useEffect(() => {
-        setGas(gases[0])
-    }, [])
+        setGas(gases[0]);
+    }, []);
     useEffect(() => {
         for (const element of values) {
             if (element.gas_id === gas.id && element.pressure === pressure && element.temp === temperature) {
@@ -44,148 +44,146 @@ export default function ValueScreen() {
     let image = require('../../assets/bg-car.png');
 
     return (
-        <SafeAreaView>
-            <Container image={image}>
-                <View style={{height: 'auto', maxHeight: Dimensions.get('window').height - 80}}>
-                    <ScrollView scrollEnabled={true} nestedScrollEnabled={true} style={styles.mainContainer}>
-                        { /* Select gas */}
-                        <View style={styles.inputContainer}>
-                            <Text style={{...styles.text, color: '#666'}}>{t('SelectGas')}</Text>
-                            <SelectDropdown
-                                renderButton={(selectedItem, isOpened) => {
-                                    if (selectedItem) {
-                                        return (
-                                            <View style={styles.dropdownButtonStyle}>
-                                                <View style={styles.dropdownPlaceholderStyle}>
-                                                    <Text style={{...styles.dropdownPlaceholderStyle, color: '#000'}}>
-                                                        {selectedItem.title}
-                                                    </Text>
-                                                    <FontAwesomeIcon icon={faChevronDown}
-                                                                     style={styles.dropdownItemIconStyle}/>
-                                                </View>
-                                            </View>
-                                        );
-                                    } else {
-                                        return (
-                                            <View style={styles.dropdownButtonStyle}>
-                                                <View style={styles.dropdownPlaceholderStyle}>
-                                                    <Text style={styles.dropdownPlaceholderStyle}>
-                                                        {t('SelectGas')}
-                                                    </Text>
-                                                    <FontAwesomeIcon icon={faChevronDown}
-                                                                     style={styles.dropdownItemIconStyle}/>
-                                                </View>
-                                            </View>
-                                        );
-                                    }
-                                }}
-                                renderItem={(item, index, isSelected) => {
+        <Container image={image}>
+            <View style={{height: 'auto', maxHeight: Dimensions.get('window').height - 80}}>
+                <ScrollView scrollEnabled={true} nestedScrollEnabled={true} style={styles.mainContainer}>
+                    { /* Select gas */}
+                    <View style={styles.inputContainer}>
+                        <Text style={{...styles.text, color: '#666'}}>{t('SelectGas')}</Text>
+                        <SelectDropdown
+                            renderButton={(selectedItem, isOpened) => {
+                                if (selectedItem) {
                                     return (
-                                        <View
-                                            style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#DDD'})}}>
-                                            <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+                                        <View style={styles.dropdownButtonStyle}>
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text style={{...styles.dropdownPlaceholderStyle, color: '#000'}}>
+                                                    {selectedItem.title}
+                                                </Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={styles.dropdownItemIconStyle}/>
+                                            </View>
                                         </View>
                                     );
-                                }}
-                                onSelect={(selectedItem) => {
-                                    setGas(selectedItem);
-                                }}
-                                defaultValue={gas}
-                                data={gases}/>
-                        </View>
-                        { /* Pressure */}
-                        <View style={styles.inputContainer}>
-                            <Text style={{...styles.text, color: '#666'}}>{t('Density')}</Text>
-                            <View style={styles.inline}>
-                                <TextInput style={styles.inputText} onChangeText={(text) => {
-                                    if (text.length) {
-                                        let val = Number.parseInt(text);
-                                        if (val > 0 && val < 301) {
-                                            setPressure(Number.parseInt(text));
-                                        }
+                                } else {
+                                    return (
+                                        <View style={styles.dropdownButtonStyle}>
+                                            <View style={styles.dropdownPlaceholderStyle}>
+                                                <Text style={styles.dropdownPlaceholderStyle}>
+                                                    {t('SelectGas')}
+                                                </Text>
+                                                <FontAwesomeIcon icon={faChevronDown}
+                                                                 style={styles.dropdownItemIconStyle}/>
+                                            </View>
+                                        </View>
+                                    );
+                                }
+                            }}
+                            renderItem={(item, index, isSelected) => {
+                                return (
+                                    <View
+                                        style={{...styles.dropdownItemStyle, ...(isSelected && {backgroundColor: '#DDD'})}}>
+                                        <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+                                    </View>
+                                );
+                            }}
+                            onSelect={(selectedItem) => {
+                                setGas(selectedItem);
+                            }}
+                            defaultValue={gas}
+                            data={gases}/>
+                    </View>
+                    { /* Pressure */}
+                    <View style={styles.inputContainer}>
+                        <Text style={{...styles.text, color: '#666'}}>{t('Density')}</Text>
+                        <View style={styles.inline}>
+                            <TextInput style={styles.inputText} onChangeText={(text) => {
+                                if (text.length) {
+                                    let val = Number.parseInt(text);
+                                    if (val > 0 && val < 301) {
+                                        setPressure(Number.parseInt(text));
                                     }
-                                }} inputMode={'numeric'}>{pressure}</TextInput>
-                                <Text style={{...styles.text, marginLeft: 10}}>{t('Athmose')}</Text>
-                            </View>
+                                }
+                            }} inputMode={'numeric'}>{pressure}</TextInput>
+                            <Text style={{...styles.text, marginLeft: 10}}>{t('Athmose')}</Text>
                         </View>
-                        { /* Temperature */}
-                        <View style={styles.inputContainer}>
-                            <Text style={{...styles.text, color: '#666'}}>{t('Temperature')}</Text>
-                            <View style={styles.inline}>
-                                <TextInput style={styles.inputText} onChangeText={text => {
-                                    if (text.length) {
-                                        let val = Number.parseInt(text);
-                                        if (val > -31 && val < 31) {
-                                            setTemperature(val);
-                                        }
+                    </View>
+                    { /* Temperature */}
+                    <View style={styles.inputContainer}>
+                        <Text style={{...styles.text, color: '#666'}}>{t('Temperature')}</Text>
+                        <View style={styles.inline}>
+                            <TextInput style={styles.inputText} onChangeText={text => {
+                                if (text.length) {
+                                    let val = Number.parseInt(text);
+                                    if (val > -31 && val < 31) {
+                                        setTemperature(val);
                                     }
-                                }} inputMode={'numeric'}>{temperature}</TextInput>
-                                <Text style={{...styles.text, marginLeft: 10}}>{t('Celcium')}</Text>
-                            </View>
+                                }
+                            }} inputMode={'numeric'}>{temperature}</TextInput>
+                            <Text style={{...styles.text, marginLeft: 10}}>{t('Celcium')}</Text>
                         </View>
-                        { /* Value */}
-                        <View style={styles.inputContainer}>
-                            <Text style={{...styles.text, color: '#666'}}>{t('Balloon Value')}</Text>
-                            <View style={styles.inline}>
-                                <TextInput style={styles.inputText} onChangeText={text => {
-                                    if (text.length) {
-                                        let val = Number.parseInt(text);
-                                        setBalloonValue(val);
-                                    }
-                                }} inputMode={'numeric'}>{balloonValue}</TextInput>
-                                <Text style={{...styles.text, marginLeft: 10}}>{t('Liters')}</Text>
-                            </View>
+                    </View>
+                    { /* Value */}
+                    <View style={styles.inputContainer}>
+                        <Text style={{...styles.text, color: '#666'}}>{t('Balloon Value')}</Text>
+                        <View style={styles.inline}>
+                            <TextInput style={styles.inputText} onChangeText={text => {
+                                if (text.length) {
+                                    let val = Number.parseInt(text);
+                                    setBalloonValue(val);
+                                }
+                            }} inputMode={'numeric'}>{balloonValue}</TextInput>
+                            <Text style={{...styles.text, marginLeft: 10}}>{t('Liters')}</Text>
                         </View>
-                        { /* Result */}
-                        <View style={styles.resultContainer}>
-                            <View style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                            }}>
-                                <Text style={{...styles.text, fontWeight: 'bold'}}>{t('Gas Value')}: </Text>
-                                <Text
-                                    style={styles.text}>{Math.floor(result * 1000000) / 1000000}... {t('CubicMeter-small')}</Text>
-                            </View>
-                            <View style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                            }}>
-                                <Text style={{...styles.text, fontWeight: 'bold'}}>{t('Koefficient K')}: </Text><Text
-                                style={styles.text}>{Math.floor(koef * 100000000) / 100000000}...</Text>
-                            </View>
+                    </View>
+                    { /* Result */}
+                    <View style={styles.resultContainer}>
+                        <View style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                        }}>
+                            <Text style={{...styles.text, fontWeight: 'bold'}}>{t('Gas Value')}: </Text>
+                            <Text
+                                style={styles.text}>{Math.floor(result * 1000000) / 1000000}... {t('CubicMeter-small')}</Text>
                         </View>
-                        <Pressable onPress={() => {
-                            setAdvancedVisible(!advancedVisible);
-                        }} style={{paddingTop: 20}}>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{...styles.text, fontWeight: 'bold'}}>{t('Details')}</Text>
-                                <FontAwesomeIcon icon={!advancedVisible ? faChevronDown : faChevronUp}/>
-                            </View>
-                        </Pressable>
-                        {advancedVisible && <View>
-                            <Text style={{...styles.text, paddingBottom: 10}}>С помощью данного калькулятора Вы можете
-                                расчитать сколько кислорода, азота, аргона или гелия содержится в баллоне при различных
-                                температурах и давлениях. Для этого необходимо выбрать интересующий Вас газ, проставить
-                                давление (диапазон давлениий для всех газов за исключением гелия от 1 до 300атм, для
-                                гелия до 400атм) и температуру (диапазон температур для каждого газа от -30 до +30°C), а
-                                также объем баллона.</Text>
-                            <Text style={{...styles.text, paddingBottom: 10}}>Результатом будет объем газа, содержащийся
-                                в указанном баллоне при выбранном давлении и температуре. Также выводится коэффициент К,
-                                который используется для определения объема газа в баллоне при нормальных
-                                условиях.</Text>
-                            <Text style={{...styles.text, fontStyle: 'italic'}}>K = (0.968 * P + 1) * (293 / 273 + t) *
-                                0,001 /
-                                z</Text>
-                            <Text style={{...styles.text, fontSize: 12}}>z - коэффициент сжимаемости газа'</Text>
-                            <Text></Text>
-                            <Text></Text>
-                        </View>}
-                    </ScrollView>
-                </View>
-            </Container>
-        </SafeAreaView>
+                        <View style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                        }}>
+                            <Text style={{...styles.text, fontWeight: 'bold'}}>{t('Koefficient K')}: </Text><Text
+                            style={styles.text}>{Math.floor(koef * 100000000) / 100000000}...</Text>
+                        </View>
+                    </View>
+                    <Pressable onPress={() => {
+                        setAdvancedVisible(!advancedVisible);
+                    }} style={{paddingTop: 20}}>
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Text style={{...styles.text, fontWeight: 'bold'}}>{t('Details')}</Text>
+                            <FontAwesomeIcon icon={!advancedVisible ? faChevronDown : faChevronUp}/>
+                        </View>
+                    </Pressable>
+                    {advancedVisible && <View>
+                        <Text style={{...styles.text, paddingBottom: 10}}>С помощью данного калькулятора Вы можете
+                            расчитать сколько кислорода, азота, аргона или гелия содержится в баллоне при различных
+                            температурах и давлениях. Для этого необходимо выбрать интересующий Вас газ, проставить
+                            давление (диапазон давлениий для всех газов за исключением гелия от 1 до 300атм, для
+                            гелия до 400атм) и температуру (диапазон температур для каждого газа от -30 до +30°C), а
+                            также объем баллона.</Text>
+                        <Text style={{...styles.text, paddingBottom: 10}}>Результатом будет объем газа, содержащийся
+                            в указанном баллоне при выбранном давлении и температуре. Также выводится коэффициент К,
+                            который используется для определения объема газа в баллоне при нормальных
+                            условиях.</Text>
+                        <Text style={{...styles.text, fontStyle: 'italic'}}>K = (0.968 * P + 1) * (293 / 273 + t) *
+                            0,001 /
+                            z</Text>
+                        <Text style={{...styles.text, fontSize: 12}}>z - коэффициент сжимаемости газа'</Text>
+                        <Text></Text>
+                        <Text></Text>
+                    </View>}
+                </ScrollView>
+            </View>
+        </Container>
     );
 }
 
