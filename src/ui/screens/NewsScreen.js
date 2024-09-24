@@ -1,6 +1,6 @@
 import {
     Animated,
-    Dimensions, Image, SafeAreaView,
+    Dimensions, Image, Platform, SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
@@ -22,7 +22,7 @@ export default function NewsScreen({route, navigation}) {
     const [modalActive, setModalActive] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
     const {t} = useTranslation();
-    const scrollOffsetY = useRef(new Animated.Value(0)).current;
+    const scrollOffsetY = useRef(new Animated.Value(Platform.OS === "ios" ? 40 : 0)).current;
 
     const request = () => {
         axios.get(`https://tgko.gasgo.pro/web/api/post/index?sort=-created_at`, {
@@ -68,8 +68,8 @@ export default function NewsScreen({route, navigation}) {
     }
 
     const scrollViewTop = scrollOffsetY.interpolate({
-        inputRange: [0, 100],
-        outputRange: [120, 50],
+        inputRange: [Platform.OS === "ios" ? 40 : 0, 100],
+        outputRange: [Platform.OS === "ios" ? 160 : 120, 50],
         extrapolate: 'clamp',
     });
 

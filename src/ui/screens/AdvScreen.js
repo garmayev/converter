@@ -5,7 +5,7 @@ import {
     ScrollView,
     Dimensions,
     Animated,
-    SafeAreaView, Pressable,
+    SafeAreaView, Pressable, Platform,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -58,7 +58,7 @@ export default function AdvScreen({navigation}) {
         return () => clearInterval(intervalId);
     }, []);
 
-    const scrollOffsetY = useRef(new Animated.Value(0)).current;
+    const scrollOffsetY = useRef(new Animated.Value(Platform.OS === "IOS" ? 40 : 0)).current;
 
     function showItem(element) {
         // navigation.navigate('modal', {
@@ -74,8 +74,8 @@ export default function AdvScreen({navigation}) {
     const STEP = 100;
 
     const scrollViewTop = scrollOffsetY.interpolate({
-        inputRange: [0, STEP],
-        outputRange: [120, 50],
+        inputRange: [Platform.OS === "ios" ? 40 : 0, STEP],
+        outputRange: [Platform.OS === "ios" ? 160 : 120, 50],
         extrapolate: 'clamp',
     });
 
