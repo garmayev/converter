@@ -1,5 +1,4 @@
 import {
-    ActivityIndicator,
     Animated,
     Dimensions, Image, SafeAreaView,
     ScrollView,
@@ -12,12 +11,8 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import News from '../classes/News';
 import {useTranslation} from 'react-i18next';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
-import {Modal, PaperProvider, Portal} from 'react-native-paper';
 import {useRef} from 'react';
 import DynamicHeader from '../components/DynamicHeader';
-import WebView from 'react-native-webview';
 
 export default function NewsScreen({route, navigation}) {
     const [data, setData] = useState([]);
@@ -83,52 +78,50 @@ export default function NewsScreen({route, navigation}) {
             <DynamicHeader title={t('News')} description={''}
                            animatedValue={scrollOffsetY} step={100}
             />
-            <PaperProvider>
-                <Animated.View style={{
-                    top: scrollViewTop,
-                    // paddingBottom: 20
-                }}>
-                    <ScrollView
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            paddingHorizontal: 5,
-                            marginBottom: 100,
-                            // paddingBottom: 40
-                        }}
-                        scrollEventThrottle={16}
-                        onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollOffsetY}}}], {useNativeDriver: false})}
-                    >
-                        {loading &&
-                            data.map((item, index) => {
-                                return (
-                                    <TouchableOpacity style={styles.card} onPress={() => {
-                                        navigation.navigate('ViewNews', { id: item.id });
-                                    }} key={index}>
-                                        <View style={styles.cardContainer}>
-                                            <Image
-                                                style={styles.cardPicture}
-                                                resizeMode={'cover'}
-                                                source={{uri: item.picture}}/>
-                                            <View style={styles.cardItem}>
-                                                <Text style={styles.cardTitle}>{item.title}</Text>
-                                            </View>
+            <Animated.View style={{
+                top: scrollViewTop,
+                // paddingBottom: 20
+            }}>
+                <ScrollView
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        paddingHorizontal: 5,
+                        marginBottom: 100,
+                        // paddingBottom: 40
+                    }}
+                    scrollEventThrottle={16}
+                    onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollOffsetY}}}], {useNativeDriver: false})}
+                >
+                    {loading &&
+                        data.map((item, index) => {
+                            return (
+                                <TouchableOpacity style={styles.card} onPress={() => {
+                                    navigation.navigate('ViewNews', {id: item.id});
+                                }} key={index}>
+                                    <View style={styles.cardContainer}>
+                                        <Image
+                                            style={styles.cardPicture}
+                                            resizeMode={'cover'}
+                                            source={{uri: item.picture}}/>
+                                        <View style={styles.cardItem}>
+                                            <Text style={styles.cardTitle}>{item.title}</Text>
                                         </View>
-                                    </TouchableOpacity>
-                                );
-                            })
-                        }
-                        {error &&
-                            <Text style={{
-                                width: '100%',
-                                fontStyle: 'italic',
-                                textAlign: 'center',
-                                color: 'red',
-                            }}>{errorDescription}</Text>
-                        }
-                    </ScrollView>
-                </Animated.View>
-            </PaperProvider>
+                                    </View>
+                                </TouchableOpacity>
+                            );
+                        })
+                    }
+                    {error &&
+                        <Text style={{
+                            width: '100%',
+                            fontStyle: 'italic',
+                            textAlign: 'center',
+                            color: 'red',
+                        }}>{errorDescription}</Text>
+                    }
+                </ScrollView>
+            </Animated.View>
         </SafeAreaView>
     );
 }

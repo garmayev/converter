@@ -2,22 +2,15 @@ import {
     Text,
     View,
     StyleSheet,
-    TouchableOpacity,
     ScrollView,
     Dimensions,
     Animated,
-    Image,
-    SafeAreaView, Linking, Pressable,
+    SafeAreaView, Pressable,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import axios from 'axios';
-import {baseUrl} from '../../const';
-import Ad from '../classes/Ad';
 import DynamicHeader from '../components/DynamicHeader';
-import {Modal, PaperProvider, Portal} from 'react-native-paper';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {useRef} from 'react';
 
 export default function AdvScreen({navigation}) {
