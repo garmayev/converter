@@ -5,7 +5,7 @@ import {
     ScrollView,
     Dimensions,
     Animated,
-    SafeAreaView, Pressable, Platform,
+    SafeAreaView, Pressable, Platform, FlatList,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -18,8 +18,6 @@ export default function AdvScreen({navigation}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorDescription, setErrorDescription] = useState('');
-    const [modalActive, setModalActive] = useState(false);
-    const [selectedItem, setSelectedItem] = useState({});
 
     const {t} = useTranslation();
 
@@ -58,72 +56,34 @@ export default function AdvScreen({navigation}) {
         return () => clearInterval(intervalId);
     }, []);
 
-    const scrollOffsetY = useRef(new Animated.Value(Platform.OS === "IOS" ? 40 : 0)).current;
-
-    function showItem(element) {
-        // navigation.navigate('modal', {
-        //     screen: 'ViewAdv',
-        //     params: {
-        //         id: element.id,
-        //     },
-        // });
-        setSelectedItem(element);
-        setModalActive(true);
-    }
-
-    const STEP = 100;
-
-    const scrollViewTop = scrollOffsetY.interpolate({
-        inputRange: [Platform.OS === "ios" ? 40 : 0, STEP],
-        outputRange: [Platform.OS === "ios" ? 160 : 120, 50],
-        extrapolate: 'clamp',
-    });
+    const Item = ({item}) => (
+        <Pressable onPress={() => {
+            navigation.navigate('ViewAdv', {id: item.id});
+        }}>
+            <View style={styles.card}>
+                <Text style={styles.cardText}>{item.title}</Text>
+            </View>
+        </Pressable>
+    )
 
     return (
         <SafeAreaView>
-            <DynamicHeader title={t('Advertisements')}
-                           animatedValue={scrollOffsetY} step={STEP}
-            />
-                <Animated.View style={{
-                    top: scrollViewTop,
-                    marginBottom: 100,
-                    paddingBottom: 10,
-                }}>
-                    <ScrollView
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            paddingHorizontal: 5,
-                        }}
-                        scrollEventThrottle={16}
-                        onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollOffsetY}}}], {useNativeDriver: false})}
-                    >
-                        {loading && data.map((item, index) => {
-                            return (
-                                <Pressable key={index} onPress={() => {
-                                    navigation.navigate('ViewAdv', {id: item.id});
-                                    // showItem(item);
-                                }}>
-                                    <View style={styles.card}>
-                                        <Text style={styles.cardText}>{item.title}</Text>
-                                    </View>
-                                </Pressable>
-                            );
-                        })}
-                        {error &&
-                            <Text style={{
-                                width: '100%',
-                                fontStyle: 'italic',
-                                textAlign: 'center',
-                                color: 'red',
-                            }}>{errorDescription}</Text>
-                        }
-                    </ScrollView>
-                </Animated.View>
+            <DynamicHeader title={t('Advertisements')} />
+            <FlatList data={data} renderItem={Item} />
         </SafeAreaView>
     );
 }
 
+const shadow = {
+    shadowColor: "#000000",
+    shadowOffset: {
+        width: 0,
+        height: 5,
+    },
+    shadowOpacity:  0.20,
+    shadowRadius: 5.62,
+    elevation: 7
+}
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#E4E4E4',
@@ -140,8 +100,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         backgroundColor: '#FFF',
         minHeight: 90,
-        elevation: 5,
-        borderRadius: 10,
+        borderRadius: 24,
+        ...shadow
     },
     cardText: {
         color: '#000',

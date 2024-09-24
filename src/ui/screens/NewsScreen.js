@@ -1,6 +1,6 @@
 import {
     Animated,
-    Dimensions, Image, Platform, SafeAreaView,
+    Dimensions, FlatList, Image, Platform, Pressable, SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
@@ -19,10 +19,11 @@ export default function NewsScreen({route, navigation}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorDescription, setErrorDescription] = useState('');
-    const [modalActive, setModalActive] = useState(false);
-    const [selectedItem, setSelectedItem] = useState({});
     const {t} = useTranslation();
-    const scrollOffsetY = useRef(new Animated.Value(Platform.OS === "ios" ? 40 : 0)).current;
+    const isIos = () => {
+        return Platform.OS === 'ios';
+    };
+    const scrollOffsetY = useRef(new Animated.Value(isIos() ? 0 : 40)).current;
 
     const request = () => {
         axios.get(`https://tgko.gasgo.pro/web/api/post/index?sort=-created_at`, {
@@ -39,17 +40,17 @@ export default function NewsScreen({route, navigation}) {
                     d.push(new News(response[key]));
                 }
                 setData(d);
-                setLoading(true);
                 setError(false);
                 setErrorDescription('');
             } else {
                 setError(true);
                 setErrorDescription(t('No data found'));
-                setLoading(false);
             }
         }).catch(error => {
-            console.error(error);
-        });
+            setError(error.message);
+        }).finally(() => {
+            setLoading(true)
+        })
     };
 
     useEffect(() => {
@@ -61,71 +62,54 @@ export default function NewsScreen({route, navigation}) {
         return () => clearInterval(intervalId);
     }, []);
 
-    function show(element) {
-        // navigation.navigate('modal', {screen: 'ViewNews', params: {item: JSON.stringify(element)}});
-        setSelectedItem(element);
-        setModalActive(true);
-    }
-
-    const scrollViewTop = scrollOffsetY.interpolate({
-        inputRange: [Platform.OS === "ios" ? 40 : 0, 100],
-        outputRange: [Platform.OS === "ios" ? 160 : 120, 50],
-        extrapolate: 'clamp',
-    });
+    const Item = (item) => {
+        const data = item.item;
+        return (
+            <Pressable style={styles.card} onPress={() => {
+                navigation.navigate('ViewNews', {id: data.id});
+            }}>
+                <View style={styles.cardContainer}>
+                    <Image
+                        style={styles.cardPicture}
+                        resizeMode={'cover'}
+                        source={{uri: data.picture}}/>
+                    <View style={styles.cardItem}>
+                        <Text style={styles.cardTitle}>{data.title}</Text>
+                    </View>
+                </View>
+            </Pressable>
+        );
+    };
+    const EmptyList = () => {
+        return (
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>{t('No data found')}</Text>
+            </View>
+        );
+    };
 
     return (
         <SafeAreaView style={{minHeight: Dimensions.get('window').height}}>
-            <DynamicHeader title={t('News')} description={''}
-                           animatedValue={scrollOffsetY} step={100}
+            <DynamicHeader title={t('News')} description={''} start={isIos()}
+                           animatedValue={scrollOffsetY} step={50}
             />
-            <Animated.View style={{
-                top: scrollViewTop,
-                // paddingBottom: 20
-            }}>
-                <ScrollView
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        paddingHorizontal: 5,
-                        marginBottom: 100,
-                        // paddingBottom: 40
-                    }}
-                    scrollEventThrottle={16}
-                    onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollOffsetY}}}], {useNativeDriver: false})}
-                >
-                    {loading &&
-                        data.map((item, index) => {
-                            return (
-                                <TouchableOpacity style={styles.card} onPress={() => {
-                                    navigation.navigate('ViewNews', {id: item.id});
-                                }} key={index}>
-                                    <View style={styles.cardContainer}>
-                                        <Image
-                                            style={styles.cardPicture}
-                                            resizeMode={'cover'}
-                                            source={{uri: item.picture}}/>
-                                        <View style={styles.cardItem}>
-                                            <Text style={styles.cardTitle}>{item.title}</Text>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            );
-                        })
-                    }
-                    {error &&
-                        <Text style={{
-                            width: '100%',
-                            fontStyle: 'italic',
-                            textAlign: 'center',
-                            color: 'red',
-                        }}>{errorDescription}</Text>
-                    }
-                </ScrollView>
-            </Animated.View>
+            {loading && <FlatList data={data} renderItem={Item} contentContainerStyle={{flexGrow: 1}}
+                       ListEmptyComponent={EmptyList}/>}
+            {!loading && <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text>{errorDescription}</Text></View>}
         </SafeAreaView>
     );
 }
 
+const shadow = {
+    shadowColor: "#000000",
+    shadowOffset: {
+        width: 0,
+        height: 5,
+    },
+    shadowOpacity:  0.20,
+    shadowRadius: 5.62,
+    elevation: 7
+}
 const styles = StyleSheet.create({
     card: {
         flex: 1,
@@ -140,8 +124,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 5,
         borderRadius: 24,
-        borderWidth: 2,
         borderColor: '#CCC',
+        ...shadow
     },
     cardItem: {
         width: '100%',
