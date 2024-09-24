@@ -18,18 +18,17 @@ export default function ViewEventScreen({route, navigation}) {
         axios.get(`https://tgko.gasgo.pro/web/api/event/view?id=${route.params.id}`)
             .then(response => response.data)
             .then(response => {
-                console.log(response);
                 setEvent(response);
-                setLoading(true);
                 setError(false);
                 setErrorDescription('');
             })
             .catch(error => {
-                console.error(error);
-                setLoading(false);
                 setError(true);
                 setErrorDescription(t('No data found'));
-            });
+            })
+            .finally(() => {
+                setLoading(true);
+            })
     }, []);
 
     return (

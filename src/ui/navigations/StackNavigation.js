@@ -3,6 +3,8 @@ import DrawerNavigation from './DrawerNavigation';
 import {useTranslation} from 'react-i18next';
 import ViewEventScreen from '../screens/ViewEventScreen';
 import RemainderViewScreen from '../screens/RemainderViewScreen';
+import ViewNewsScreen from '../screens/ViewNewsScreen';
+import ViewAdvScreen from '../screens/ViewAdvScreen';
 
 const config = {
     animation: 'switch',
@@ -40,6 +42,12 @@ export default function StackNavigation() {
                 headerShown: false
             }} />
             <Stack.Screen name={'remainderView'} component={RemainderViewScreen} options={{
+                headerShown: true,
+            }} />
+            <Stack.Screen name={'ViewNews'} component={ViewNewsScreen} options={{
+                headerShown: true,
+            }} />
+            <Stack.Screen name={'ViewAdv'} component={ViewAdvScreen} options={{
                 headerShown: true,
             }} />
         </Stack.Navigator>

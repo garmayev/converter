@@ -1,6 +1,6 @@
 import {Text, Animated, Dimensions, ScrollView, StyleSheet} from 'react-native';
 
-export default function DynamicHeader({title, description, animatedValue, step}) {
+export default function DynamicHeader({title, description = '', animatedValue, step}) {
     const headerHeight = animatedValue.interpolate({
         inputRange: [0, step],
         outputRange: [150, 120],
@@ -31,11 +31,11 @@ export default function DynamicHeader({title, description, animatedValue, step})
                 height: headerHeight,
             }}>
                 <Text style={styles.title}>{title}</Text>
-                <Animated.View style={{
+                {description && <Animated.View style={{
                     opacity: descriptionOpacity,
                 }}>
                     <Text style={styles.description}>{description}</Text>
-                </Animated.View>
+                </Animated.View>}
             </Animated.View>
     );
 }

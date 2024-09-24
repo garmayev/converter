@@ -7,7 +7,7 @@ import {
     Dimensions,
     Animated,
     Image,
-    SafeAreaView, Linking,
+    SafeAreaView, Linking, Pressable,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -78,7 +78,7 @@ export default function AdvScreen({navigation}) {
         setModalActive(true);
     }
 
-    const STEP = 80
+    const STEP = 100;
 
     const scrollViewTop = scrollOffsetY.interpolate({
         inputRange: [0, STEP],
@@ -87,110 +87,47 @@ export default function AdvScreen({navigation}) {
     });
 
     return (
-        <SafeAreaView style={{minHeight: Dimensions.get("window").height}}>
-            <DynamicHeader title={t('Advertisements')} description={t('advInfo')}
+        <SafeAreaView>
+            <DynamicHeader title={t('Advertisements')}
                            animatedValue={scrollOffsetY} step={STEP}
             />
-            <PaperProvider>
                 <Animated.View style={{
                     top: scrollViewTop,
                     marginBottom: 100,
-                    paddingBottom: 10
+                    paddingBottom: 10,
                 }}>
                     <ScrollView
                         style={{
                             display: 'flex',
                             flexDirection: 'column',
                             paddingHorizontal: 5,
-                            // minHeight: Dimensions.get("window").height * 3
                         }}
                         scrollEventThrottle={16}
                         onScroll={Animated.event([{nativeEvent: {contentOffset: {y: scrollOffsetY}}}], {useNativeDriver: false})}
                     >
-                    {loading && data.map((item, index) => {
-                        return (
-                            <TouchableOpacity key={index} onPress={() => {
-                                showItem(item);
-                            }}>
-                                <View style={styles.card}>
-                                    <Text style={styles.cardText}>{item.title}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        );
-                    })}
-                    {error &&
-                        <Text style={{
-                            width: '100%',
-                            fontStyle: 'italic',
-                            textAlign: 'center',
-                            color: 'red',
-                        }}>{errorDescription}</Text>
-                    }
-                </ScrollView>
+                        {loading && data.map((item, index) => {
+                            return (
+                                <Pressable key={index} onPress={() => {
+                                    navigation.navigate('ViewAdv', {id: item.id});
+                                    // showItem(item);
+                                }}>
+                                    <View style={styles.card}>
+                                        <Text style={styles.cardText}>{item.title}</Text>
+                                    </View>
+                                </Pressable>
+                            );
+                        })}
+                        {error &&
+                            <Text style={{
+                                width: '100%',
+                                fontStyle: 'italic',
+                                textAlign: 'center',
+                                color: 'red',
+                            }}>{errorDescription}</Text>
+                        }
+                    </ScrollView>
                 </Animated.View>
-                <Portal>
-                    <MyModal data={selectedItem} active={modalActive} onClose={setModalActive}/>
-                </Portal>
-            </PaperProvider>
         </SafeAreaView>
-    );
-}
-
-function MyModal({data, active, onClose}) {
-    const {t} = useTranslation();
-
-    return (
-        <Modal
-            style={{
-                zIndex: 99999,
-            }}
-            visible={active}
-            onDismiss={() => {
-                onClose(false);
-            }}
-            contentContainerStyle={styles.modalContainer}
-            dismissable={true}
-        >
-            <View style={styles.modalInnerContainer}>
-                <TouchableOpacity onPress={() => {
-                    onClose(false);
-                }} style={styles.modalCloseBtn}>
-                    <FontAwesomeIcon icon={faTimes} size={24}/>
-                </TouchableOpacity>
-                <View>
-                    <Text style={styles.modalTitle}>{data.title}</Text>
-                </View>
-                <ScrollView style={{
-                    paddingHorizontal: 15,
-                    paddingBottom: 90,
-                }}>
-                    <View>
-                        <Text style={styles.modalText}>{data.description}</Text>
-                    </View>
-                    <Text></Text>
-                    <View style={styles.inline}>
-                        <Text style={styles.label}>{t('author')}: </Text>
-                        <Text style={styles.modalAuthor}>{data.name}</Text>
-                    </View>
-                    <View style={styles.inline}>
-                        <Text style={styles.label}>{t('email')}: </Text>
-                        <TouchableOpacity onPress={event => {
-                            Linking.openURL(`mailto:${data.mail}`);
-                        }}>
-                            <Text style={styles.modalAuthor}>{data.email}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.inline}>
-                        <Text style={styles.label}>{t('phone')}: </Text>
-                        <TouchableOpacity onPress={event => {
-                            Linking.openURL(`tel:${data.phone}`);
-                        }}>
-                            <Text style={styles.modalAuthor}>{data.phone}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            </View>
-        </Modal>
     );
 }
 
@@ -201,11 +138,17 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
     },
     card: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10,
         padding: 10,
-        marginBottom: 5,
+        marginBottom: 15,
         marginHorizontal: 10,
         backgroundColor: '#FFF',
         minHeight: 90,
+        elevation: 5,
+        borderRadius: 10,
     },
     cardText: {
         color: '#000',

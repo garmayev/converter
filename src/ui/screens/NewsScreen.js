@@ -103,7 +103,7 @@ export default function NewsScreen({route, navigation}) {
                             data.map((item, index) => {
                                 return (
                                     <TouchableOpacity style={styles.card} onPress={() => {
-                                        show(item);
+                                        navigation.navigate('ViewNews', { id: item.id });
                                     }} key={index}>
                                         <View style={styles.cardContainer}>
                                             <Image
@@ -128,70 +128,8 @@ export default function NewsScreen({route, navigation}) {
                         }
                     </ScrollView>
                 </Animated.View>
-                <Portal>
-                    <MyModal data={selectedItem} active={modalActive} onClose={setModalActive}/>
-                </Portal>
             </PaperProvider>
         </SafeAreaView>
-    );
-}
-
-function MyModal({data, active, onClose}) {
-    const {width, height} = Dimensions.get('window');
-    const [webViewHeight, setWebViewHeight] = useState(null);
-    const onMessage = event => {
-        setWebViewHeight(Number(event.nativeEvent.data));
-    };
-    const injectedJavaScript = `
-    window.ReactNativeWebView.postMessage(
-        Math.max(document.body.scrollHeight, document.body.offsetHeight)
-    );
-    `;
-    return (
-        <Modal
-            style={{
-                zIndex: 99,
-                maxHeight: height,
-            }}
-            visible={active}
-            onDismiss={() => {
-                onClose(false);
-            }}
-            contentContainerStyle={styles.modalContainer}
-            dismissable={true}
-        >
-            <TouchableOpacity onPress={() => {
-                onClose(false);
-            }} style={styles.modalCloseBtn}>
-                <FontAwesomeIcon icon={faTimes} size={24}/>
-            </TouchableOpacity>
-            <Image source={{uri: data.picture}} width={width} height={200}/>
-            {/*<Text style={styles.modalText}>{data._content}</Text>*/}
-            <View style={{paddingHorizontal: 20, width: width, backgroundColor: '#fff', minHeight: 400}}>
-                <WebView originWhitelist={['*']}
-                         source={{html: `<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>p {font-size: 120%} h1 {font-size: 130%; text-align: justify}</style></head><body><h1>${data.title}</h1>${data.content}</body></html>`}}
-                         containerStyle={{minHeight: 250}} automaticallyAdjustContentInsets={true}
-                         scrollEnabled={false} onMessage={onMessage} injectedJavaScript={injectedJavaScript}/>
-            </View>
-            <View style={{
-                paddingHorizontal: 20,
-                flex: 1,
-                justifyContent: 'space-between',
-                flexDirection: 'row',
-                backgroundColor: '#fff',
-                width: '100%',
-            }}>
-                {data._date && <Text style={styles.modalDate}>{data._date.toLocaleDateString()}</Text>}
-                <Text style={styles.modalAuthor}>{data.author}</Text>
-            </View>
-        </Modal>
-    )
-        ;
-}
-
-function LoadingIndicatorComponent() {
-    return (
-        <ActivityIndicator color="#009b88" size="large"/>
     );
 }
 
@@ -240,6 +178,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 50,
+        backgroundColor: '#fff',
     },
     modalInnerContainer: {
         flex: 1,
