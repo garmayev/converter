@@ -806,7 +806,6 @@ export default function ConverterScreen({navigation}) {
     }
     let image = require('../../assets/bg-car2.png');
     return (
-        <SafeAreaView>
             <Container image={image}>
             {/* Gas */}
             <View style={styles.inlineContainer}>
@@ -1092,7 +1091,6 @@ export default function ConverterScreen({navigation}) {
                     result={result}/>
             </View>
         </Container>
-        </SafeAreaView>
     );
 }
 
