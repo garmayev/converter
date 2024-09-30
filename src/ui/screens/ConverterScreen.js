@@ -775,6 +775,9 @@ export default function ConverterScreen({navigation}) {
 
     useEffect(() => {
         setGas(gases[0]);
+        navigation.setOptions({
+            title: ''
+        })
     }, []);
 
     function calculate() {
@@ -805,9 +808,9 @@ export default function ConverterScreen({navigation}) {
         }
     }
 
-    let image = require('../../assets/bg-car2.png');
+    let image = require('../../assets/bg-car2.jpg');
     return (
-        <Container image={image}>
+        <Container image={image} useBg={false}>
             {/* Gas */}
             <View style={styles.inlineContainer}>
                 <SelectDropdown

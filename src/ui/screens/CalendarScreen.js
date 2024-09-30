@@ -1,36 +1,15 @@
-import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
+import {Dimensions, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useEffect, useState} from 'react';
-import CalendarPicker from 'react-native-calendar-picker';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import {baseUrl} from '../../const';
-import {useTranslation} from 'react-i18next';
 
 export default function CalendarScreen({navigation}) {
-    const [date, _setDate] = useState(null);
-    const [events, setEvents] = useState([]);
-    const [customEvent, setCustomEvent] = useState([]);
-    const {t} = useTranslation();
+    const [routes, setRoutes] = useState([]);
+    const [activeRoute, setActiveRoute] = useState(undefined);
+    const [activeData, setActiveData] = useState(routes.length ? routes[0] : []);
 
-    const setDate = (newDate) => {
-        _setDate(newDate);
-        let url = `https://tgko.gasgo.pro/web/api/event/search-by-date?date=${newDate.getTime() / 1000}`;
-        // console.log(`${baseUrl}/event/view?date=${newDate.getTime() / 1000}`);
-        axios.get(url)
-            .then(response => response.data)
-            .then(response => {
-                setCustomEvent(response);
-                // console.log(response);
-                return response;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    };
-
-    const request = () => {
-        axios.get(`https://tgko.gasgo.pro/web/api/event/index`, {
+    const getDates = () => {
+        axios.get(`${baseUrl}/event/date`, {
             header: {
                 'Content-Type': 'application/json',
                 'accept': 'application/json',
@@ -38,124 +17,120 @@ export default function CalendarScreen({navigation}) {
         }).then(response => {
             return response.data;
         }).then(response => {
-            let result = response.map(item => {
-                return {
-                    ...item,
-                    date: new Date(item.date * 1000),
-                    marked: true,
-                    selected: true,
-                };
-            });
-            setEvents(result);
-            return result;
-        }).catch(error => {
-            console.error(error);
-        });
+            let result = [];
+            if (response) {
+                response.map((item, index) => {
+                    result.push({
+                        key: index,
+                        title: getFullDateStr((new Date(item.date)).toLocaleDateString(), false),
+                        date: item.date,
+                    });
+                });
+                setRoutes(result);
+                setActiveRoute(result[0]);
+            } else {
+                console.error(response);
+            }
+        }).catch(error => console.error(error));
     };
-    const view = (id) => {
-        navigation.navigate('modal', {screen: 'ViewEvent', params: {id: id}});
-        // request(id)
-        // console.log(id);
+    const getEvents = (route) => {
+        if (route) {
+            let activeRouteDate = new Date(route.date);
+            axios.get(`${baseUrl}/event/search-by-date?date=${activeRouteDate.getTime() / 1000}`)
+                .then(response => response.data)
+                .then(response => {
+                    // console.log(response);
+                    setActiveData(response);
+                })
+                .catch(error => console.error(error));
+        }
     };
+
+    function getFullDateStr(dateStr, inclYear = true) {
+        const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+        let dc = dateStr.match(/(\d{1,2}).(\d{1,2}).(\d{4})/);
+        if (dc) {
+            dc.splice(0, 1);
+            dc[0] = +dc[0];
+            dc[1] = MONTHS[+dc[1] - 1];
+            return inclYear ? dc.join(' ') + ' г.' : `${dc[0]} ${dc[1]}`;
+        }
+    }
 
     useEffect(() => {
-        navigation.setOptions({
-            title: t('Calendar'),
-        });
-        request();
-        const intervalId = setInterval(() => {
-            request();
-        }, 5000);
-
-        return () => clearInterval(intervalId);
+        getDates();
+        return () => {
+        };
     }, []);
 
-    return (
-        <View>
-            <CalendarPicker
-                onDateChange={setDate}
-                startFromMonday={true}
-                scaleFactor={375}
-                minDate={new Date()}
-                weekdays={['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']}
-                months={[
-                    'Январь',
-                    'Февраль',
-                    'Март',
-                    'Апрель',
-                    'Май',
-                    'Июнь',
-                    'Июль',
-                    'Август',
-                    'Сентябрь',
-                    'Октябрь',
-                    'Ноябрь',
-                    'Декабрь',
-                ]}
-                selectMonthTitle={t("Select Month")}
-                selectYearTitle={t("Select Year")}
-                customDatesStyles={events}
-                todayBackgroundColor={'#e6ffe6'}
-                selectedDayColor={'#66ff33'}
-                previousComponent={<FontAwesomeIcon icon={faChevronLeft}/>}
-                nextComponent={<FontAwesomeIcon icon={faChevronRight}/>}
-            />
-            {(customEvent.length > 0) && customEvent.map((item, index) => {
-                return (
-                    <TouchableOpacity onPress={() => {
-                        view(item.id);
-                    }} key={index}>
-                        <EventView label={''} item={item} index={index}/>
-                    </TouchableOpacity>
-                );
-            })}
-        </View>
-    );
-}
+    useEffect(() => {
+        getEvents(activeRoute);
+    }, [activeRoute]);
 
-function EventView({item, index}) {
-    const {t} = useTranslation();
+    const {width, height} = Dimensions.get('window');
 
     return (
-        <View style={styles.eventContainer}>
-            <Text>
-                <Text style={styles.header}>{t('Event')}: </Text>
-                <Text style={styles.text}>{item.title}</Text>
-            </Text>
-            <Text>
-                <Text style={styles.header}>{t('Description')}: </Text>
-                <Text style={styles.text}>{item.description}</Text>
-            </Text>
-            <Text>
-                <Text style={styles.header}>{t('Date')}: </Text>
-                <Text style={styles.text}>{new Date(item.date * 1000).toLocaleString()}</Text>
-            </Text>
-            <Text style={styles.submit}>{t('View more')}</Text>
+        <View style={{height: height, flex: 1, flexDirection: 'column'}}>
+            <ScrollView horizontal={true} style={{backgroundColor: '#1b3f63', minWidth: width, maxHeight: 40}}>
+                {routes && routes.map(route => {
+                    return (
+                        <Pressable key={route.key} onPress={() => {
+                            setActiveRoute(route);
+                        }} style={activeRoute && activeRoute.key === route.key ? styles.activeRoute : styles.route}>
+                            <Text key={route.key} style={{
+                                color: '#fff',
+                                fontWeight: 'bold',
+                                paddingVertical: 10,
+                                textAlign: 'center',
+                                minWidth: (routes.length < 5) ? width / routes.length : width / 4,
+                            }}>{route.title}</Text>
+                        </Pressable>
+                    );
+                })}
+            </ScrollView>
+            <View style={styles.container}>
+                {activeData && activeData.map((item, index) => {
+                    return (
+                        <Pressable key={index} onPress={() => {
+                            navigation.navigate('ViewEvent', {id: item.id});
+                        }}>
+                            <View style={styles.item}>
+                                <Text style={styles.header}>{getFullDateStr((new Date(item.date * 1000)).toLocaleDateString())}</Text>
+                                <Text style={{color: '#000'}}>{item.title}</Text>
+                            </View>
+                        </Pressable>
+                    );
+                })}
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    eventContainer: {
-        color: '#000',
-        paddingVertical: 15,
-        borderBottomColor: '#999',
-        borderBottomWidth: 1,
-        marginHorizontal: 15,
+    container: {
+        padding: 10,
+    },
+    item: {
+        backgroundColor: '#fff',
+        padding: 10,
+        marginBottom: 10,
+        borderRadius: 5,
+        elevation: 3,
     },
     header: {
-        fontWeight: 'bold',
         color: '#000',
     },
-    text: {
+    summary: {
         color: '#000',
     },
-    submit: {
-        color: '#000',
-        backgroundColor: '#ccc',
-        textTransform: 'uppercase',
-        textAlign: 'center',
-        padding: 5,
-        marginVertical: 5,
+    activeRoute: {
+        backgroundColor: '#153a50',
+        borderBottomWidth: 3,
+        borderBottomColor: '#fff',
+    },
+    route: {
+        backgroundColor: '#1b3f63',
+        borderBottomWidth: 3,
+        borderBottomColor: '#1b3f63',
     },
 });

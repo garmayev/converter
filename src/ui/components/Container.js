@@ -12,7 +12,7 @@ import {
 import {Logo} from '../icons/Logo';
 import React from 'react';
 
-export default function Container({children, image}) {
+export default function Container({children, image, useBg = true}) {
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -22,8 +22,8 @@ export default function Container({children, image}) {
             <ScrollView style={{paddingVertical: 5}}>
                 {children}
             </ScrollView>
-            <Image style={styles.bgLogo} source={require('../../assets/logo-mini.png')} resizeMode={'stretch'}
-                   resizeMethod={'resize'} height={600} width={600} blurRadius={2}/>
+            {useBg && <Image style={styles.bgLogo} source={require('../../assets/logo-mini.png')} resizeMode={'stretch'}
+                   resizeMethod={'resize'} height={600} width={600} blurRadius={2}/> }
         </View>
     );
 }
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     bgHeader: {
         width: '100%',
         height: Dimensions.get('window').width / 1.47,
-        top: -2,
+        top: -3,
         resizeMode: 'contain',
     },
     bgLogo: {

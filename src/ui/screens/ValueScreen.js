@@ -6,7 +6,6 @@ import {
     TextInput,
     ScrollView,
     Dimensions,
-    SafeAreaView,
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
@@ -14,10 +13,9 @@ import {useTranslation} from 'react-i18next';
 import SelectDropdown from 'react-native-select-dropdown';
 import React, {useEffect, useRef} from 'react';
 import {useState} from 'react';
-import {gases, values} from '../../const';
 import Container from '../components/Container';
 
-export default function ValueScreen() {
+export default function ValueScreen({navigation}) {
     const {t} = useTranslation();
     const [gas, setGas] = useState({});
     const [pressure, setPressure] = useState(1);
@@ -26,22 +24,29 @@ export default function ValueScreen() {
     const [result, setResult] = useState(0.0);
     const [koef, setKoef] = useState(0.0);
     const [advancedVisible, setAdvancedVisible] = useState(false);
+    const gases = require('../../gases.json');
+    const values = require('../../values.json');
 
     useEffect(() => {
+        navigation.setOptions({
+            title: ''
+        })
         setGas(gases[0]);
     }, []);
     useEffect(() => {
-        for (const element of values) {
-            if (element.gas_id === gas.id && element.pressure === pressure && element.temp === temperature) {
-                let k = ((0.968 * pressure + 1) * (293 / (273 + temperature)) * 0.001) / element.koef;
-                setKoef(k);
-                let R = k * balloonValue;
-                setResult(R);
+        if (values) {
+            for (const element of values) {
+                if (element.gas_id === gas.id && element.pressure === pressure && element.temp === temperature) {
+                    let k = ((0.968 * pressure + 1) * (293 / (273 + temperature)) * 0.001) / element.koef;
+                    setKoef(k);
+                    let R = k * balloonValue;
+                    setResult(R);
+                }
             }
         }
     }, [gas, pressure, temperature, balloonValue]);
 
-    let image = require('../../assets/bg-car.png');
+    let image = require('../../assets/bg-car.jpg');
 
     return (
         <Container image={image}>
@@ -99,8 +104,11 @@ export default function ValueScreen() {
                             <TextInput style={styles.inputText} onChangeText={(text) => {
                                 if (text.length) {
                                     let val = Number.parseInt(text);
+                                    console.log(val);
                                     if (val > 0 && val < 301) {
                                         setPressure(Number.parseInt(text));
+                                    } else if (val > 300) {
+                                        setPressure(300);
                                     }
                                 }
                             }} inputMode={'numeric'}>{pressure}</TextInput>

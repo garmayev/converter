@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import axios from 'axios';
 import {Image, SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {baseUrl} from '../../const';
 
 const shadow = {
     shadowColor: '#000000',
@@ -25,7 +26,7 @@ export default function ViewNewsScreen({route, navigation}) {
         navigation.setOptions({
             title: t('ViewNews'),
         });
-        axios.get(`https://tgko.gasgo.pro/web/api/post/view?id=${route.params.id}`)
+        axios.get(`${baseUrl}/post/view?id=${route.params.id}`)
             .then(response => response.data)
             .then(response => {
                 setPost(response);

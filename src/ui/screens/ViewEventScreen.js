@@ -13,9 +13,9 @@ export default function ViewEventScreen({route, navigation}) {
 
     useEffect(() => {
         navigation.setOptions({
-            title: t('ViewEvent')
+            title: t('Event`s details')
         })
-        axios.get(`https://tgko.gasgo.pro/web/api/event/view?id=${route.params.id}`)
+        axios.get(`${baseUrl}/event/view?id=${route.params.id}`)
             .then(response => response.data)
             .then(response => {
                 setEvent(response);
@@ -36,16 +36,13 @@ export default function ViewEventScreen({route, navigation}) {
             {loading &&
                 <>
                     <Text style={styles.text}>
-                        <Text style={styles.header}>Title: </Text>
-                        <Text>{event.title}</Text>
+                        <Text style={styles.header}>{event.title}</Text>
                     </Text>
                     <Text style={styles.text}>
-                        <Text style={styles.header}>Description: </Text>
                         <Text>{event.description}</Text>
                     </Text>
                     <Text style={styles.text}>
-                        <Text style={styles.header}>Date: </Text>
-                        <Text>{(new Date(event.date * 1000)).toLocaleString()}</Text>
+                        <Text style={styles.sub}>{(new Date(event.date * 1000)).toLocaleDateString()}</Text>
                     </Text>
                 </>
             }
@@ -71,5 +68,8 @@ const styles = StyleSheet.create({
     },
     header: {
         fontWeight: 'bold',
+    },
+    sub: {
+        fontStyle: 'italic',
     },
 });

@@ -1,32 +1,28 @@
 import {
-    Animated,
-    Dimensions, FlatList, Image, Platform, Pressable, SafeAreaView,
-    ScrollView,
+    Dimensions, FlatList, Pressable, SafeAreaView,
     StyleSheet,
     Text,
-    TouchableOpacity,
     View,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import News from '../classes/News';
 import {useTranslation} from 'react-i18next';
-import {useRef} from 'react';
-import DynamicHeader from '../components/DynamicHeader';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
+import {baseUrl} from '../../const';
 
-export default function NewsScreen({route, navigation}) {
+export default function NewsScreen({route, navigation, isFilter = false, setFilter = () => {}}) {
     const [data, setData] = useState([]);
+    const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorDescription, setErrorDescription] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState([1]);
     const {t} = useTranslation();
-    const isIos = () => {
-        return Platform.OS === 'ios';
-    };
-    const scrollOffsetY = useRef(new Animated.Value(isIos() ? 0 : 40)).current;
 
-    const request = () => {
-        axios.get(`https://tgko.gasgo.pro/web/api/post/index?sort=-created_at`, {
+    const request = (page) => {
+        axios.get(`${baseUrl}/post/index?page=${page}`, {
             header: {
                 'Content-Type': 'application/json',
                 'accept': 'application/json',
@@ -39,7 +35,9 @@ export default function NewsScreen({route, navigation}) {
                 for (const key in response) {
                     d.push(new News(response[key]));
                 }
-                setData(d);
+                if (d.length > 0) {
+                    setData(data.concat(d));
+                }
                 setError(false);
                 setErrorDescription('');
             } else {
@@ -49,18 +47,15 @@ export default function NewsScreen({route, navigation}) {
         }).catch(error => {
             setError(error.message);
         }).finally(() => {
-            setLoading(true)
-        })
+            setLoading(true);
+        });
     };
 
     useEffect(() => {
-        request();
-        const intervalId = setInterval(() => {
-            request();
-        }, 5000);
-
-        return () => clearInterval(intervalId);
-    }, []);
+        request(page);
+        return () => {
+        };
+    }, [page]);
 
     const Item = (item) => {
         const data = item.item;
@@ -69,13 +64,11 @@ export default function NewsScreen({route, navigation}) {
                 navigation.navigate('ViewNews', {id: data.id});
             }}>
                 <View style={styles.cardContainer}>
-                    <Image
-                        style={styles.cardPicture}
-                        resizeMode={'cover'}
-                        source={{uri: data.picture}}/>
-                    <View style={styles.cardItem}>
-                        <Text style={styles.cardTitle}>{data.title}</Text>
-                    </View>
+                    <Text style={{fontStyle: 'italic', fontSize: 16, color: '#666', paddingBottom: 15, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <FontAwesomeIcon icon={faCalendarAlt} color={"#999"} size={16} />
+                        {data._date.toLocaleDateString()}
+                    </Text>
+                    <Text style={{color: '#000', fontWeight: 'bold'}}>{data._title}</Text>
                 </View>
             </Pressable>
         );
@@ -90,42 +83,44 @@ export default function NewsScreen({route, navigation}) {
 
     return (
         <SafeAreaView style={{minHeight: Dimensions.get('window').height}}>
-            <DynamicHeader title={t('News')} description={''} start={isIos()}
-                           animatedValue={scrollOffsetY} step={50}
-            />
-            {loading && <FlatList data={data} renderItem={Item} contentContainerStyle={{flexGrow: 1}}
-                       ListEmptyComponent={EmptyList}/>}
-            {!loading && <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text>{errorDescription}</Text></View>}
+            {loading && <FlatList data={data} renderItem={Item} contentContainerStyle={isFilter ? {flexGrow: 1, paddingBottom: 80, paddingTop: 120} : {flexGrow: 1, paddingBottom: 80}}
+                                  ListEmptyComponent={EmptyList} keyExtractor={(item, index) => index}
+                                  onEndReached={() => {
+                                      setPage(page + 1);
+                                  }}/>}
+            {!loading &&
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text>{errorDescription}</Text></View>}
         </SafeAreaView>
     );
 }
 
 const shadow = {
-    shadowColor: "#000000",
+    shadowColor: '#000000',
     shadowOffset: {
         width: 0,
         height: 5,
     },
-    shadowOpacity:  0.20,
+    shadowOpacity: 0.20,
     shadowRadius: 5.62,
-    elevation: 7
-}
+    elevation: 7,
+};
 const styles = StyleSheet.create({
+    container: { padding: 16 },
     card: {
         flex: 1,
         width: '100%',
-        minHeight: 205,
         flexDirection: 'column',
         padding: 5,
-        paddingBottom: 5,
+        marginTop: 4,
+        marginBottom: 10,
     },
     cardContainer: {
+        borderRadius: 5,
         flex: 1,
         backgroundColor: '#fff',
         padding: 5,
-        borderRadius: 24,
         borderColor: '#CCC',
-        ...shadow
+        ...shadow,
     },
     cardItem: {
         width: '100%',
