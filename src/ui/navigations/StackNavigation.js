@@ -35,7 +35,7 @@ export default function StackNavigation() {
                     color: '#fff',
                     height: 20
                 },
-                headerBackTitle: '',
+                headerBackTitle: t('Back'),
                 headerTintColor: '#fff',
             }} />
             <Stack.Screen name={'ValueScreen'} component={ValueScreen} options={{
@@ -58,7 +58,7 @@ export default function StackNavigation() {
                     height: 20,
                     textAlign: 'center',
                 },
-                headerBackTitle: '',
+                headerBackTitle: t('Back'),
                 headerTintColor: '#fff',
             }}>
                 {props => <NewsScreen {...props} isFilter={filter} setFilter={setFilter} />}
@@ -73,11 +73,11 @@ export default function StackNavigation() {
                     height: 20,
                     elevation: 0,
                 },
-                headerBackTitle: '',
+                headerBackTitle: t('Back'),
                 headerTintColor: '#fff',
             }} />
             <Stack.Screen name={'remainderView'} component={RemainderViewScreen} options={{
-                headerBackTitle: '',
+                headerBackTitle: t('Back'),
                 headerShown: true,
             }} />
             <Stack.Screen name={'ViewNews'} component={ViewNewsScreen} options={{
@@ -88,11 +88,11 @@ export default function StackNavigation() {
                     color: '#fff',
                     height: 20
                 },
-                headerBackTitle: '',
+                headerBackTitle: t('Back'),
                 headerTintColor: '#fff',
             }} />
             <Stack.Screen name={'ViewEvent'} component={ViewEventScreen} options={{
-                headerBackTitle: '',
+                headerBackTitle: t('Back'),
                 headerShown: true,
             }} />
         </Stack.Navigator>
