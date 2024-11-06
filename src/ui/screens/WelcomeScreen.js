@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function WelcomeScreen({navigation}) {
-    const image = require('../../assets/bg-car3.jpg');
+    const image = require('../../assets/bg-main.png');
     const {t} = useTranslation();
     return (
         <Container image={image} useBg={false}>

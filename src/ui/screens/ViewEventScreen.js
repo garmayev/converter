@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import {useEffect, useState} from 'react';
 import {baseUrl} from '../../const';
 import axios from 'axios';
@@ -32,7 +32,7 @@ export default function ViewEventScreen({route, navigation}) {
     }, []);
 
     return (
-        <View style={{padding: 15}}>
+        <ScrollView style={{padding: 0, paddingHorizontal: 20}}>
             {loading &&
                 <>
                     <Text style={styles.text}>
@@ -51,7 +51,7 @@ export default function ViewEventScreen({route, navigation}) {
                     <Text style={styles.error}>{errorDescription}</Text>
                 </>
             }
-        </View>
+        </ScrollView>
     );
 }
 
