@@ -1,5 +1,5 @@
 import {
-    Dimensions, FlatList, Pressable, SafeAreaView,
+    Dimensions, FlatList, Image, Pressable, SafeAreaView,
     StyleSheet,
     Text,
     View,
@@ -59,11 +59,13 @@ export default function NewsScreen({route, navigation, isFilter = false, setFilt
 
     const Item = (item) => {
         const data = item.item;
+        console.log(data._picture);
         return (
             <Pressable style={styles.card} onPress={() => {
                 navigation.navigate('ViewNews', {id: data.id});
             }}>
                 <View style={styles.cardContainer}>
+                    <Image style={{height: 150, borderRadius: 10, marginBottom: 10}} resizeMode={'cover'} source={{uri: data._picture}} />
                     <Text style={{fontStyle: 'italic', fontSize: 16, color: '#666', paddingBottom: 15, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <FontAwesomeIcon icon={faCalendarAlt} color={"#999"} size={16} />
                         {data._date.toLocaleDateString()}
@@ -115,10 +117,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     cardContainer: {
-        borderRadius: 5,
+        borderRadius: 15,
         flex: 1,
         backgroundColor: '#fff',
-        padding: 5,
+        padding: 10,
         borderColor: '#CCC',
         ...shadow,
     },
