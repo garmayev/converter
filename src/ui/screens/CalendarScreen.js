@@ -1,14 +1,22 @@
-import {Dimensions, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View, Text, ScrollView, FlatList, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import AutoHeightWebView from "react-native-autoheight-webview";
+import CalendarPicker from "react-native-calendar-picker";
+import {useTranslation} from "react-i18next";
+import Event from "../classes/Event";
 
 export default function CalendarScreen({navigation}) {
-    const [routes, setRoutes] = useState([]);
-    const [activeRoute, setActiveRoute] = useState(undefined);
-    const [activeData, setActiveData] = useState(routes.length ? routes[0] : []);
+    const {t} = useTranslation();
+    const [isLoading, setIsLoading] = useState(true)
+    const [selectedDate, setSelectedDate] = useState(new Date())
+    const [eventList, setEventList] = useState([])
+    const [filtered, setFiltered] = useState([])
+    const [customDateStyles, setCustomDateStyles] = useState([]);
+    const today = new Date()
+
 
     const getDates = () => {
+        setIsLoading(false)
         axios.get(`https://tgko.ru/api/v1/events`, {
             header: {
                 'Content-Type': 'application/json',
@@ -18,92 +26,79 @@ export default function CalendarScreen({navigation}) {
             return response.data;
         }).then(response => {
             let result = [];
+            const t = [];
             if (response.success) {
                 for (const key in response.data.events) {
-                    const item = response.data.events[key]
-                    result.push({
-                        key: key,
-                        title: item.events_date,
-                        date: item.createdon
-                    })
+                    const event = new Event(response.data.events[key]);
+                    const startDate = new Date(event.start);
+                    const end = new Date(event.end);
+                    if (startDate) {
+                        result.push(event)
+                        while (startDate <= end) {
+                            const a = t.find(item => item.date === startDate && startDate >= today)
+                            // console.log(a)
+                            if (a === undefined) {
+                                t.push({
+                                    date: new Date(startDate),
+                                    style: {backgroundColor: "#1E82CE"},
+                                    textStyle: {color: "#fff"},
+                                    containerStyle: [],
+                                    allowDisabled: true
+                                })
+                            }
+                            startDate.setDate(startDate.getDate() + 1)
+                        }
+                    }
+                    // result.push(event)
                 }
-                setRoutes(result.reverse());
-                setActiveRoute(result.reverse()[0]);
+                setEventList(result)
+                setCustomDateStyles( t.reverse() );
             } else {
                 console.error(response);
             }
-        }).catch(error => console.error(error));
+        }).catch(error => console.error(error))
+            .finally(() => {
+                setIsLoading(true)
+            })
     };
-    const getEvents = (route) => {
-        if (route) {
-            console.log(route)
-            axios.get(`https://tgko.ru/api/v1/events/${route.key}`)
-                .then(response => response.data)
-                .then(response => {
-                    // console.log(response.data);
-                    setActiveData(response.data[route.key]);
-                })
-                .catch(error => console.error(error));
-        }
-    };
-
-    function getFullDateStr(dateStr, inclYear = true) {
-        const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-        let dc = dateStr.match(/(\d{1,2}).(\d{1,2}).(\d{4})/);
-        if (dc) {
-            dc.splice(0, 1);
-            dc[0] = +dc[0];
-            dc[1] = MONTHS[+dc[1] - 1];
-            return inclYear ? dc.join(' ') + ' г.' : `${dc[0]} ${dc[1]}`;
-        }
-    }
 
     useEffect(() => {
         getDates();
-        return () => {
-        };
+        setSelectedDate(today)
+        return () => null;
     }, []);
 
     useEffect(() => {
-        getEvents(activeRoute);
-    }, [activeRoute]);
-
-    const {width, height} = Dimensions.get('window');
-    const customCss = `img { display: none !important; font-size: 12px; } p { padding-right: 10px; } br { content: " "; display: block; margin-bottom: 10px; }`;
+        const a = Event.filter(eventList, selectedDate);
+        setFiltered([]);
+        setFiltered(Event.filter(eventList, selectedDate))
+    }, [selectedDate]);
 
     return (
-        <View style={{height: height, flex: 1, flexDirection: 'column'}}>
-            <ScrollView horizontal={true} style={{backgroundColor: '#1b3f63', minWidth: width, maxHeight: 40}}>
-                {routes && routes.map(route => {
-                    return (
-                        <Pressable key={route.key} onPress={() => {
-                            setActiveRoute(route);
-                        }} style={activeRoute && activeRoute.key === route.key ? styles.activeRoute : styles.route}>
-                            <Text key={route.key} style={{
-                                color: '#fff',
-                                fontWeight: 'bold',
-                                paddingVertical: 10,
-                                paddingHorizontal: 10,
-                                textAlign: 'center',
-                                minWidth: (routes.length < 5) ? width / routes.length : width / 4,
-                            }}>{route.title}</Text>
-                        </Pressable>
-                    );
-                })}
-            </ScrollView>
-            <View style={styles.container}>
-                {activeData && (
-                        <Pressable key={activeData.id} onPress={() => {
-                            navigation.navigate('ViewEvent', {id: activeData.id});
-                        }}>
-                            <View style={styles.item}>
-                                <Text style={styles.header}>{activeData.events_date}</Text>
-                                <Text style={{color: '#000'}}>{activeData.menutitle}</Text>
-                                <AutoHeightWebView style={{width: width - 15, marginBottom: 40}} source={{html: activeData.content}} customStyle={customCss} />
-                            </View>
-                        </Pressable>
-                )}
-            </View>
+        <View style={{flex: 1, flexDirection: 'column'}}>
+            {isLoading ?
+                <>
+                    <View style={{margin: 20}}>
+                        <CalendarPicker style={{marginTop: 20}} onDateChange={setSelectedDate} firstDay={1}
+                                        weekdays={['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']} minDate={today}
+                                        previousTitleStyle={{color: "#000"}} previousTitle={t("previous")}
+                                        nextTitleStyle={{color: "#000"}} nextTitle={t("next")}
+                                        customDatesStyles={customDateStyles}
+                                        months={['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']}/>
+                    </View>
+                    {filtered ? <FlatList data={filtered} renderItem={({item}) => (
+                        <View style={[styles.item, {marginHorizontal: 20}]}>
+                            <Pressable onPress={() => {
+                                navigation.navigate('ViewEvent', {id: item.id});
+                            }}>
+                                <Text style={styles.text}>{item.title}</Text>
+                            </Pressable>
+                        </View>
+                    )}
+                    /> : <View></View>}
+                </> :
+                <ActivityIndicator size={"large"} color={"#007BFF"}/>
+            }
         </View>
     );
 }
@@ -135,4 +130,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 3,
         borderBottomColor: '#1b3f63',
     },
+    text: {
+        color: '#000'
+    }
 });

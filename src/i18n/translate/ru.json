@@ -55,12 +55,12 @@
     "with density": "При давлении {{dens}} кгс/см\u00B2",
     "density": "{{density}} кгс/см\u00B2",
     "System Fail! Not enough data!": "Ошибка!\nДля рассчета не хватает проверенных данных",
-    "News": "Новостная лента",
+    "News": "Новостная\nлента",
     "Advertisements": "Объявления",
     "Density": "Давление",
     "BalloonDensity": "Давление в баллоне",
     "ViewNews": "Просмотр новости",
-    "Calendar": "Календарь",
+    "Calendar": "Календарь\nсобытий",
     "Event`s details": "Подробности события",
     "Event": "Событие",
     "Description": "Описание",
@@ -89,7 +89,7 @@
     "All saved data will be deleted": "Все сохраненные данные будут удалены",
     "Yes": "Да",
     "Cancel": "Отмена",
-    "ValueInBalloon": "Объем газа в баллоне",
+    "ValueInBalloon": "Объем газа\nв баллоне",
     "Athmose": "атм",
     "author": "Автор",
     "email": "E-mail",
@@ -98,6 +98,8 @@
     "Apply": "Применить",
     "Back": "Назад",
     "startDate": "Дата начала",
-    "endDate": "Дата завершения"
+    "endDate": "Дата завершения",
+    "previous": "Предыдущий",
+    "next": "Следующий"
   }
 }

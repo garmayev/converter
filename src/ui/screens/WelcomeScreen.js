@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     text: {
-        color: '#000'
+        color: '#000',
+        textAlign: 'center'
     }
 })
