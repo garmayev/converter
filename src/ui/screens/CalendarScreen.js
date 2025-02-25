@@ -1,7 +1,7 @@
 import {Dimensions, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {baseUrl} from '../../const';
+import AutoHeightWebView from "react-native-autoheight-webview";
 
 export default function CalendarScreen({navigation}) {
     const [routes, setRoutes] = useState([]);
@@ -9,7 +9,7 @@ export default function CalendarScreen({navigation}) {
     const [activeData, setActiveData] = useState(routes.length ? routes[0] : []);
 
     const getDates = () => {
-        axios.get(`${baseUrl}/event/date`, {
+        axios.get(`https://tgko.ru/api/v1/events`, {
             header: {
                 'Content-Type': 'application/json',
                 'accept': 'application/json',
@@ -18,16 +18,17 @@ export default function CalendarScreen({navigation}) {
             return response.data;
         }).then(response => {
             let result = [];
-            if (response) {
-                response.map((item, index) => {
+            if (response.success) {
+                for (const key in response.data.events) {
+                    const item = response.data.events[key]
                     result.push({
-                        key: index,
-                        title: getFullDateStr((new Date(item.date)).toLocaleDateString(), false),
-                        date: item.date,
-                    });
-                });
-                setRoutes(result);
-                setActiveRoute(result[0]);
+                        key: key,
+                        title: item.events_date,
+                        date: item.createdon
+                    })
+                }
+                setRoutes(result.reverse());
+                setActiveRoute(result.reverse()[0]);
             } else {
                 console.error(response);
             }
@@ -35,12 +36,12 @@ export default function CalendarScreen({navigation}) {
     };
     const getEvents = (route) => {
         if (route) {
-            let activeRouteDate = new Date(route.date);
-            axios.get(`${baseUrl}/event/search-by-date?date=${activeRouteDate.getTime() / 1000}`)
+            console.log(route)
+            axios.get(`https://tgko.ru/api/v1/events/${route.key}`)
                 .then(response => response.data)
                 .then(response => {
-                    // console.log(response);
-                    setActiveData(response);
+                    // console.log(response.data);
+                    setActiveData(response.data[route.key]);
                 })
                 .catch(error => console.error(error));
         }
@@ -68,6 +69,7 @@ export default function CalendarScreen({navigation}) {
     }, [activeRoute]);
 
     const {width, height} = Dimensions.get('window');
+    const customCss = `img { display: none !important; font-size: 12px; } p { padding-right: 10px; } br { content: " "; display: block; margin-bottom: 10px; }`;
 
     return (
         <View style={{height: height, flex: 1, flexDirection: 'column'}}>
@@ -81,6 +83,7 @@ export default function CalendarScreen({navigation}) {
                                 color: '#fff',
                                 fontWeight: 'bold',
                                 paddingVertical: 10,
+                                paddingHorizontal: 10,
                                 textAlign: 'center',
                                 minWidth: (routes.length < 5) ? width / routes.length : width / 4,
                             }}>{route.title}</Text>
@@ -89,18 +92,17 @@ export default function CalendarScreen({navigation}) {
                 })}
             </ScrollView>
             <View style={styles.container}>
-                {activeData && activeData.map((item, index) => {
-                    return (
-                        <Pressable key={index} onPress={() => {
-                            navigation.navigate('ViewEvent', {id: item.id});
+                {activeData && (
+                        <Pressable key={activeData.id} onPress={() => {
+                            navigation.navigate('ViewEvent', {id: activeData.id});
                         }}>
                             <View style={styles.item}>
-                                <Text style={styles.header}>{getFullDateStr((new Date(item.date * 1000)).toLocaleDateString())}</Text>
-                                <Text style={{color: '#000'}}>{item.title}</Text>
+                                <Text style={styles.header}>{activeData.events_date}</Text>
+                                <Text style={{color: '#000'}}>{activeData.menutitle}</Text>
+                                <AutoHeightWebView style={{width: width - 15, marginBottom: 40}} source={{html: activeData.content}} customStyle={customCss} />
                             </View>
                         </Pressable>
-                    );
-                })}
+                )}
             </View>
         </View>
     );

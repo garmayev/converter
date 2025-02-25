@@ -1,4 +1,5 @@
 import {
+    ActivityIndicator,
     Dimensions, FlatList, Image, Pressable, SafeAreaView,
     StyleSheet,
     Text,
@@ -6,71 +7,70 @@ import {
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
-import News from '../classes/News';
 import {useTranslation} from 'react-i18next';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
-import {baseUrl} from '../../const';
+
+axios.defaults.timeout = 999999999999;
 
 export default function NewsScreen({route, navigation, isFilter = false, setFilter = () => {}}) {
     const [data, setData] = useState([]);
-    const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const [errorDescription, setErrorDescription] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState([1]);
     const {t} = useTranslation();
 
     const request = (page) => {
-        axios.get(`${baseUrl}/post/index?page=${page}`, {
-            header: {
-                'Content-Type': 'application/json',
-                'accept': 'application/json',
-            },
-        }).then(response => {
-            return response.data;
-        }).then(response => {
-            let d = [];
-            if (response.length) {
-                for (const key in response) {
-                    d.push(new News(response[key]));
-                }
-                if (d.length > 0) {
-                    setData(data.concat(d));
-                }
-                setError(false);
-                setErrorDescription('');
-            } else {
-                setError(true);
-                setErrorDescription(t('No data found'));
+        setLoading(false)
+        console.log("Request is started")
+        axios({
+            url: `https://tgko.ru/api/v1/news`,
+            method: 'get',
+            timeout: 0,
+            headers: {
+                "Content-Type": "application/json"
             }
-        }).catch(error => {
-            setError(error.message);
-        }).finally(() => {
-            setLoading(true);
-        });
+        })
+            .then(response => {
+                const responseData = response.data;
+                const result = [];
+
+                if (responseData.success) {
+                    setData(responseData.data.news)
+                    for (const key in responseData.data.news) {
+                        result.push(responseData.data.news[key])
+                    }
+                    setData(result.reverse())
+                }
+                setLoading(true)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            .finally(() => {
+                console.log("Request is done")
+            })
     };
 
     useEffect(() => {
-        request(page);
+        // request(page);
+        request()
         return () => {
         };
-    }, [page]);
+    }, []);
+
 
     const Item = (item) => {
         const data = item.item;
-        console.log(data._picture);
         return (
             <Pressable style={styles.card} onPress={() => {
                 navigation.navigate('ViewNews', {id: data.id});
             }}>
                 <View style={styles.cardContainer}>
-                    <Image style={{height: 150, borderRadius: 10, marginBottom: 10}} resizeMode={'cover'} source={{uri: data._picture}} />
+                    <Image style={{height: 150, borderRadius: 10, marginBottom: 10}} resizeMode={'cover'} source={{uri: `https://tgko.ru/${data.news_image}`}} />
                     <Text style={{fontStyle: 'italic', fontSize: 16, color: '#666', paddingBottom: 15, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <FontAwesomeIcon icon={faCalendarAlt} color={"#999"} size={16} />
-                        {data._date.toLocaleDateString()}
+                        {(new Date(data.createdon * 1000)).toLocaleDateString()}
                     </Text>
-                    <Text style={{color: '#000', fontWeight: 'bold'}}>{data._title}</Text>
+                    <Text style={{color: '#000', fontWeight: 'bold'}}>{data.menutitle}</Text>
                 </View>
             </Pressable>
         );
@@ -85,13 +85,10 @@ export default function NewsScreen({route, navigation, isFilter = false, setFilt
 
     return (
         <SafeAreaView style={{minHeight: Dimensions.get('window').height}}>
-            {loading && <FlatList data={data} renderItem={Item} contentContainerStyle={isFilter ? {flexGrow: 1, paddingBottom: 80, paddingTop: 120} : {flexGrow: 1, paddingBottom: 80}}
-                                  ListEmptyComponent={EmptyList} keyExtractor={(item, index) => index}
-                                  onEndReached={() => {
-                                      setPage(page + 1);
-                                  }}/>}
-            {!loading &&
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}><Text>{errorDescription}</Text></View>}
+            {loading ? <FlatList data={data} renderItem={Item}
+                                  contentContainerStyle={isFilter ? {flexGrow: 1, paddingBottom: 80, paddingTop: 120} : {flexGrow: 1, paddingBottom: 80}}
+                                  ListEmptyComponent={EmptyList} keyExtractor={(item, index) => index} />
+            : <ActivityIndicator size={"large"} color={"#007BFF"} styles={{marginVertical: 20, paddingVertical: 20}} />}
         </SafeAreaView>
     );
 }
