@@ -1,16 +1,15 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import DrawerNavigation from './DrawerNavigation';
 import {useTranslation} from 'react-i18next';
 import ViewEventScreen from '../screens/ViewEventScreen';
 import RemainderViewScreen from '../screens/RemainderViewScreen';
 import ViewNewsScreen from '../screens/ViewNewsScreen';
-import ViewAdvScreen from '../screens/ViewAdvScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import ConverterScreen from '../screens/ConverterScreen';
 import ValueScreen from '../screens/ValueScreen';
-import NewsScreen from '../screens/NewsScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import {useState} from 'react';
+import TabNavigation from "./TabNavigation";
+import ViewAdvScreen from "../screens/ViewAdvScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,7 +60,8 @@ export default function StackNavigation() {
                 headerBackTitle: t('Back'),
                 headerTintColor: '#fff',
             }}>
-                {props => <NewsScreen {...props} isFilter={filter} setFilter={setFilter} />}
+                {props => <TabNavigation />}
+                {/*{props => <NewsScreen {...props} isFilter={filter} setFilter={setFilter} />}*/}
             </Stack.Screen>
             <Stack.Screen name={'CalendarScreen'} component={CalendarScreen} options={{
                 headerShown: true,
@@ -94,6 +94,17 @@ export default function StackNavigation() {
             <Stack.Screen name={'ViewEvent'} component={ViewEventScreen} options={{
                 headerBackTitle: t('Back'),
                 headerShown: true,
+            }} />
+            <Stack.Screen name={'ViewAdv'} component={ViewAdvScreen} options={{
+                headerShown: true,
+                headerTransparent: false,
+                headerStyle: {
+                    backgroundColor: '#1b3f63',
+                    color: '#fff',
+                    height: 20
+                },
+                headerBackTitle: t('Back'),
+                headerTintColor: '#fff',
             }} />
         </Stack.Navigator>
     );

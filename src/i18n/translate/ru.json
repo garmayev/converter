@@ -55,7 +55,7 @@
     "with density": "При давлении {{dens}} кгс/см\u00B2",
     "density": "{{density}} кгс/см\u00B2",
     "System Fail! Not enough data!": "Ошибка!\nДля рассчета не хватает проверенных данных",
-    "News": "Новостная\nлента",
+    "News": "Новости",
     "Advertisements": "Объявления",
     "Density": "Давление",
     "BalloonDensity": "Давление в баллоне",

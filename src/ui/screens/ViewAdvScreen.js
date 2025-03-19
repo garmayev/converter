@@ -1,7 +1,8 @@
-import {Text, View, StyleSheet, ScrollView, Pressable, Linking} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Pressable, Linking, ActivityIndicator, Dimensions} from 'react-native';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import axios from 'axios';
+import AutoHeightWebView from "react-native-autoheight-webview";
 
 export default function ViewAdvScreen({route, navigation}) {
     const [loading, setLoading] = useState(false);
@@ -11,13 +12,16 @@ export default function ViewAdvScreen({route, navigation}) {
     const {t} = useTranslation();
 
     useEffect(() => {
+        setLoading(true)
         navigation.setOptions({
             title: t('Adv Details'),
         });
-        axios.get(`https://tgko.gasgo.pro/web/api/adv/view?id=${route.params.id}`)
+        // console.log(route.params.id)
+        axios.get(`https://tgko.ru/api/v1/adverts/get/${route.params.id}`)
             .then(response => response.data)
             .then(response => {
-                setAdv(response);
+                console.log(response.data.advert)
+                setAdv(response.data.advert);
                 setError(false);
                 setErrorDescription('');
             })
@@ -26,37 +30,41 @@ export default function ViewAdvScreen({route, navigation}) {
                 setErrorDescription(t('No data found'));
             })
             .finally(() => {
-                setLoading(true);
+                setLoading(false);
             });
         return () => {
         };
     }, []);
+    const {width, height} = Dimensions.get("window");
+    const customCss = `img { font-size: 12px; width: 100% } p { padding-right: 10px; } br { content: " "; display: block; margin-bottom: 10px; }`;
     return (
         <ScrollView style={styles.container}>
+            {!loading ? <>
             <Text style={[styles.text, styles.header, {paddingBottom: 20}]}>{adv.title}</Text>
-            <Text style={[styles.text, {paddingBottom: 20}]}>{adv.description && adv.description.replace(/<\/?[^>]+(>|$)/g, '').replace(/&quot;/g, '"')}</Text>
+                <AutoHeightWebView style={{width: width - 15, marginBottom: 40}} source={{html: adv.content}} customStyle={customCss} />
             <View style={{paddingBottom: 30}}>
                 <View style={styles.inline}>
                     <Text style={styles.text}>{t('author')}: </Text>
-                    <Text style={[styles.text, styles.textItalic]}>{adv.name}</Text>
+                    <Text style={[styles.text, styles.textItalic]}>{adv.advert_name}</Text>
                 </View>
                 <View style={styles.inline}>
                     <Text style={styles.text}>{t('email')}: </Text>
                     <Pressable onPress={event => {
-                        Linking.openURL(`mailto:${adv.mail}`);
+                        Linking.openURL(`mailto:${adv.advert_email}`);
                     }}>
-                        <Text style={[styles.text, styles.textItalic]}>{adv.email}</Text>
+                        <Text style={[styles.text, styles.textItalic]}>{adv.advert_email}</Text>
                     </Pressable>
                 </View>
                 <View style={styles.inline}>
                     <Text style={styles.text}>{t('phone')}: </Text>
                     <Pressable onPress={event => {
-                        Linking.openURL(`tel:${adv.phone}`);
+                        Linking.openURL(`tel:${adv.advert_phone}`);
                     }}>
-                        <Text style={[styles.text, styles.textItalic]}>{adv.phone}</Text>
+                        <Text style={[styles.text, styles.textItalic]}>{adv.advert_phone}</Text>
                     </Pressable>
                 </View>
             </View>
+            </> : <ActivityIndicator size={"large"} />}
         </ScrollView>
     );
 }

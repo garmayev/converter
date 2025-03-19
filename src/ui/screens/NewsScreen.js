@@ -9,7 +9,7 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useTranslation} from 'react-i18next';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
+import {faCalendarAlt, faCalendarDay} from '@fortawesome/free-solid-svg-icons';
 
 axios.defaults.timeout = 999999999999;
 
@@ -20,7 +20,7 @@ export default function NewsScreen({route, navigation, isFilter = false, setFilt
 
     const request = (page) => {
         setLoading(false)
-        console.log("Request is started")
+        // console.log("Request is started")
         axios({
             url: `https://tgko.ru/api/v1/news`,
             method: 'get',
@@ -34,7 +34,7 @@ export default function NewsScreen({route, navigation, isFilter = false, setFilt
                 const result = [];
 
                 if (responseData.success) {
-                    setData(responseData.data.news)
+                    // setData(responseData.data.news)
                     for (const key in responseData.data.news) {
                         result.push(responseData.data.news[key])
                     }
@@ -67,7 +67,7 @@ export default function NewsScreen({route, navigation, isFilter = false, setFilt
                 <View style={styles.cardContainer}>
                     <Image style={{height: 150, borderRadius: 10, marginBottom: 10}} resizeMode={'cover'} source={{uri: `https://tgko.ru/${data.news_image}`}} />
                     <Text style={{fontStyle: 'italic', fontSize: 16, color: '#666', paddingBottom: 15, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                        <FontAwesomeIcon icon={faCalendarAlt} color={"#999"} size={16} />
+                        <FontAwesomeIcon icon={faCalendarDay} color={"#999"} size={16} />
                         {(new Date(data.createdon * 1000)).toLocaleDateString()}
                     </Text>
                     <Text style={{color: '#000', fontWeight: 'bold'}}>{data.menutitle}</Text>
@@ -85,7 +85,8 @@ export default function NewsScreen({route, navigation, isFilter = false, setFilt
 
     return (
         <SafeAreaView style={{minHeight: Dimensions.get('window').height}}>
-            {loading ? <FlatList data={data} renderItem={Item}
+            {loading ?
+                    <FlatList data={data} renderItem={Item}
                                   contentContainerStyle={isFilter ? {flexGrow: 1, paddingBottom: 80, paddingTop: 120} : {flexGrow: 1, paddingBottom: 80}}
                                   ListEmptyComponent={EmptyList} keyExtractor={(item, index) => index} />
             : <ActivityIndicator size={"large"} color={"#007BFF"} styles={{marginVertical: 20, paddingVertical: 20}} />}
